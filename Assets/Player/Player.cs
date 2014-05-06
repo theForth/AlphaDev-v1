@@ -62,7 +62,7 @@ public class Player : MonoBehaviour {
 		}else{
 			HandleTrainer();
 			//move trainer
-			Vector3 vel = (Vector3.forward*Input.GetAxis("Vertical") + Vector3.right*Input.GetAxis("Horizontal"));
+			Vector3 vel = Quaternion.Euler(0,CameraControl.ay,0) * (Vector3.forward*Input.GetAxis("Vertical") + Vector3.right*Input.GetAxis("Horizontal"));
 			trainer.SetVelocity(vel);
 		}
 	}
