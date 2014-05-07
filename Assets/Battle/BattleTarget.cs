@@ -56,9 +56,9 @@ public class BattleTarget : MonoBehaviour {
 		if (activeTarget && targetedPokemon != null) {
 			pokemonWild = targetedPokemon.GetComponent<PokemonWild>();
 			pokemon = pokemonWild.pokemonObj.pokemon;
-			battleGUI.pokemonObj = pokemonWild.pokemonObj;
+			//battleGUI.pokemonObj = pokemonWild.pokemonObj;
 			//battleGUI.ToggleHud();
-			battleGUI.EnemyTargetWindow(pokemon);
+			//battleGUI.EnemyTargetWindow(pokemon);
 		}
 	}
 

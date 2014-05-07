@@ -10,14 +10,14 @@ public class BattleGUI : MonoBehaviour {
 	public string moveCast;
 	public int currentHealth = 0;
 	public PokemonObj pokemonObj;
-
 	/*
+
 	public BattleGUI(PokemonObj pokemonObj){
 		
 		this.pokemonObj = pokemonObj;
 		pokemonObj.pokemon.pp = 1;
 	}
-	*/
+
 
 	public static BattleGUI CreateBattleGUI (GameObject where, PokemonObj pokeobjtmp) {
 		BattleGUI myC = where.AddComponent<BattleGUI>();
@@ -71,6 +71,7 @@ public class BattleGUI : MonoBehaviour {
 		GUI.Label(new Rect(xpos,ypos,200,20), "HP");
 		GUImgr.DrawBar(new Rect(xpos+35,ypos+5,200,10), tmpPokeHp, GUImgr.hp);
 	}
+	*/
 	
 }
 

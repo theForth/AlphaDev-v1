@@ -11,7 +11,7 @@ public class InitScene : MonoBehaviour {
 	void Update(){
 		startTime += Time.deltaTime;
 		if (startTime>disclaimerTime+splashTime){
-			Application.LoadLevel("Menu");
+			Application.LoadLevel("MenuNGUI");
 		}
 	}
 	

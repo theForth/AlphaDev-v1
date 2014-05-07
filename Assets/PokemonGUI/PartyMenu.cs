@@ -20,10 +20,10 @@ public class PartyMenu : MonoBehaviour {
 	void Start(){
 		GUImgr.Start();
 		if (this.GetComponent<PartyMenuPopup> () != null) {
-			Debug.Log("partymenu != null");
+			//Debug.Log("partymenu != null");
 			partyMenuPopup = gameObject.GetComponent<PartyMenuPopup>();
 		} else {
-			Debug.Log("partymenu else");
+			//Debug.Log("partymenu else");
 			partyMenuPopup = gameObject.AddComponent<PartyMenuPopup> ();
 		}
 	}

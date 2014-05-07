@@ -9,8 +9,8 @@ public class Player : MonoBehaviour {
 	public static Trainer trainer = null;
 	public static Pokemon pokemon {get{return trainer.party.GetActivePokemon();} set{}}
 	public static bool pokemonActive = false;
-	//public static PokemonGUI pokemonGUI = new PokemonGUI();
-	public PokemonGUI pokemonGUI;
+	public static PokemonGUI pokemonGUI = new PokemonGUI();
+	//public PokemonGUI pokemonGUI;
 	public static GameGUI gamegui;
 
 	void Start(){
@@ -62,7 +62,7 @@ public class Player : MonoBehaviour {
 		}else{
 			HandleTrainer();
 			//move trainer
-			Vector3 vel = Quaternion.Euler(0,CameraControl.ay,0) * (Vector3.forward*Input.GetAxis("Vertical") + Vector3.right*Input.GetAxis("Horizontal"));
+			Vector3 vel = (Vector3.forward*Input.GetAxis("Vertical") + Vector3.right*Input.GetAxis("Horizontal"));
 			trainer.SetVelocity(vel);
 		}
 	}
@@ -91,10 +91,10 @@ public class Player : MonoBehaviour {
 			pokemon.obj.Return();
 		}
 		if(Input.GetKeyDown ("x")){
-			if(pokemonGUI.HpBarToggle) 
-				pokemonGUI.HpBarToggle=false;
+			if(PokemonGUI.HpBarToggle) 
+				PokemonGUI.HpBarToggle=false;
 			else
-				pokemonGUI.HpBarToggle=true;
+				PokemonGUI.HpBarToggle=true;
 		}
 	
 		/*
