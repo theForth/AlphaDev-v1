@@ -18,7 +18,6 @@ public class Player : MonoBehaviour {
 		gameObject.AddComponent<CameraControl> ();
 		trainer.gameObject.AddComponent<PlayerMovement> ();
 		gamegui = gameObject.AddComponent<GameGUI> ();
-		pokemonGUI = gameObject.AddComponent<PokemonGUI> ();
 		gameObject.AddComponent<BattleTarget> ();
 	}
 

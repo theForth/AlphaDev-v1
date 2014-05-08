@@ -89,7 +89,7 @@ public class PokemonGUI: MonoBehaviour
 						return;
 				}
 
-				if (pokemonObj == null) {
+		if (!HpBarToggle||pokemonObj == null) {
 						if (HpBar != null) {
 								Destroy (HpBar, 0);
 								Destroy (PpBar, 0);
