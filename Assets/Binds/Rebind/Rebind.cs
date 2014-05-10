@@ -38,7 +38,8 @@ public class Rebind : MonoBehaviour
 
     public static void SetupSerializers()
     {
-		ConfigFilePath =  @"D:\TempDelete\Assets\Binds";
+		//
+		ConfigFilePath = Application.dataPath + @"\Binds";
 		defaultBindsSerializer = new ConfigSerializer(ConfigFilePath + @"\DefaultBindings.txt");
 		keyBindsSerializer = new ConfigSerializer(ConfigFilePath + @"\KeyBindings.txt");
     }
