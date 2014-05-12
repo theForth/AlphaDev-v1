@@ -38,7 +38,13 @@ public class Player : MonoBehaviour {
 			Screen.lockCursor = true;
 			Screen.showCursor = false;
 		}
+		if (Input.GetKeyDown(KeyCode.F) && !click){
+			if (GameGUI.fpsWindow)
+				GameGUI.fpsWindow = false;
+			else
+				GameGUI.fpsWindow = !GameGUI.fpsWindow;
 
+		}
 		//capture pokemon
 		if(Input.GetKeyDown("c")) {
 			CapturePokemon();
@@ -174,7 +180,8 @@ public class Player : MonoBehaviour {
 				GameGUI.menuActive = !GameGUI.menuActive;
 			click = true;
 		}
-
+	
+		
 		//hides or reveals the stats(Data) popup on press of k
 		if (Input.GetKeyDown (KeyCode.K) && !GameGUI.menuActive) {
 			if (!pokemonActive)

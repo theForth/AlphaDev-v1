@@ -9,18 +9,24 @@ public class GameGUI : MonoBehaviour {
 	public static bool menuActive = false;
 	public static bool chatActive=false;
 	public static bool dataWindow=false;
+	public static bool fpsWindow = true;
 	public static string addToChat;
 	public static ArrayList chatHistory = new ArrayList();
 	int pokedexEntery = 1;
 	enum MenuWindows{None, Multiplayer, Pokedex, Pokemon, Inventory, Talents, Options, Quit};
 	MenuWindows currentWindow = MenuWindows.None;
 	PartyMenu partyMenu;
-
+	float deltaTime = 0.0f;
 	void Start(){
 		GUImgr.Start();
 		partyMenu = gameObject.AddComponent<PartyMenu> ();
 	}
 
+	
+	void Update()
+	{
+		deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
+	}
 	void OnGUI(){
 		GUI.skin.label.fontSize = 15;
 		GUI.skin.label.fontStyle = FontStyle.Bold;
@@ -40,12 +46,15 @@ public class GameGUI : MonoBehaviour {
 		if(chatActive){
 			OpenChatWindow();
 		}
-
+		if (fpsWindow) {
+			OpenFpsWindow();
+				}
 		if (Player.pokemonActive && Player.pokemon.obj!=null){
 			Player.pokemon.obj.GetComponent<PokemonDomesticated>().BattleGUI();
 			return;
 		}
-		
+
+
 		if (menuActive){
 			GUI.skin.label.alignment = TextAnchor.MiddleRight;
 			ypos = 0;
@@ -124,7 +133,20 @@ public class GameGUI : MonoBehaviour {
 		}
 	
 	}
-
+	public void OpenFpsWindow(){
+				int w = Screen.width, h = Screen.height;
+		
+				GUIStyle style = new GUIStyle ();
+		
+				Rect rect = new Rect (0, 0, w, h * 2 / 100);
+				style.alignment = TextAnchor.UpperCenter;
+				style.fontSize = h * 2 / 100;
+				style.normal.textColor = new Color (0.0f, 0.0f, 0.5f, 1.0f);
+				float msec = deltaTime * 1000.0f;
+				float fps = 1.0f / deltaTime;
+				string text = string.Format ("{0:0.0} ms ({1:0.} fps)", msec, fps);
+				GUI.Label (rect, text, style);
+		}
 	
 	//Creates a box for a Pokemon Overview.  Currently shows a base stat overview for the current
 	//selected pokemon.  Having trouble converting out move and item names for the overview.
