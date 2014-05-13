@@ -16,6 +16,7 @@ public class Player : MonoBehaviour {
 
 	void Start(){
 		trainer = GameObject.Find("Player").GetComponent<Trainer>();
+		gameObject.AddComponent<PlayerSave> ();
 		battleGUI = gameObject.AddComponent<BattleGUI> ();
 		gameObject.AddComponent<CameraControl> ();
 		trainer.gameObject.AddComponent<PlayerMovement> ();
@@ -24,6 +25,9 @@ public class Player : MonoBehaviour {
 	}
 
 	void Update(){
+		if (Input.GetKeyDown (KeyCode.Q)) {
+			Debug.Log("Local position: " + transform.localPosition.ToString());
+		}
 		//do nothing if in dialog
 		if (Dialog.inDialog){
 			Screen.lockCursor = false;

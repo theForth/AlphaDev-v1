@@ -329,7 +329,12 @@ public class GameGUI : MonoBehaviour {
 		float my = Screen.height-Input.mousePosition.y;
 		float ypos = 0;
 		foreach(var item in Player.trainer.inventory.GetItems()){
-			if (item.id == Player.trainer.item.id)	GUI.DrawTexture(new Rect(0,ypos+8,150,16), GUImgr.gradRight);
+			//What is this? It's broken, whatever it is.
+		/*
+			if (item.id == Player.trainer.item.id)	{
+				GUI.DrawTexture(new Rect(0,ypos+8,150,16), GUImgr.gradRight);
+			}
+		*/
 			if (mx<100 && my>ypos && my<ypos+30){
 				GUI.DrawTexture(new Rect(0,ypos+8,150,16), GUImgr.gradRight);
 				if (Input.GetMouseButton(0) && !Player.click){
