@@ -1,3 +1,12 @@
+/* BattleGUI
+ * 
+ * This will show a little window containing a targets name and current HP (as a bar)
+ * 
+ * PONDERANCE
+ * Should you be able to target yourself?
+ * 
+ */
+
 
 using UnityEngine;
 using System.Collections;
@@ -10,8 +19,10 @@ public class BattleGUI : MonoBehaviour {
 	public string moveCast;
 	public int currentHealth = 0;
 	public PokemonObj pokemonObj;
-	/*
+	public bool showEnemyTargetWindow = false;
+	public static Pokemon pokemon;
 
+/*
 	public BattleGUI(PokemonObj pokemonObj){
 		
 		this.pokemonObj = pokemonObj;
@@ -58,12 +69,28 @@ public class BattleGUI : MonoBehaviour {
 			}
 		}
 	}
+*/
+	void OnGUI() {
+		if (showEnemyTargetWindow && pokemon != null) {
+			if (pokemon.hp <= 0) { 
+				CloseTargetWindow();
+			}
+			else {
+				EnemyTargetWindow(pokemon);
+			}
+		}
+	}
+
+	public void CloseTargetWindow() {
+		showEnemyTargetWindow = false;
+		pokemon = null;
+	}
 
 	public void EnemyTargetWindow(Pokemon pokemon) {
 		float tmpPokeHp = pokemon.hp;
 		if (tmpPokeHp <= 0)
 						tmpPokeHp = 0;
-		float ypos = 5;
+		float ypos = 15;
 		float xpos = (Screen.width / 2) - 100;
 		GUI.DrawTexture(new Rect(xpos,ypos,200,60), GUImgr.gradRight);
 		GUI.Label(new Rect(xpos,ypos,200,20), pokemon.name + " lvl" + pokemon.level.ToString());
@@ -71,7 +98,7 @@ public class BattleGUI : MonoBehaviour {
 		GUI.Label(new Rect(xpos,ypos,200,20), "HP");
 		GUImgr.DrawBar(new Rect(xpos+35,ypos+5,200,10), tmpPokeHp, GUImgr.hp);
 	}
-	*/
+	
 	
 }
 
