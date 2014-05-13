@@ -25,9 +25,6 @@ public class Player : MonoBehaviour {
 	}
 
 	void Update(){
-		if (Input.GetKeyDown (KeyCode.Q)) {
-			Debug.Log("Local position: " + transform.localPosition.ToString());
-		}
 		//do nothing if in dialog
 		if (Dialog.inDialog){
 			Screen.lockCursor = false;
