@@ -17,16 +17,16 @@ public class GameGUI : MonoBehaviour {
 	MenuWindows currentWindow = MenuWindows.None;
 	PartyMenu partyMenu;
 	float deltaTime = 0.0f;
+
 	void Start(){
 		GUImgr.Start();
 		partyMenu = gameObject.AddComponent<PartyMenu> ();
 	}
-
 	
-	void Update()
-	{
+	void Update() {
 		deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
 	}
+
 	void OnGUI(){
 		GUI.skin.label.fontSize = 15;
 		GUI.skin.label.fontStyle = FontStyle.Bold;
@@ -46,14 +46,15 @@ public class GameGUI : MonoBehaviour {
 		if(chatActive){
 			OpenChatWindow();
 		}
+
 		if (fpsWindow) {
 			OpenFpsWindow();
-				}
+		}
+
 		if (Player.pokemonActive && Player.pokemon.obj!=null){
 			Player.pokemon.obj.GetComponent<PokemonDomesticated>().BattleGUI();
 			return;
 		}
-
 
 		if (menuActive){
 			GUI.skin.label.alignment = TextAnchor.MiddleRight;
@@ -99,40 +100,9 @@ public class GameGUI : MonoBehaviour {
 			case MenuWindows.Quit:			QuitWindow();			break;
 			}
 			return;
-		}
-		
-		ypos = 0;
-		var party = Player.trainer.party;
-		/*foreach(var slot in Player.trainer.party.GetSlots()){
-			var pokemon = slot.pokemon;
-
-			if (party.IsActive(pokemon)){
-				GUI.DrawTexture(new Rect(0,ypos+16,100,32), GUImgr.gradRight);
-				//this.OpenStatWindow (pokemon);
-				this.OpenStatWindow (pokemon);
-			}
-
-			GUI.DrawTexture(new Rect(0,ypos,64,64), pokemon.icon);
-			GUI.Label(new Rect(64,ypos,200,25), pokemon.name+" lvl"+pokemon.level.ToString());
-			//changed to do tests.  DO NOT COMMIT
-			GUImgr.DrawBar(new Rect(64,ypos+25,100,5), pokemon.hp, GUImgr.hp, false);
-			GUImgr.DrawBar(new Rect(64,ypos+35,100,5), pokemon.xp, GUImgr.xp);
-			ypos += 70;
-		}
-		*/
-		//New Age UI
-		foreach (var slot in Player.trainer.party.GetSlots()) {
-			var pokemon = slot.pokemon;
-			if (party.IsActive (pokemon)) {
-				//GUI.DrawTexture (new Rect (0, ypos + 16, 100, 64), GUImgr.gradRight);
-				this.OpenStatWindow (pokemon);
-			}
-			gameObject.AddComponent<PartyMenu>().AddSlot(pokemon,ypos);
-			//partyMenu.AddSlot(pokemon,ypos);
-			ypos += 70;
-		}
-	
+		}	
 	}
+
 	public void OpenFpsWindow(){
 				int w = Screen.width, h = Screen.height;
 		
