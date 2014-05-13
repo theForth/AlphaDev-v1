@@ -27,7 +27,7 @@ public class BattleTarget : MonoBehaviour {
 	void Start() {
 		allPokemon = new List<Transform>();
 		targetedPokemon = null;
-		battleGUI = gameObject.AddComponent<BattleGUI> ();
+		battleGUI = Player.battleGUI;
 	}
 
 	void Update() {
@@ -51,17 +51,18 @@ public class BattleTarget : MonoBehaviour {
 			activeTarget = false;
 		}
 	}
-
+/*
 	void OnGUI() {
 		if (activeTarget && targetedPokemon != null) {
 			pokemonWild = targetedPokemon.GetComponent<PokemonWild>();
 			pokemon = pokemonWild.pokemonObj.pokemon;
-			//battleGUI.pokemonObj = pokemonWild.pokemonObj;
+			battleGUI.pokemonObj = pokemonWild.pokemonObj;
 			//battleGUI.ToggleHud();
 			//battleGUI.EnemyTargetWindow(pokemon);
+			BattleGUI.pokemon = pokemon;
 		}
 	}
-
+*/
 	private void AddTargetPokemon() {
 		foreach(GameObject tmpPokemon in GameObject.FindGameObjectsWithTag("pokemon")){
 			AddTarget(tmpPokemon.transform);
@@ -110,7 +111,10 @@ public class BattleTarget : MonoBehaviour {
 		}
 		targetedPokemon = targetThis;
 		activeTarget = true;
-		HighlightTarget();
+		pokemon = targetThis.transform.GetComponent<PokemonObj> ().pokemon;
+		BattleGUI.pokemon = pokemon;
+		battleGUI.showEnemyTargetWindow = true;
+		//HighlightTarget();
 	}
 
 	public void HighlightTarget() {
@@ -120,6 +124,7 @@ public class BattleTarget : MonoBehaviour {
 	public void UnHighlightTarget() {
 		targetedPokemon = null;
 		activeTarget = false;
+		battleGUI.CloseTargetWindow ();
 		/*
 		if (highlightSparkles != null) {
 			Destroy (highlightSparkles);

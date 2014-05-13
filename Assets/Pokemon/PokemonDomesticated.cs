@@ -10,12 +10,20 @@ public class PokemonDomesticated : MonoBehaviour {
 	PokemonObj pokemonObj;
 	GameGUI gamegui = new GameGUI();
 
+	BattleGUI battleGUI;
+
 	void Start(){
 		pokemonObj = GetComponent<PokemonObj>();
 		pokemonObj.pokemon.pp = 1;
+		battleGUI = Player.battleGUI;
 	}
 
 	void Update(){
+		if (Input.GetKeyDown (KeyCode.Escape)) {
+			if (pokemonObj.enemy!=null) {
+				pokemonObj.enemy = null;
+			}
+		}
 		var pokemon = Player.trainer.party.GetActivePokemon();
 		if (Player.pokemon.obj==pokemonObj && pokemon != null)	return;
 
@@ -33,7 +41,9 @@ public class PokemonDomesticated : MonoBehaviour {
 		}
 	}
 
-	public void BattleGUI(){
+
+	/* We should rename this */
+	public void BattleGUITmp(){
 		GUI.DrawTexture(new Rect(0,Screen.height-90,200,100), GUImgr.gradRight);
 		float ypos = Screen.height-85;
 		GUI.Label(new Rect(10,ypos,200,20), name+" lvl"+pokemonObj.pokemon.level.ToString());
@@ -53,18 +63,14 @@ public class PokemonDomesticated : MonoBehaviour {
 
 		//current target
 		/*
-		 * UPDATE ME!
-		 * use BattleGUI EnemyTargetWindow(Pokemon pokemon)
-		 * instead of drawing this window
+		 * FIX ME!
+		 * This is called so many times that, if you are under attack, you cannot target a pokemon other than the one that is attacking you
+		 * We need to move this somewhere!
 		 */
 		if (pokemonObj.enemy!=null){
 			if (pokemonObj.enemy.pokemon!=null){
-				GUI.DrawTexture(new Rect(0,0,200,60), GUImgr.gradRight);
-				ypos = 5;
-				GUI.Label(new Rect(10,ypos,200,20), pokemonObj.enemy.name+" lvl"+pokemonObj.enemy.pokemon.level.ToString());
-				ypos+=20;
-				GUI.Label(new Rect(10,ypos,200,20), "HP");
-				GUImgr.DrawBar(new Rect(35,ypos+5,200,10), pokemonObj.enemy.pokemon.hp, GUImgr.hp);
+				BattleGUI.pokemon = pokemonObj.enemy.pokemon;
+				battleGUI.showEnemyTargetWindow=true;
 			}
 		}
 

@@ -52,7 +52,7 @@ public class GameGUI : MonoBehaviour {
 		}
 
 		if (Player.pokemonActive && Player.pokemon.obj!=null){
-			Player.pokemon.obj.GetComponent<PokemonDomesticated>().BattleGUI();
+			Player.pokemon.obj.GetComponent<PokemonDomesticated>().BattleGUITmp();
 			return;
 		}
 

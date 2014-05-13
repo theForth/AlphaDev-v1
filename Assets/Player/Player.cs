@@ -12,9 +12,11 @@ public class Player : MonoBehaviour {
 	public static PokemonGUI pokemonGUI = new PokemonGUI();
 	//public PokemonGUI pokemonGUI;
 	public static GameGUI gamegui;
+	public static BattleGUI battleGUI;
 
 	void Start(){
 		trainer = GameObject.Find("Player").GetComponent<Trainer>();
+		battleGUI = gameObject.AddComponent<BattleGUI> ();
 		gameObject.AddComponent<CameraControl> ();
 		trainer.gameObject.AddComponent<PlayerMovement> ();
 		gamegui = gameObject.AddComponent<GameGUI> ();
@@ -115,7 +117,10 @@ public class Player : MonoBehaviour {
 		}
 		//if (Input.GetKeyDown(KeyCode.Escape) && !click){
 		if (Input.GetKeyDown(KeyCode.Escape)) {
-			if (pokemonActive) {
+			if (battleGUI.showEnemyTargetWindow) {
+				battleGUI.CloseTargetWindow();
+			}
+			else if (pokemonActive) {
 				pokemon.obj.Return();
 				pokemonActive = false;
 				Vector3 vel = Quaternion.Euler(0,CameraControl.ay,0) * (Vector3.forward*Input.GetAxis("Vertical") + Vector3.right*Input.GetAxis("Horizontal"));
@@ -174,7 +179,10 @@ public class Player : MonoBehaviour {
 		
 		//activate menu
 		if (Input.GetKeyDown(KeyCode.Escape) && !click){
-			if (pokemonActive)
+			if (battleGUI.showEnemyTargetWindow) {
+				battleGUI.CloseTargetWindow();
+			}
+			else if (pokemonActive)
 				pokemonActive = false;
 			else
 				GameGUI.menuActive = !GameGUI.menuActive;
