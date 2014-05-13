@@ -12,17 +12,6 @@ public class Trainer : MonoBehaviour { //Need to separate the Unity object from 
 	void Start(){
 		party = new PokeParty(this);
 		inventory = new Inventory(this);
-
-		//kanto starters, why not
-		party.AddPokemon(new Pokemon(1, true));
-		party.AddPokemon(new Pokemon(4, true));
-		party.AddPokemon(new Pokemon(7, true));
-		Pokedex.states [1] = Pokedex.State.Captured;
-		Pokedex.states [4] = Pokedex.State.Captured;
-		Pokedex.states [7] = Pokedex.State.Captured;
-		
-		inventory.Add(1, 5); //New inventory code references shared item data. (id, quantity)
-		inventory.Add(4, 2);
 	}
 
 	public Target.TARGETS GetTargetType() {
