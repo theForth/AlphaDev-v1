@@ -10,6 +10,7 @@ public class PokeCenter : MonoBehaviour {
 
 			//pokemon.hp = pokemon.health;
 			pokemon.hp = 1;
+			pokemon.currentHealth = pokemon.TotalHP();
 		}
 	}
 }

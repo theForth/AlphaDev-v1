@@ -82,6 +82,8 @@ public class TrainerAI : MonoBehaviour {
 					aiAlivePokemon.Remove(x);
 				}
 			}
+
+
 			if (direct.sqrMagnitude>1)	transform.position += direct;
 			currentPokemon = trainer.party.GetActivePokemon();
 
@@ -92,12 +94,12 @@ public class TrainerAI : MonoBehaviour {
 			}
 			direct.y = 0;
 			transform.rotation = Quaternion.LookRotation(direct);
+
 			GetComponent<Animator>().SetBool("run", false);
 			if (aiAlivePokemon.Count > 0) {
 				if (currentPokemon.obj==null)	trainer.ThrowPokemon(trainer.party.GetSlot(aiAlivePokemon[0]).pokemon); //Only 1 pokemon is throwable
 			}
 			else {
-				Debug.Log("ai defeated");
 				currentState = States.Defeated;
 			}
 		}

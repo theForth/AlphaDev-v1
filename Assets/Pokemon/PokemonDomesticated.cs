@@ -8,8 +8,6 @@ public class PokemonDomesticated : MonoBehaviour {
 	
 	bool letsGo = false;
 	PokemonObj pokemonObj;
-	GameGUI gamegui = new GameGUI();
-
 	BattleGUI battleGUI;
 
 	void Start(){

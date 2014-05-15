@@ -20,7 +20,7 @@ public class BattleTarget : MonoBehaviour {
 	public bool activeTarget{ get; set; }
 	public GameObject highlightSparkles;
 	PokemonWild pokemonWild;
-	Pokemon pokemon;
+	public Pokemon targetPokemon;
 	BattleGUI battleGUI;
 	int tabCount = 0;
 
@@ -111,8 +111,8 @@ public class BattleTarget : MonoBehaviour {
 		}
 		targetedPokemon = targetThis;
 		activeTarget = true;
-		pokemon = targetThis.transform.GetComponent<PokemonObj> ().pokemon;
-		BattleGUI.pokemon = pokemon;
+		targetPokemon = targetThis.transform.GetComponent<PokemonObj> ().pokemon;
+		BattleGUI.pokemon = targetPokemon;
 		battleGUI.showEnemyTargetWindow = true;
 		//HighlightTarget();
 	}

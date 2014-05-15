@@ -7,14 +7,22 @@
 using UnityEngine;
 
 public class PlayerSave : MonoBehaviour {
-	GameObject player;
+	Player player;
 	Trainer trainer;
 	Vector3 playerPosition;
 
 	void Start() {
-		player = GameObject.Find ("Player");
-		trainer = player.GetComponent<Trainer> ();
-		player.transform.position = PlayerPosition ();
+		trainer = gameObject.GetComponent<Trainer> ();
+		if (gameObject.name.ToString() == "Player") {
+			player = gameObject.GetComponent<Player> ();
+			if (player != null) {
+				player.transform.position = PlayerPosition ();
+			}
+		}
+		else if (gameObject.name.ToString() == "Trainer") {
+			//replace the following line with whatever stuff we get from server. will use PlayerPosition() as well.
+			//trainer.transform.position = new Vector3 (-426.8574f, 50f, 23.41644f);
+		}
 		PopulatePokemonParty ();
 		PopulateItems ();
 	}

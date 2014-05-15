@@ -9,19 +9,40 @@ public class Player : MonoBehaviour {
 	public static Trainer trainer = null;
 	public static Pokemon pokemon {get{return trainer.party.GetActivePokemon();} set{}}
 	public static bool pokemonActive = false;
-	public static PokemonGUI pokemonGUI = new PokemonGUI();
-	//public PokemonGUI pokemonGUI;
+	//public static PokemonGUI pokemonGUI = new PokemonGUI();
 	public static GameGUI gamegui;
 	public static BattleGUI battleGUI;
+	public static BattleTarget battleTarget;
+	public static SphereCollider m_Collider;
 
 	void Start(){
 		trainer = GameObject.Find("Player").GetComponent<Trainer>();
-		gameObject.AddComponent<PlayerSave> ();
+		//trainer = this.gameObject.GetComponent<Trainer> ();
+		if (trainer != null) {
+			trainer.gameObject.AddComponent<PlayerMovement> ();
+		}
 		battleGUI = gameObject.AddComponent<BattleGUI> ();
 		gameObject.AddComponent<CameraControl> ();
-		trainer.gameObject.AddComponent<PlayerMovement> ();
 		gamegui = gameObject.AddComponent<GameGUI> ();
-		gameObject.AddComponent<BattleTarget> ();
+		battleTarget = gameObject.AddComponent<BattleTarget> ();
+		//Instantiate (Resources.Load("Trainer",typeof(GameObject)), new Vector3(-462.6291f, 50.29899f, 5.202448f), transform.rotation);
+		m_Collider = gameObject.AddComponent<SphereCollider>();
+		m_Collider.center = Vector3.zero; // the center must be in local coordinates
+		m_Collider.radius = 50.0f;
+		m_Collider.isTrigger = true;
+	}
+
+
+	void OnTriggerEnter(Collider collided) {
+		if (collided.CompareTag ("pokemon")) {
+			collided.GetComponent<PokemonGUI>().nearPlayer=true;
+		}
+	}
+
+	void OnTriggerExit(Collider collided) {
+		if (collided.CompareTag ("pokemon")) {
+			collided.GetComponent<PokemonGUI>().nearPlayer=false;
+		}
 	}
 
 	void Update(){
