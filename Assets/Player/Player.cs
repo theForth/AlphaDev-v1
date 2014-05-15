@@ -84,6 +84,13 @@ public class Player : MonoBehaviour {
 			click = true;
 		}
 
+		if(Input.GetKeyDown ("x")){
+			if(PokemonGUI.HpBarToggle) 
+				PokemonGUI.HpBarToggle=false;
+			else
+				PokemonGUI.HpBarToggle=true;
+		}
+
 		//player control
 		click = CanClick();
 		if (pokemonActive && pokemon.obj!=null){
@@ -119,12 +126,7 @@ public class Player : MonoBehaviour {
 			pokemonActive = false;
 			pokemon.obj.Return();
 		}
-		if(Input.GetKeyDown ("x")){
-			if(PokemonGUI.HpBarToggle) 
-				PokemonGUI.HpBarToggle=false;
-			else
-				PokemonGUI.HpBarToggle=true;
-		}
+
 	
 		/*
 		if (Input.GetKeyDown (KeyCode.K) && !GameGUI.menuActive) {

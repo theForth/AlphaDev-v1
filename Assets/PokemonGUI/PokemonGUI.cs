@@ -64,9 +64,9 @@ public class PokemonGUI: MonoBehaviour {
 					PpBar.GetComponent<EnergyBarRenderer> ().screenPosition = new Vector2 (x - 40, y - 55);
 					PpBar.GetComponent<EnergyBar> ().valueCurrent = pokemonObj.pokemon.pp;
 
-/*
+
 					//if (pokemonObj.enemy && pokemonObj.enemy.pokemon != null && pokemonObj.enemy.pokemon.hp > 0) {
-					if (enemy && enemy.pokemon != null && enemy.pokemon.hp > 0) {
+					if (enemy && enemy.pokemon != null && enemy.pokemon.hp > 0 && enemy.isWild) {
 						//moveCast = pokemonObj.enemy.pokemon.moveCast;
 						//damage = (int)pokemonObj.enemy.pokemon.damage;
 						if (!HpBarEnemy) {
@@ -91,7 +91,7 @@ public class PokemonGUI: MonoBehaviour {
 						}
 						
 					}
-*/
+
 				}
 
 			}
