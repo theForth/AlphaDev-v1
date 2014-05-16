@@ -221,13 +221,6 @@ public class Player : MonoBehaviour {
 
 		}
 
-		/*
-	 * don't try using this right now, because it doesn't exist!
-		if (Input.GetKeyDown ("k")) {
-			Populate okasf = new Populate();
-			okasf.Test();
-		}
-	*/
 		//anticlick
 		bool anti = false;
 		for(int i = 1; i <= 10 && !anti; i++) {

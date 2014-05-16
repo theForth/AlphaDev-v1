@@ -16,3 +16,4 @@ SELECT_POKE_PARTY_10=Alpha0,Keypad0
 SELECT_POKE_PREV=PageUp,Comma,Minus,KeypadMinus
 SELECT_POKE_NEXT=PageDown,Period,Plus,KeypadPlus
 THROW_POKEBALL=Return,KeypadEnter
+ACTION_ROLL=LeftControl

@@ -38,8 +38,8 @@ public class Rebind : MonoBehaviour
 
     public static void SetupSerializers()
     {
-		//
-		ConfigFilePath = Application.dataPath + @"\Binds";
+		//ConfigFilePath = Application.dataPath + @"\Binds";
+		ConfigFilePath = "C:/PokemonNXT/trunk/Assets/Binds";
 		defaultBindsSerializer = new ConfigSerializer(ConfigFilePath + @"\DefaultBindings.txt");
 		keyBindsSerializer = new ConfigSerializer(ConfigFilePath + @"\KeyBindings.txt");
     }
