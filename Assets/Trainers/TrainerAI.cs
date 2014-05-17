@@ -5,7 +5,6 @@ using System.Collections.Generic;
 public class TrainerAI : MonoBehaviour {
 	Trainer trainer = null;
 	Trainer enemyTrainer = null;
-
 	Pokemon currentPokemon = null;
 	Vector3 trainerPos = Vector3.zero;
 	enum States {Idle, InBattle, Defeated, Inactive};
@@ -97,20 +96,52 @@ public class TrainerAI : MonoBehaviour {
 
 			GetComponent<Animator>().SetBool("run", false);
 			if (aiAlivePokemon.Count > 0) {
-				if (currentPokemon.obj==null)	trainer.ThrowPokemon(trainer.party.GetSlot(aiAlivePokemon[0]).pokemon); //Only 1 pokemon is throwable
+				if (currentPokemon.obj==null) {
+					trainer.party.Select(aiAlivePokemon[0]);
+					trainer.ThrowPokemon(trainer.party.GetSlot(aiAlivePokemon[0]).pokemon); //Only 1 pokemon is throwable
+				}
+				else {
+					Fight();
+				}
 			}
 			else {
 				currentState = States.Defeated;
 			}
 		}
-		
-		/*if (currentPokemonObj!=null){
-			PokemonTrainer pokeComp = currentPokemonObj.GetComponent<PokemonTrainer>;
-			if (pokeComp!=null){
-				if (Player.pokemonObj!=null){
-					pokeComp.AttackEnemy(Player.pokemonObj);
+	}
+
+	void Fight() {
+		if (trainer != null) {
+			if (currentPokemon != null) {
+				if (currentPokemon.hp > 0) {
+					PokemonObj aiEnemy = currentPokemon.obj.enemy;
+					if (aiEnemy != null) {
+						if (aiEnemy.pokemon.hp > 0) {
+							Move move = currentPokemon.moves[Random.Range(0,currentPokemon.moves.Count)];
+
+							Vector3 direct = aiEnemy.transform.position-currentPokemon.obj.transform.position;
+							if (direct.sqrMagnitude>25*25){
+								aiEnemy = null;
+								return;
+							}
+							
+							direct.y = 0;
+							currentPokemon.obj.transform.rotation = Quaternion.LookRotation(direct);
+							
+							if (Random.value<0.1f)	//use random moves whenever
+								currentPokemon.obj.UseMove(direct.normalized, currentPokemon.moves[Random.Range(0,currentPokemon.moves.Count)]);
+							
+							if (direct.sqrMagnitude>1){
+								currentPokemon.obj.SetVelocity(direct.normalized*currentPokemon.obj.speed);
+							}
+
+						}
+					}
+					else {
+						currentPokemon.obj.enemy = enemyTrainer.party.GetActivePokemon().obj;
+					}
 				}
 			}
-		}*/
+		}
 	}
 }
