@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
 		private float _rotation = 0;
 		private Vector3 _last_position = Vector3.zero;
 		private float _animation_speed = 1;
-		private float _move_speed = 0;
+		public float _move_speed = 0;
 		private Vector3 _wanted_position = Vector3.zero;
 		private Vector3 _last_wanted_position = Vector3.zero;
 		private float _last_distance = 0;
@@ -89,13 +89,14 @@ public class PlayerController : MonoBehaviour
 	
 		void Update ()
 		{
-				/*
-		 * Uncomment this code if you want to make a toggle button for running / walking
-		if(Input.GetButtonDown("ToggleRun"))
-		{
-			_running = !_running;
-		}
-		*/
+				
+		 
+				if (Input.GetKeyDown (KeyCode.LeftShift)) {
+						_running = true;
+				} else {
+						_running = false;
+				}
+		
 		
 				// If user middle-clicks, toggle autorun on/off
 				if (Input.GetMouseButtonDown (2)) {
@@ -199,25 +200,7 @@ public class PlayerController : MonoBehaviour
 						}
 				}
 		
-				if (clickToMove) {
-						if (_last_wanted_position != _wanted_position) {
-								float d = Vector3.Distance (_t.position, _wanted_position);
-				
-								if (d > _last_distance) {
-										d = 0;
-								} else {
-										_last_distance = d;
-								}
-				
-								if (d >= 0.1f) {
-										_t.LookAt (new Vector3 (_wanted_position.x, _t.position.y, _wanted_position.z));
-										_input_y = Mathf.Clamp (d / 2f, 0, 1);
-								} else {
-										_last_wanted_position = _wanted_position;
-										_input_y = 0;
-								}
-						}
-				}
+			
 		
 				// If on the ground, test to see if still on the ground and apply movement direction
 				if (_grounded) {
