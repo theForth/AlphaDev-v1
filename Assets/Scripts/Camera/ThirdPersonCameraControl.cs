@@ -87,7 +87,7 @@ public class ThirdPersonCameraControl : MonoBehaviour
 				//Rect screenRect = new Rect (0, 0, Screen.width, Screen.height);
 				//if (!screenRect.Contains (Input.mousePosition))
 				//return;
-				if (Input.GetKeyDown (KeyCode.A)) {
+				if (Input.GetKeyDown (KeyCode.H)) {
 						isPokemonControl = true;
 						SmoothCamera = new GameObject ("MadefromCode");
 						SmoothCamera.transform.position = target.position;

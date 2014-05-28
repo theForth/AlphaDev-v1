@@ -26,8 +26,12 @@ public class PlayerController : MonoBehaviour
 		private bool _autorun = false;
 		private Vector3 _velocity = Vector3.zero;
 		private float _fall_start = 0;
+		
+		[SerializeField]
 		private float _input_x = 0;
+		[SerializeField]
 		private float _input_y = 0;
+		[SerializeField]
 		private float _input_s = 0;
 		private float _rotation = 0;
 		private Vector3 _last_position = Vector3.zero;
@@ -159,8 +163,9 @@ public class PlayerController : MonoBehaviour
 				
 				
 								//* Strafing axis takes priority!
+								
 								_input_s = Input.GetAxis ("Strafe");
-				
+								
 						}
 				}
 		
