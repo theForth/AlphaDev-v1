@@ -5,5 +5,7 @@ Temp
 *.unityproj
 *.userprefs
 *.suo
+*.csproj
+*.sln
 Debug
 Release
