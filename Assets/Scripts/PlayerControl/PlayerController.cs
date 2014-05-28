@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour
 		public float antiBunny = 0.0f;
 	
 		private bool _controllable = true;
+	
+		[SerializeField]
 		private bool _running = true;
 		private bool _grounded = false;
 		private float _speed = 0;
@@ -28,11 +30,14 @@ public class PlayerController : MonoBehaviour
 		private float _fall_start = 0;
 		
 		[SerializeField]
-		private float _input_x = 0;
+		private float
+				_input_x = 0;
 		[SerializeField]
-		private float _input_y = 0;
+		private float
+				_input_y = 0;
 		[SerializeField]
-		private float _input_s = 0;
+		private float
+				_input_s = 0;
 		private float _rotation = 0;
 		private Vector3 _last_position = Vector3.zero;
 		private float _animation_speed = 1;
@@ -95,11 +100,7 @@ public class PlayerController : MonoBehaviour
 		{
 				
 		 
-				if (Input.GetKeyDown (KeyCode.LeftShift)) {
-						_running = true;
-				} else {
-						_running = false;
-				}
+			
 		
 		
 				// If user middle-clicks, toggle autorun on/off
@@ -213,70 +214,14 @@ public class PlayerController : MonoBehaviour
 						_velocity = _t.TransformDirection (_velocity) * _speed;
 			
 						// Animation
-						_move_speed = (_t.position - _last_position).magnitude;
-						_last_position = _t.position;
-			
-						if (_move_speed > 0) {
-								if (_move_speed > 0.07f) {
-										if (Input.GetMouseButton (1) &&
-												_input_x != 0) {
-												if (_input_x < 0) {
-														if (_input_y > 0) {
-																ani.SetBool ("run", true);
-														} else {
-																ani.SetBool ("run", true);
-														}
-												} else {
-														if (_input_y > 0) {
-																ani.SetBool ("run", true);
-														} else {
-																ani.SetBool ("run", true);
-														}
-												}
-										} else {
-												ani.SetBool ("run", true);
-										}
+						//_move_speed = (_t.position - _last_position).magnitude;
 					
-										_animation_speed = 1;
-								} else {
-										if (Input.GetMouseButton (1) &&
-												_input_x != 0) {
-												if (_input_x < 0) {
-														if (_input_y > 0) {
-																ani.SetBool ("run", false);
-														} else if (_input_y < 0) {
-																ani.SetBool ("run", false);
-														} else {
-																ani.SetBool ("run", false);
-														}
-												} else {
-														if (_input_y > 0) {
-																ani.SetBool ("run", false);
-														} else if (_input_y < 0) {
-																ani.SetBool ("run", false);
-														} else {
-																ani.SetBool ("run", false);
-														}
-												}
-										} else {
-												//_animator.Action = "walk";
-										}
-					
-										_animation_speed = _move_speed * 13 + 1;
-					
-										if (_input_y < 0) {
-												_animation_speed = -_animation_speed;
-										}
-								}
-						} else {
-								if (_rotation < 0) {
-										//_animator.Action = "shimmy_left";
-								} else if (_rotation > 0) {
-										//_animator.Action = "shimmy_right";
-								} else {
-										ani.SetBool ("run", false);
-								}
-						}
+						
+						//_last_position = _t.position;
+						if (_input_y > 0) {
+								ani.SetFloat ("Speed", _speed, 0.05f, Time.deltaTime);
+						} else 
+								ani.SetFloat ("Speed", 0f, 0.01f, Time.deltaTime);
 			
 						if (!Physics.Raycast (_t.position, -Vector3.up, 0.2f)) {
 								_grounded = false;

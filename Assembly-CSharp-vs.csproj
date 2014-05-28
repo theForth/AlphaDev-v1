@@ -5,7 +5,7 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{3E0B4DC1-8C9C-22D0-66F6-43BE70C91225}</ProjectGuid>
+	<ProjectGuid>{512C9B36-C0BB-66DA-9409-1FB46ED27CC4}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
@@ -39,10 +39,10 @@
 	<Reference Include="System.Core" />
 	<Reference Include="System.Xml.Linq" />
 	<Reference Include="UnityEngine">
-	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+	  <HintPath>D:/UnityEditor/Data/Managed/UnityEngine.dll</HintPath>
 	</Reference>
 	<Reference Include="UnityEditor">
-	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+	  <HintPath>D:/UnityEditor/Data/Managed/UnityEditor.dll</HintPath>
 	</Reference>
   </ItemGroup>
   <ItemGroup>
@@ -59,7 +59,6 @@
      <Compile Include="Assets\Binds\Rebind\RebindInspector.cs" />
      <Compile Include="Assets\Data\Data.cs" />
      <Compile Include="Assets\Data\Identifiers.cs" />
-     <Compile Include="Assets\Data\PullData.cs" />
      <Compile Include="Assets\Data\ServerConnection.cs" />
      <Compile Include="Assets\Effects\2DAnimation\AnimationEffect.cs" />
      <Compile Include="Assets\Effects\2DAnimation\Billboard.cs" />
@@ -83,6 +82,7 @@
      <Compile Include="Assets\Invocables\Hook.cs" />
      <Compile Include="Assets\Invocables\Hooks.cs" />
      <Compile Include="Assets\JSONObject\JSONObject.cs" />
+     <Compile Include="Assets\Load\PlayerSave.cs" />
      <Compile Include="Assets\NGUI\Examples\Scripts\InventorySystem\Game\EquipItems.cs" />
      <Compile Include="Assets\NGUI\Examples\Scripts\InventorySystem\Game\EquipRandomItem.cs" />
      <Compile Include="Assets\NGUI\Examples\Scripts\InventorySystem\Game\UICursor.cs" />
@@ -234,7 +234,6 @@
      <Compile Include="Assets\Pokemon\Spawner.cs" />
      <Compile Include="Assets\PokemonGUI\BattleGUI.cs" />
      <Compile Include="Assets\PokemonGUI\PartyMenu.cs" />
-     <Compile Include="Assets\PokemonGUI\PartyMenuPopup.cs" />
      <Compile Include="Assets\PokemonGUI\PokemonGUI.cs" />
      <Compile Include="Assets\Scenes\GameStart\GameStart.cs" />
      <Compile Include="Assets\Scenes\Init\InitScene.cs" />
@@ -242,6 +241,12 @@
      <Compile Include="Assets\Scenes\Map\MapCamera.cs" />
      <Compile Include="Assets\Scenes\Menu\MenuScene.cs" />
      <Compile Include="Assets\Scenes\MenuNGUI\MenuSceneNGUI.cs" />
+     <Compile Include="Assets\Scenes\TestSceneV1\Scripts\Camera\MiniMapCameraControl.cs" />
+     <Compile Include="Assets\Scripts\Camera\CameraSwitch.cs" />
+     <Compile Include="Assets\Scripts\Camera\ThirdPersonCameraControl.cs" />
+     <Compile Include="Assets\Scripts\PlayerControl\PlayerAnimatorController.cs" />
+     <Compile Include="Assets\Scripts\PlayerControl\PlayerController.cs" />
+     <Compile Include="Assets\Scripts\PlayerControl\PokemonController.cs" />
      <Compile Include="Assets\Terrain Assets\TimeMgr.cs" />
      <Compile Include="Assets\Trainers\Inventory.cs" />
      <Compile Include="Assets\Trainers\PokeParty.cs" />
@@ -352,6 +357,7 @@
      <None Include="Assets\Effects\Skybox\README.txt" />
      <None Include="Assets\StreamingAssets\Audio\GeneratedSoundBanks\Windows\PluginInfo.xml" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Premultiplied Colored.shader" />
+     <None Include="Assets\Resources\Pokemon\025 - Pikachu\Pikachu_Animation_Notes.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Dynamic Font.shader" />
      <None Include="Assets\Energy Bar Toolkit\Resources\Shaders\UnlitShader.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored.shader" />
@@ -373,27 +379,6 @@
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (SoftClip).shader" />
      <None Include="Assets\NGUI\Examples\Models\Orc Armor\Orc Armor.shader" />
      <None Include="Assets\NGUI\Examples\Resources\Localization.txt" />
- <Reference Include="SimpleJson">
- <HintPath>Assets\Plugins\SimpleJson.dll</HintPath>
- </Reference>
- <Reference Include="SocketIO">
- <HintPath>Assets\Plugins\SocketIO.dll</HintPath>
- </Reference>
- <Reference Include="SuperSocket.ClientEngine.Common">
- <HintPath>Assets\Plugins\SuperSocket.ClientEngine.Common.dll</HintPath>
- </Reference>
- <Reference Include="SuperSocket.ClientEngine.Core">
- <HintPath>Assets\Plugins\SuperSocket.ClientEngine.Core.dll</HintPath>
- </Reference>
- <Reference Include="SuperSocket.ClientEngine.Protocol">
- <HintPath>Assets\Plugins\SuperSocket.ClientEngine.Protocol.dll</HintPath>
- </Reference>
- <Reference Include="SuperSocket.ClientEngine.Proxy">
- <HintPath>Assets\Plugins\SuperSocket.ClientEngine.Proxy.dll</HintPath>
- </Reference>
- <Reference Include="WebSocket4Net">
- <HintPath>Assets\Plugins\WebSocket4Net.dll</HintPath>
- </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
