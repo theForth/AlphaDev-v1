@@ -17,7 +17,7 @@ public class MiniMapCameraControl : MonoBehaviour
 		}
 	
 		// Update is called once per frame
-		void FixedUpdate ()
+		void LateUpdate ()
 		{
 
 				transform.position = new Vector3 (target.position.x, 15f, target.position.z);

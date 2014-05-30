@@ -33,9 +33,15 @@ public class ThirdPersonCameraControl : MonoBehaviour
 		public bool returnToOrigin = true;
 		public float returnSmoothing = 3;
 		public Vector3 CollisionSmooth;
-		public float distance = 5f;
-		public float minDistance = 5f;
-		public float maxDistance = 25f;
+		[SerializeField]
+		private float
+				distance = 15f;
+		[SerializeField]
+		private float
+				minDistance = 5f;
+		[SerializeField]
+		private float
+				maxDistance = 25f;
 		public float collisionDistance;
 		public Vector2 sensitivity = new Vector2 (3, 3);
 	
@@ -53,7 +59,8 @@ public class ThirdPersonCameraControl : MonoBehaviour
 		private float wantedDistance;
 		private Quaternion _rotation;
 		private Vector2 inputRotation;
-		
+		private bool isFirstPerson = false;
+		private bool isThirdPerson;
 		private bool isPlayerControl = true;
 		private bool isPokemonControl = false;
 		public Transform _transform;
@@ -87,6 +94,20 @@ public class ThirdPersonCameraControl : MonoBehaviour
 				//Rect screenRect = new Rect (0, 0, Screen.width, Screen.height);
 				//if (!screenRect.Contains (Input.mousePosition))
 				//return;
+				if (Input.GetKeyDown (KeyCode.Home)) {
+						isFirstPerson = true;
+						isThirdPerson = false;
+						targetOffset.y = 2;
+						//minDistance = 5f;
+				}
+				
+				if (Input.GetKeyDown (KeyCode.End)) {
+						isFirstPerson = false;
+						isThirdPerson = true;
+						minDistance = -5f;
+						targetOffset.y = 1.5f;
+						
+				}
 				if (Input.GetKeyDown (KeyCode.H)) {
 						isPokemonControl = true;
 						SmoothCamera = new GameObject ("MadefromCode");
@@ -151,7 +172,7 @@ public class ThirdPersonCameraControl : MonoBehaviour
 						}
 						SmoothCamera.transform.position = Vector3.Lerp (SmoothCamera.transform.position, target2.position, 5f * Time.deltaTime);
 				      
-						SmoothFollow (SmoothCamera.transform);
+						//SmoothFollow (SmoothCamera.transform);
 						
 				} else
 						SmoothFollow (target);
@@ -162,12 +183,7 @@ public class ThirdPersonCameraControl : MonoBehaviour
 	#region Methods
 		private void SmoothFollow (Transform target)
 		{
-				if (Input.GetKeyDown (KeyCode.Home)) {
-						distance = 0;
-				}
-				if (Input.GetKeyDown (KeyCode.End)) {
-						distance = 10;
-				}
+				
 				//Rect screenRect = new Rect (0, 0, Screen.width, Screen.height);
 				//if (!screenRect.Contains (Input.mousePosition))
 				//return;
@@ -238,11 +254,15 @@ public class ThirdPersonCameraControl : MonoBehaviour
 						}
 			
 						// Lerp from current distance to wanted distance
+						if (isFirstPerson)
+								wantedDistance = 15f;
+						if (isThirdPerson)
+								wantedDistance = -4f;
 						distance = Mathf.Clamp (Mathf.Lerp (distance, wantedDistance, Time.deltaTime * zoomSmoothing), minDistance, maxDistance);
 			
 						// Set wanted position based off rotation and distance
-						Vector3 wanted_position = _rotation * new Vector3 (0.0f, 0, -wantedDistance - 0.2f) + target.position + new Vector3 (0, 0, 0);
-						Vector3 current_position = _rotation * new Vector3 (0.0f, 0, 0) + target.position + new Vector3 (0, 0, 0);
+						Vector3 wanted_position = _rotation * new Vector3 (targetOffset.x, 0, -wantedDistance - 0.2f) + target.position + new Vector3 (0, targetOffset.y, 0);
+						Vector3 current_position = _rotation * new Vector3 (targetOffset.x, 0, 0) + target.position + new Vector3 (0, targetOffset.y, 0);
 			
 			
 						// Linecast to test if there are objects between the camera and the target using collision layers
@@ -256,7 +276,7 @@ public class ThirdPersonCameraControl : MonoBehaviour
 			
 			
 						// Set the position and rotation of the camera
-						_transform.position = _rotation * new Vector3 (0.0f, 0.0f, -distance) + target.position + new Vector3 (0.0f, 0.0f, 0);
+						_transform.position = _rotation * new Vector3 (targetOffset.x, 0.0f, -distance) + target.position + new Vector3 (0.0f, targetOffset.y, 0);
 						_transform.rotation = _rotation;
 				}
 		}

@@ -22,10 +22,11 @@ public class PlayerController : MonoBehaviour
 		private bool _controllable = true;
 	
 		[SerializeField]
-		private bool _running = true;
+		private bool
+				_running = true;
 		private bool _grounded = false;
 		private float _speed = 0;
-		private bool _autorun = false;
+		private bool _autorun = true;
 		private Vector3 _velocity = Vector3.zero;
 		private float _fall_start = 0;
 		

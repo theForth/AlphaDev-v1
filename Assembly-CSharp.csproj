@@ -243,6 +243,7 @@
     <Compile Include="Assets\Scenes\TestSceneV1\Scripts\Camera\MiniMapCameraControl.cs" />
     <Compile Include="Assets\Scripts\Camera\CameraSwitch.cs" />
     <Compile Include="Assets\Scripts\Camera\ThirdPersonCameraControl.cs" />
+    <Compile Include="Assets\Scripts\DebugGUI.cs" />
     <Compile Include="Assets\Scripts\PlayerControl\PlayerAnimatorController.cs" />
     <Compile Include="Assets\Scripts\PlayerControl\PlayerController.cs" />
     <Compile Include="Assets\Scripts\PlayerControl\PokemonController.cs" />
