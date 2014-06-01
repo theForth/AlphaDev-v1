@@ -8176,7 +8176,8 @@ Prefab:
       propertyPath: m_LocalRotation.w
       value: .473146707
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 11400004, guid: e214ea43364477740aa484568782d2e1, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: e214ea43364477740aa484568782d2e1, type: 2}
   m_RootGameObject: {fileID: 1197421549}
   m_IsPrefabParent: 0
@@ -9873,7 +9874,8 @@ Prefab:
       propertyPath: m_LocalRotation.w
       value: .473146707
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 11400004, guid: e214ea43364477740aa484568782d2e1, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: e214ea43364477740aa484568782d2e1, type: 2}
   m_RootGameObject: {fileID: 1895373081}
   m_IsPrefabParent: 0
@@ -11640,7 +11642,8 @@ Prefab:
       propertyPath: m_LocalRotation.w
       value: .693069696
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 11400002, guid: a3a8a853e69997e41be0d9e83a54a10f, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: a3a8a853e69997e41be0d9e83a54a10f, type: 2}
   m_RootGameObject: {fileID: 307661819}
   m_IsPrefabParent: 0
