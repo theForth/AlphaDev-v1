@@ -66,19 +66,22 @@ public class ThirdPersonCameraControl : MonoBehaviour
 		public Transform _transform;
 		// addition rotation smooth components
 		public float mouseSmoothingFactor = 0.08f;
-		private float mouseX = 0f;
+		//private float mouseX = 0f;
 		private float mouseXSmooth = 0f;
 		private float mouseXVel;
-		private float mouseY = 0f;
+		//private float mouseY = 0f;
 		private float mouseYSmooth = 0f;
 		private float mouseYVel;
+		CameraState currentCameraState = CameraState.ThirdPerson;
 		public bool Controllable {
 				get { return isPlayerControl; }
 				set { isPlayerControl = value; }
 		}
-	
+		
+
 		void Start ()
-		{
+		{		
+				
 				_transform = transform;
 				wantedDistance = distance;
 				inputRotation = originRotation;
@@ -95,17 +98,14 @@ public class ThirdPersonCameraControl : MonoBehaviour
 				//if (!screenRect.Contains (Input.mousePosition))
 				//return;
 				if (Input.GetKeyDown (KeyCode.Home)) {
-						isFirstPerson = true;
-						isThirdPerson = false;
-						targetOffset.y = 2;
+						currentCameraState = CameraState.ThirdPerson;
+						
 						//minDistance = 5f;
 				}
 				
 				if (Input.GetKeyDown (KeyCode.End)) {
-						isFirstPerson = false;
-						isThirdPerson = true;
-						minDistance = -5f;
-						targetOffset.y = 1.5f;
+						currentCameraState = CameraState.FirstPerson;
+						
 						
 				}
 				if (Input.GetKeyDown (KeyCode.H)) {
@@ -118,6 +118,16 @@ public class ThirdPersonCameraControl : MonoBehaviour
 					
 						//transitionCamera.transform.position = positionCurrent.transform.position;
 				}
+				
+				switch (currentCameraState) {
+				case CameraState.ThirdPerson:
+						ThirdPersonCamera ();
+						break;
+				case CameraState.FirstPerson:
+						FirstPersonCamera ();
+						break;
+				}
+			
 		
 				if (target) {
 						// Fade the target according to Fade Distance (if enabled)
@@ -254,9 +264,10 @@ public class ThirdPersonCameraControl : MonoBehaviour
 						}
 			
 						// Lerp from current distance to wanted distance
-						if (isFirstPerson)
-								wantedDistance = 15f;
-						if (isThirdPerson)
+						if (currentCameraState == CameraState.FirstPerson)
+								wantedDistance = 5.5f;
+						
+						if (currentCameraState == CameraState.ThirdPerson)	
 								wantedDistance = -4f;
 						distance = Mathf.Clamp (Mathf.Lerp (distance, wantedDistance, Time.deltaTime * zoomSmoothing), minDistance, maxDistance);
 			
@@ -293,6 +304,18 @@ public class ThirdPersonCameraControl : MonoBehaviour
 				} else if (inputRotation.x - originRotation.x > 180) {
 						inputRotation.x -= 360;
 				}
+		}
+		private void ThirdPersonCamera ()
+		{
+				isFirstPerson = true;
+				isThirdPerson = false;
+				targetOffset.y = 2;
+		}
+		private void FirstPersonCamera ()
+		{
+				minDistance = -5f;
+				targetOffset.y = 1.5f;
+		
 		}
 		#endregion
 }
