@@ -26,12 +26,12 @@ public class AISpawner : MonoBehaviour
 				for (int i=0; i < maximumSpawnerCount; i++) {
 						GameObject prefab = (GameObject)enemyPokemonToSpawn [discreteDistribution.Sample ()];
 						GameObject newPokemon = (GameObject)Instantiate (prefab);
-						newPokemon.transform.position = transform.position + Vector3.up * 100
+						newPokemon.transform.position = transform.position 
 								+ Quaternion.Euler (0, Random.value * 360, 0) * Vector3.right * radius * Mathf.Sqrt (Random.value);
 						RaycastHit hit;
-						if (Physics.Raycast (newPokemon.transform.position, Vector3.down, out hit)) {
-								newPokemon.transform.position = hit.point;
-						}
+						//if (Physics.Raycast (newPokemon.transform.position, Vector3.down, out hit)) {
+						//newPokemon.transform.position = hit.point;
+						//}
 						Debug.Log ("PokemonSpawned " + newPokemon.name + discreteDistribution.Sample ());
 						//_globalGameManager.pokemonSpawned.Add (newPokemon);
 						yield return 0;
