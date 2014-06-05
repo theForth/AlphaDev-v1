@@ -4,22 +4,18 @@ using BehaviorDesigner.Runtime.Tasks;
 
 namespace BehaviorDesigner.Runtime.Tasks.Movement.AstarPathfindingProject.AIPath
 {
-		[TaskDescription("Wander using the A* Pathfinding Project.")]
-		[TaskCategory("Movement/A* Pathfinding Project/AIPath")]
-		[HelpURL("http://www.opsive.com/assets/BehaviorDesigner/Movement/documentation.php?id=9")]
-		[TaskIcon("Assets/Behavior Designer Movement/Editor/Icons/{SkinColor}WanderIcon.png")]
 		public class Wander : Action
 		{
-				[Tooltip("The speed of the agent")]
-				public SharedFloat
+				
+				public SharedFloat    //speed of gameObject
 						speed;
-				[Tooltip("Turn speed of the agent")]
-				public SharedFloat
+				
+				public SharedFloat		//turn Speed
 						angularSpeed;
-				[Tooltip("How far ahead of the current position to look ahead for a wander")]
-				public float
+			
+				public float					//how far should it wander from the starter point
 						wanderDistance = 20;
-				[Tooltip("The amount that the agent rotates direction")]
+			
 				public float
 						wanderRate = 2;
 
@@ -55,7 +51,8 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement.AstarPathfindingProject.AIPath
 
 				// Return targetPosition if targetTransform is null
 				private Vector3 Target ()
-				{
+				{		// TODO need to add logic for only finding targets that are within a proxmity from spawnPoint.
+						// TODO use couroutines to reduce constant new targets. Should match the pathing read of the agent
 						// point in a new random direction and then multiply that by the wander distance
 						var direction = transform.forward + Random.insideUnitSphere * wanderRate;
 						return transform.position + direction.normalized * wanderDistance;
