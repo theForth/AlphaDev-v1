@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: dff9bf0aa4e620a468d3316b8973cd86
 ModelImporter:
-  serializedVersion: 15
+  serializedVersion: 16
   fileIDToRecycleName:
     100000: Chest
     100002: Geo_grp
@@ -1091,4 +1091,5 @@ ModelImporter:
     rootMotionBoneName: 
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 3
+  additionalBone: 0
   userData: 

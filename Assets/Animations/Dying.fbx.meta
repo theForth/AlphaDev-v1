@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: cfd356efcf3214b458d91f23135d6e7b
 ModelImporter:
-  serializedVersion: 15
+  serializedVersion: 16
   fileIDToRecycleName:
     100000: Chest
     100002: Geo_grp
@@ -205,7 +205,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Dying
       takeName: UNTY_die_tk02
-      firstFrame: 140
+      firstFrame: 156
       lastFrame: 275
       wrapMode: 0
       orientationOffsetY: 0
@@ -1092,4 +1092,5 @@ ModelImporter:
   lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: e194d39a231e29a489a36758f9fb175e,
     type: 3}
   animationType: 3
+  additionalBone: 0
   userData: 

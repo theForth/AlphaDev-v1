@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: ce448a8080b4e934b8473badd27be402
 ModelImporter:
-  serializedVersion: 15
+  serializedVersion: 16
   fileIDToRecycleName:
     100000: l_clavicleProxy_geo
     100002: l_shourderProxy_geo
@@ -1415,4 +1415,5 @@ ModelImporter:
   lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: e194d39a231e29a489a36758f9fb175e,
     type: 3}
   animationType: 3
+  additionalBone: 0
   userData: 
