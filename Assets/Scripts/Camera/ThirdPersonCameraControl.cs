@@ -50,7 +50,7 @@ public class ThirdPersonCameraControl : MonoBehaviour
 
 		public float zoomAltDelay = 0.5f;
 	
-		private float minAngle = 5;
+		private float minAngle = -45;
 		private float maxAngle = 45;
 		
 		private List<Material> _faded_mats = new List<Material> ();   // I have yet to implement this properly

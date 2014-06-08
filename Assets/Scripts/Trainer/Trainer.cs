@@ -34,16 +34,5 @@ public class Trainer : MonoBehaviour
 				//gamegui.SetChatWindow(ball.GetComponent<Pokeball>().pokemon.GetName() + "! I choose you!");
 		}
 	
-		public void SetVelocity (Vector3 vel)
-		{
-				velocity = vel;
-				Animator ani = GetComponent<Animator> ();
-		
-				if (vel.magnitude > 0.1f) {
-						ani.SetBool ("run", true);
-						transform.rotation = Quaternion.LookRotation (vel);
-				} else {
-						ani.SetBool ("run", false);
-				}
-		}
+	
 }

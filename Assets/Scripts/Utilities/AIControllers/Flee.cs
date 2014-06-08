@@ -23,10 +23,10 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement.AstarPathfindingProject.AIPath
 						targetPosition;
 				[Tooltip("The distance to look ahead when fleeing")]
 				public float
-						lookAheadDistance = 5;
+						lookAheadDistance = 20;
 				[Tooltip("The agent has fleed when the square magnitude is greater than this value")]
 				public float
-						fleedDistance = 200;
+						fleedDistance = 10000;
 		
 				// True if the target is a transform
 				private bool dynamicTarget;
