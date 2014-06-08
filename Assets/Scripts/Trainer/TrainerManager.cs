@@ -28,9 +28,9 @@ public class PlayerTrainerManager : MonoBehaviour //This purely controls the tra
 		void PopulatePokemonParty ()
 		{
 				//kanto starters, why not
-				trainer.party.AddPokemon (new Pokemon (1, true));
-				trainer.party.AddPokemon (new Pokemon (4, true));
-				trainer.party.AddPokemon (new Pokemon (7, true));
+				//trainer.party.AddPokemon (new Pokemon (1, true));
+				//trainer.party.AddPokemon (new Pokemon (4, true));
+				//trainer.party.AddPokemon (new Pokemon (7, true));
 				//Pokedex.states [1] = Pokedex.State.Captured;
 				//Pokedex.states [4] = Pokedex.State.Captured;
 				//Pokedex.states [7] = Pokedex.State.Captured;
