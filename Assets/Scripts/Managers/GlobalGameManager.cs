@@ -1,9 +1,10 @@
-//------------------------------------------------------------------------------
-// <summary>
-// The Game manager will hold most of the game's static (global) 
-//variables that don't change between rooms/scenes as well as a bunch of other
-// public things.
-//------------------------------------------------------------------------------
+/*
+ * 
+ * 
+ *
+ * The high Hierarchy of state management
+ *
+ */
 using System;
 using UnityEngine;
 using System.Collections.Generic;
@@ -14,6 +15,8 @@ public class GlobalGameManager: MonoBehaviour
 		public Transform spawnPointPlayer;
 		public static int totalSpawnedPokemon{ get; set; }
 		public List <GameObject> pokemonSpawned;  //delete if not needed
+		public static PlayerControlState playerControlState ;
+	 
 	
 }
 

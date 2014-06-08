@@ -4,7 +4,7 @@ using System;
 
 public class PokeParty
 {
-		public const int PARTY_MAX = 10;
+		public const int PARTY_MAX = 6;
 	
 		Trainer trainer; //Enables it to be usable by any trainer in multiplayer (independant)
 		List<Slot> slots;

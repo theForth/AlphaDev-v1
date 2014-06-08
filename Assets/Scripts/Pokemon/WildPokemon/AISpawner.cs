@@ -32,7 +32,7 @@ public class AISpawner : MonoBehaviour
 						//if (Physics.Raycast (newPokemon.transform.position, Vector3.down, out hit)) {
 						//newPokemon.transform.position = hit.point;
 						//}
-						Debug.Log ("PokemonSpawned " + newPokemon.name + discreteDistribution.Sample ());
+						Debug.Log ("PokemonSpawned: " + newPokemon.name);
 						//_globalGameManager.pokemonSpawned.Add (newPokemon);
 						yield return 0;
 				}
