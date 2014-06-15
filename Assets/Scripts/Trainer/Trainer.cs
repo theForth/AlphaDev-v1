@@ -7,8 +7,9 @@ public class Trainer : MonoBehaviour
 		public PokeParty party;
 		//public Inventory inventory;
 		//public Inventory.Item item {get{return inventory.selected;} set{}}
-	
-		Vector3 velocity = Vector3.zero;
+		private
+		Vector3
+				velocity = Vector3.zero;
 	
 		void Start ()
 		{

@@ -7,28 +7,32 @@ using System.Collections;
 public class AISpawner : MonoBehaviour
 {
 		public float[] spawnProbabilty;
+		public GameObject[] enemyPokemonToSpawn;
 		public int maximumSpawnerCount = 5;
 		public float radius = 5f;
-		public GameObject[] enemyPokemonToSpawn;
+		public bool showGizmo = true;
+		public Color areaColor;
+		private float randomAngle;	
+		private Vector3 randomSpawnVector;
+		private DiscreteDistribution discreteDistribution;
+		
 		//public List<GameObject> spawned = new List<GameObject> ();
 		GlobalGameManager _globalGameManager;
-		private DiscreteDistribution discreteDistribution;
+		
 		void Awake ()
 		{
 		
 				discreteDistribution = new DiscreteDistribution (spawnProbabilty);
-				StartCoroutine (DisplayProbabilites ());
+				StartCoroutine (SpawnPokemon ());
 				
 		}
-		IEnumerator DisplayProbabilites ()
+		IEnumerator SpawnPokemon ()
 		{
 				
 				for (int i=0; i < maximumSpawnerCount; i++) {
 						GameObject prefab = (GameObject)enemyPokemonToSpawn [discreteDistribution.Sample ()];
-						GameObject newPokemon = (GameObject)Instantiate (prefab);
-						newPokemon.transform.position = transform.position 
-								+ Quaternion.Euler (0, Random.value * 360, 0) * Vector3.right * radius * Mathf.Sqrt (Random.value);
-						RaycastHit hit;
+						GameObject newPokemon = (GameObject)Instantiate (prefab, RandomPostion (), Quaternion.identity);
+						//RaycastHit hit;
 						//if (Physics.Raycast (newPokemon.transform.position, Vector3.down, out hit)) {
 						//newPokemon.transform.position = hit.point;
 						//}
@@ -37,6 +41,15 @@ public class AISpawner : MonoBehaviour
 						yield return 0;
 				}
 		}
+		Vector3 RandomPostion ()
+		{		
+				randomAngle = Random.Range (0f, 80);
+				randomSpawnVector.x = Mathf.Sin (randomAngle) * radius + transform.position.x;
+				randomSpawnVector.z = Mathf.Cos (randomAngle) * radius + transform.position.z;
+				randomSpawnVector.y = transform.position.y;	
+		
+				return randomSpawnVector;
+		}
 		IEnumerator Wait (float duration)
 		{
 				for (float timer = 0; timer < duration; timer += Time.deltaTime)
@@ -44,6 +57,24 @@ public class AISpawner : MonoBehaviour
 		}	
 		void Update ()
 		{
+				//start coroutine for checking if less then max spawn and creating one
+		}
+		//editor utilities Should be moved to utilities later.
+		void OnDrawGizmosSelected ()
+		{
+				if (!showGizmo) {
+						Gizmos.color = new Color (0.0f, 0.5f, 0.5f, 0.3f);
+						Gizmos.DrawSphere (transform.position, radius);
+				}
+		}
+	
+		void OnDrawGizmos ()
+		{
+				if (showGizmo) {
+						Gizmos.color = areaColor;
+						Gizmos.DrawSphere (transform.position, radius);
+				}
 		
 		}
+	
 }

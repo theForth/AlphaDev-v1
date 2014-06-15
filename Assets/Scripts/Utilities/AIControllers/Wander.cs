@@ -1,7 +1,8 @@
 using UnityEngine;
 using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tasks;
-
+using System.Collections.Generic;
+using System.Collections;
 namespace BehaviorDesigner.Runtime.Tasks.Movement.AstarPathfindingProject.AIPath
 {
 		public class Wander : Action
@@ -40,12 +41,14 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement.AstarPathfindingProject.AIPath
 						aiPathAgent.target.parent = null;
 						aiPathAgent.target.position = Target ();
 						aiPathAgent.enabled = true;
+						StartCoroutine (TimedWander ());
 				}
 
 				// There is no success or fail state with wander - the agent will just keep wandering
 				public override TaskStatus OnUpdate ()
 				{
-						aiPathAgent.target.position = Target ();
+						
+						
 						return TaskStatus.Running;
 				}
 
@@ -76,5 +79,14 @@ namespace BehaviorDesigner.Runtime.Tasks.Movement.AstarPathfindingProject.AIPath
 						wanderDistance = 20;
 						wanderRate = 2;
 				}
+				IEnumerator TimedWander ()
+				{
+						while (true) {
+								aiPathAgent.target.position = Target ();
+								yield return new WaitForSeconds (3);
+						}
+						
+				}
+		
 		}
 }
