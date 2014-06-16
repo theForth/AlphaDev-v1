@@ -211,19 +211,38 @@ public class TrainerController : MonoBehaviour
 		
 				// If on the ground, test to see if still on the ground and apply movement direction
 				if (_grounded) {
-						_velocity = new Vector3 (_input_x * input_modifier, -antiBunny, _input_y * input_modifier);
-						_velocity = _t.TransformDirection (_velocity) * _speed;
+						//_velocity = new Vector3 (_input_x * input_modifier, -antiBunny, _input_y * input_modifier);
+						//_velocity = _t.TransformDirection (_velocity) * _speed;
 			
 						// Animation
 						//_move_speed = (_t.position - _last_position).magnitude;
 					
 						
 						//_last_position = _t.position;
-						if (_input_y > 0) {
-								ani.SetFloat ("Speed", _speed / 6, 0.05f, Time.deltaTime);
-						} else 
-								ani.SetFloat ("Speed", 0f, 0.01f, Time.deltaTime);
-			
+						if (_input_y > 0) {                            //foward
+
+								ani.SetFloat ("Speed", _speed / 6, 0.10f, Time.deltaTime);
+						} else {
+								if (_input_y < 0) { 
+										ani.SetFloat ("Speed", 0f, 0.035f, Time.deltaTime);
+										ani.SetFloat ("InputY", -1f);
+								} else {
+										ani.SetFloat ("Speed", 0f, 0.035f, Time.deltaTime);  //idle
+										ani.SetFloat ("InputY", 0); //idle
+								}
+						}
+					
+
+						if (_input_x > 0) 
+
+								ani.SetFloat ("InputX", 1);
+						else {	
+								if (_input_x < 0) {
+										ani.SetFloat ("InputX", -1); 
+								} else {
+										ani.SetFloat ("InputX", 0);
+								}	
+						}
 						if (!Physics.Raycast (_t.position, -Vector3.up, 0.2f)) {
 								_grounded = false;
 						}
@@ -240,8 +259,8 @@ public class TrainerController : MonoBehaviour
 						}
 				}
 		
-				_velocity.y -= gravity * Time.deltaTime;
-				_controller.Move (_velocity * Time.deltaTime);
+				//_velocity.y -= gravity * Time.deltaTime;
+				//_controller.Move (_velocity * Time.deltaTime);
 		}
 	
 		void OnControllerColliderHit (ControllerColliderHit col)
