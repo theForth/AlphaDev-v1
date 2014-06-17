@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
+using System.Linq;
 public class Pokemon
 {
 		public bool thrown = false;
@@ -14,6 +14,7 @@ public class Pokemon
 		public float pp = 1;
 		public Texture2D icon = null;
 		//public List<Move> moves = new List<Move> ();
+		public List<MoveData> moves = new List<MoveData> ();
 		public bool isPlayer = false;
 		public float currentHealth = 10;
 		public float currentXP = 0;
@@ -25,8 +26,7 @@ public class Pokemon
 		public string moveCast ;
 		//public Inventory.Item heldItem = null;
 	
-	
-	
+
 		/*  Pokemon (int number, bool isPlayer)
 		{ //TODO
 				this.number = number;

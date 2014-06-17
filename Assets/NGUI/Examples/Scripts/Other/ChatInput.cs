@@ -43,7 +43,12 @@ public class ChatInput : MonoBehaviour
 			// It's a good idea to strip out all symbols as we don't want user input to alter colors, add new lines, etc
             //TODO use string builder
 			string text = "Player 1 : " + NGUIText.StripSymbols(mInput.value);
-
+			Debug.Log ("Broken?");
+			if(NGUIText.StripSymbols(mInput.value).Length == 1){
+				Pokemon returner = new Pokemon();
+				returner = PopulateDB.getBasicPokemon(float.Parse (NGUIText.StripSymbols(mInput.value)));
+				Debug.Log(returner.name);
+			}
 			if (!string.IsNullOrEmpty(text))
 			{
 				textList.Add(text);
