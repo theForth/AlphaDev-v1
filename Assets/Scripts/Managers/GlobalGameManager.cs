@@ -17,6 +17,13 @@ public class GlobalGameManager: MonoBehaviour
 		public List <GameObject> pokemonSpawned;  //delete if not needed
 		public static PlayerControlState playerControlState ;
 	 
+
+		void Start ()
+		{
+				//Pokemon returner = new Pokemon ();
+				//returner = PopulateDB.getBasicPokemon (1);
+				//Debug.Log (returner.name);
+		}
 	
 }
 

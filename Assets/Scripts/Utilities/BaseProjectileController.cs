@@ -55,7 +55,7 @@ public class BaseProjectileController : MonoBehaviour
 		void Update ()
 		{
 		
-				triggerPushed = Input.GetAxis (triggerAxis) > lastTriggerValue;
+				/*triggerPushed = Input.GetAxis (triggerAxis) > lastTriggerValue;
 				lastTriggerValue = Input.GetAxis (triggerAxis);
 
 				if (test || Input.GetAxis (triggerAxis) > 0) {
@@ -66,7 +66,7 @@ public class BaseProjectileController : MonoBehaviour
 						} else {
 								Shoot ();
 						}
-				}
+				}*/
 				if (!isReloading && shootTimer > 0) {
 						shootTimer -= Time.deltaTime;
 				}
@@ -102,7 +102,7 @@ public class BaseProjectileController : MonoBehaviour
 		}
 	
 		//Pull the trigger: shoots if the next projectile is ready
-		public void Shoot ()
+		public virtual void Shoot ()
 		{
 				if (shootTimer <= 0) {
 						currentAmmo--;

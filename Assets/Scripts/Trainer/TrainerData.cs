@@ -11,9 +11,11 @@ public class TrainerData: MonoBehaviour //This purely controls the trainer aspec
 {
 		GlobalGameManager globalGameManager;
 		GameObject player;
-		Trainer trainer;
-		//Vector3 playerPosition;
 	
+        //badges
+    //party
+		//Vector3 playerPosition;
+/*
 		void Start ()
 		{
 				player = GameObject.Find ("Player");
@@ -42,4 +44,5 @@ public class TrainerData: MonoBehaviour //This purely controls the trainer aspec
 				//trainer.inventory.Add(1, 5); //New inventory code references shared item data. (id, quantity)
 				//trainer.inventory.Add(4, 2);
 		}
+ * */
 }

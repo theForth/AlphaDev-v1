@@ -26,7 +26,7 @@ public class Pokeball : MonoBehaviour
 								Destroy (gameObject);
 								fired = true;
 								/*
-								if (pokemon != null) {
+0								if (pokemon != null) {
 										GameObject pokeObj = (GameObject)Instantiate (Resources.Load ("Pokemon/" + Pokemon.GetName (pokemon.number)));
 										pokeObj.transform.position = transform.position;
 										pokeObj.transform.rotation = Quaternion.Euler (0, Random.value * 360, 0);

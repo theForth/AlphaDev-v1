@@ -61,7 +61,7 @@ public class ThirdPersonCameraControl : MonoBehaviour
 		private Vector2 inputRotation;
 		private bool isFirstPerson = false;
 		private bool isThirdPerson;
-		private bool isPlayerControl = true;
+		private static bool isPlayerControl = true;
 		private bool isPokemonControl = false;
 		public Transform _transform;
 		// addition rotation smooth components
@@ -73,7 +73,7 @@ public class ThirdPersonCameraControl : MonoBehaviour
 		private float mouseYSmooth = 0f;
 		private float mouseYVel;
 		CameraState currentCameraState = CameraState.ThirdPerson;
-		public bool Controllable {
+		public static bool Controllable {            // incase we would be need to modifier our setters later.
 				get { return isPlayerControl; }
 				set { isPlayerControl = value; }
 		}

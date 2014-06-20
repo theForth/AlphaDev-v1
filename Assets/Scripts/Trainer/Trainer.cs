@@ -4,7 +4,10 @@ using System.Collections.Generic;
 
 public class Trainer : MonoBehaviour
 { //Need to separate the Unity object from this object, like Pokemon has. (Target)
+    private Transform hand;
 		public PokeParty party;
+        public TrainerData trainerData;
+        private PokeballProjectileController pokeballProjectileController;
 		//public Inventory inventory;
 		//public Inventory.Item item {get{return inventory.selected;} set{}}
 		private
@@ -13,7 +16,12 @@ public class Trainer : MonoBehaviour
 	
 		void Start ()
 		{
+            hand = transform.Find("GameObject");
+            pokeballProjectileController = hand.GetComponent<PokeballProjectileController>();
+
 				party = new PokeParty (this);
+            //populate party
+            //populate inventory
 				//inventory = new Inventory(this);
 		}
 	
@@ -22,7 +30,18 @@ public class Trainer : MonoBehaviour
 				return Target.TARGETS.TRAINER;
 		}
 	
-		public void ThrowPokemon (Pokemon poke)
+    public int ThrowPokemon( int PokePartyIndex)
+    {/*
+       // Pokemon throwPokemon = party.GetPokemon(PokePartyIndex);
+        if (throwPokemon.thrown)
+        {
+
+            return 1;
+        }*/
+        pokeballProjectileController.Shoot();
+        return 1;
+    }
+		/*public void ThrowPokemon (Pokemon poke)
 		{
 				if (poke.thrown)
 						return;
@@ -35,5 +54,5 @@ public class Trainer : MonoBehaviour
 				//gamegui.SetChatWindow(ball.GetComponent<Pokeball>().pokemon.GetName() + "! I choose you!");
 		}
 	
-	
+	*/
 }

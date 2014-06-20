@@ -17,7 +17,7 @@ public class PokeballProjectileController : BaseProjectileController
 				projectileAcceleration.x = -5;
 				projectileAcceleration.y = -5;
 		}
-		public void Shoot ()
+		override public void Shoot ()
 		{
 				if (shootTimer <= 0) {
 						currentAmmo--;

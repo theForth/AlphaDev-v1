@@ -10,7 +10,7 @@ public class Pokemon
 		public string name = "";
 		public int level = 5;
 		public float xp = 0;
-		public float hp = 1;
+		public float hp= 1;
 		public float pp = 1;
 		public Texture2D icon = null;
 		//public List<Move> moves = new List<Move> ();
@@ -66,7 +66,7 @@ public class Pokemon
 	
 		public float isHPZero ()
 		{
-				return hp < 0 ? 0 : hp;
+				return hp < 0 ? 0 : hp; 
 		}
 	
 		/*
