@@ -7,6 +7,7 @@ public class Trainer : MonoBehaviour
     private Transform hand;
 		public PokeParty party;
         public TrainerData trainerData;
+        public GameObject TemporaryPokemonSlot;
         private PokeballProjectileController pokeballProjectileController;
 		//public Inventory inventory;
 		//public Inventory.Item item {get{return inventory.selected;} set{}}
@@ -18,7 +19,7 @@ public class Trainer : MonoBehaviour
 		{
             hand = transform.Find("GameObject");
             pokeballProjectileController = hand.GetComponent<PokeballProjectileController>();
-
+            pokeballProjectileController.trainer = this;
 				party = new PokeParty (this);
             //populate party
             //populate inventory

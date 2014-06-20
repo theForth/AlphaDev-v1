@@ -11,10 +11,10 @@ public class Pokeball : MonoBehaviour
 	
 		void Update ()
 		{
-				if (lifetime < 2.9f && collider != null)
-						collider.enabled = true;
+				/*	if (lifetime < 2.9f && collider != null)
+					collider.enabled = true;
 		
-				if (pokemon != null) {
+				if (pokemon != null) {*/
 						lifetime -= Time.deltaTime;
 						if (lifetime < 0 && !fired) {
 								Transform particles = transform.FindChild ("Particles");
@@ -25,7 +25,9 @@ public class Pokeball : MonoBehaviour
 								}
 								Destroy (gameObject);
 								fired = true;
+                               GameObject pokeObj =  (GameObject)Instantiate(trainer.TemporaryPokemonSlot, transform.position, transform.rotation);
 								/*
+                                 (GameObject)Instantiate (projectile, transform.position, transform.rotation);
 0								if (pokemon != null) {
 										GameObject pokeObj = (GameObject)Instantiate (Resources.Load ("Pokemon/" + Pokemon.GetName (pokemon.number)));
 										pokeObj.transform.position = transform.position;
@@ -44,7 +46,7 @@ public class Pokeball : MonoBehaviour
 								}*/
 						}
 				}
-		}
+		
 	
 		public static void ThrowPokeBall (Trainer trainer)
 		{

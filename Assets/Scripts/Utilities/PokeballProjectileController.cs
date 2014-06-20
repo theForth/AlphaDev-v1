@@ -12,6 +12,9 @@ using UnityEngine;
 
 public class PokeballProjectileController : BaseProjectileController
 {
+
+
+    public Trainer trainer;
 		public void Reset ()
 		{
 				projectileAcceleration.x = -5;
@@ -29,31 +32,33 @@ public class PokeballProjectileController : BaseProjectileController
 		}
 		override public  void Spawnprojectile ()
 		{
-				for (int i = 0; i < projectileCount; i++) {
-						GameObject newprojectile = (GameObject)Instantiate (projectile, transform.position, transform.rotation);
-						newprojectile.name = "Defaultprojectile";
-						//newprojectile.AddComponent<Rigidbody> ();
-						newprojectile.rigidbody.mass = projectileMass;
-						newprojectile.rigidbody.drag = 0;
-						newprojectile.rigidbody.useGravity = false;
-				
-						newprojectile.rigidbody.velocity =
+				 
+						GameObject pokeball = (GameObject)Instantiate (projectile, transform.position, transform.rotation);
+						pokeball.name = "Defaultprojectile";
+						//pokeball.AddComponent<Rigidbody> ();
+						pokeball.rigidbody.mass = projectileMass;
+						pokeball.rigidbody.drag = 0;
+						pokeball.rigidbody.useGravity = false;
+                        pokeball.AddComponent<Pokeball>().trainer = trainer;
+                       
+                        
+						pokeball.rigidbody.velocity =
 					Camera.main.transform.forward * (projectileSpeed + projectileSpeedDelta * (Random.value - 0.5f) * 2)
 								+ Camera.main.transform.up * (verticalSpread * (Random.value - 0.5f) * 2)
 								+ Camera.main.transform.right * (horizontalSpread * (Random.value - 0.5f) * 2);
 				
-						newprojectile.AddComponent<ConstantForce> ();
-						newprojectile.constantForce.force = (projectileAcceleration.x * Camera.main.transform.forward
+						pokeball.AddComponent<ConstantForce> ();
+						pokeball.constantForce.force = (projectileAcceleration.x * Camera.main.transform.forward
 								+ projectileAcceleration.y * Camera.main.transform.up
 								+ projectileAcceleration.z * Camera.main.transform.right) * accelerationScale;
-						newprojectile.constantForce.force += (projectileGlobalAcceleration) * accelerationScale;
-						newprojectile.constantForce.force *= 50f;
+						pokeball.constantForce.force += (projectileGlobalAcceleration) * accelerationScale;
+						pokeball.constantForce.force *= 50f;
 						audioSource = gameObject.AddComponent<AudioSource> ();
 						audioSource.clip = shootSound;
 						audioSource.Play ();
 				
-						//newprojectile.AddComponent<APEprojectile> ().life = projectileLife;
-				}
+						//pokeball.AddComponent<APEprojectile> ().life = projectileLife;
+				
 		}
 }
 
