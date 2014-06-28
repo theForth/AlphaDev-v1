@@ -3,11 +3,34 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 public class Pokemon
+
+
+
 {
+    public bool thrown = false;
+    //public PokemonObj obj = null;
+    public int number = 0;
+    public string name = "Pikachu";
+    public int level = 5;
+    public float xp = 0;
+    public float hp = 1;
+    public float pp = 1;
+    public Texture2D icon = null;
+    //public List<Move> moves = new List<Move> ();
+    public List<MoveData> moves = new List<MoveData>();
+    public bool isPlayer = false;
+    public float currentHealth = 10;
+    public float currentXP = 0;
+    public float health = 10;
+    public float attack = 10;
+    public float defence = 10;
+    public float damage = 0;
+    public float speed = 10;
+    public string moveCast;/*
 		public bool thrown = false;
 		//public PokemonObj obj = null;
 		public int number = 0;
-		public string name = "";
+		public string name = "Pikachu";
 		public int level = 5;
 		public float xp = 0;
 		public float hp= 1;
@@ -24,6 +47,7 @@ public class Pokemon
 		public float damage = 0;
 		public float speed = 10;
 		public string moveCast ;
+    */
 		//public Inventory.Item heldItem = null;
 	
 

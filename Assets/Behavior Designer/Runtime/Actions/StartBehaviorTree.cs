@@ -7,14 +7,34 @@ namespace BehaviorDesigner.Runtime.Tasks
     [TaskIcon("{SkinColor}StartBehaviorTreeIcon.png")]
     public class StartBehaviorTree : Action
     {
-        [Tooltip("The behavior tree that we want to start. If null use the current behavior")]
-        public Behavior behavior;
+        [Tooltip("The GameObject of the behavior tree that should be started. If null use the current behavior")]
+        public GameObject behaviorGameObject;
+        [Tooltip("The group of the behavior tree that should be started")]
+        public int group;
+
+        private Behavior behavior;
 
         public override void OnAwake()
         {
-            // If behavior is null use the behavior that this task is attached to.
-            if (behavior == null) {
+            // If GameObject is null use the behavior that this task is attached to.
+            if (behaviorGameObject == null) {
                 behavior = Owner;
+            } else { // search for the behavior tree based on the group number
+                var behaviorTrees = behaviorGameObject.GetComponents<Behavior>();
+                if (behaviorTrees.Length == 1) {
+                    behavior = behaviorTrees[0];
+                } else {
+                    for (int i = 0; i < behaviorTrees.Length; ++i) {
+                        if (behaviorTrees[i].group == group) {
+                            behavior = behaviorTrees[i];
+                            break;
+                        }
+                    }
+                    // If the group can't be found then use the first behavior tree
+                    if (behavior == null) {
+                        behavior = behaviorTrees[0];
+                    }
+                }
             }
         }
 

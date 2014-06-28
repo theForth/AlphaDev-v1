@@ -10,8 +10,6 @@ namespace BehaviorDesigner.Runtime
         [SerializeField]
         private Vector2 mValue;
 
-        public SharedVector2() { mValueType = SharedVariableTypes.Vector2; }
-
         public override object GetValue() { return mValue; }
         public override void SetValue(object value) { mValue = (Vector2)value; }
 

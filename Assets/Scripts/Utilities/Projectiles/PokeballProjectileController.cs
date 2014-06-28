@@ -13,35 +13,38 @@ using UnityEngine;
 public class PokeballProjectileController : BaseProjectileController
 {
 
-
+    public AudioClip openPokeball;
     public Trainer trainer;
+    public int pokePartyIndex;
 		public void Reset ()
 		{
 				projectileAcceleration.x = -5;
 				projectileAcceleration.y = -5;
 		}
-		override public void Shoot ()
+        public void Shoot(int pokePartyIndex)
 		{
 				if (shootTimer <= 0) {
 						currentAmmo--;
 						shootTimer += 1 / rateOfFire;
-						Spawnprojectile ();
+                        ThrowPokeball(pokePartyIndex);
 					
 				}
 			
 		}
-		override public  void Spawnprojectile ()
-		{
+        public void ThrowPokeball(int pokePartyIndex)
+		{       
+            //Intiating all the pokeball component values
 				 
-						GameObject pokeball = (GameObject)Instantiate (projectile, transform.position, transform.rotation);
+						GameObject pokeball = (GameObject)Instantiate (projectile, transform.position, transform.rotation); 
 						pokeball.name = "Defaultprojectile";
 						//pokeball.AddComponent<Rigidbody> ();
 						pokeball.rigidbody.mass = projectileMass;
 						pokeball.rigidbody.drag = 0;
 						pokeball.rigidbody.useGravity = false;
-                        pokeball.AddComponent<Pokeball>().trainer = trainer;
-                       
-                        
+
+
+                        pokeball.AddComponent<Pokeball>().Init(trainer, pokePartyIndex, openPokeball);
+                     
 						pokeball.rigidbody.velocity =
 					Camera.main.transform.forward * (projectileSpeed + projectileSpeedDelta * (Random.value - 0.5f) * 2)
 								+ Camera.main.transform.up * (verticalSpread * (Random.value - 0.5f) * 2)

@@ -8,7 +8,7 @@ public class TrainerController : MonoBehaviour
 {
 
 
-
+    //**********Movement variables*********************
 		public bool clickToMove = false;
 		public List<string> clickableTags = new List<string> ();
 		public bool keyboardControl = true;
@@ -49,16 +49,15 @@ public class TrainerController : MonoBehaviour
 		private Vector3 _wanted_position = Vector3.zero;
 		private Vector3 _last_wanted_position = Vector3.zero;
 		private float _last_distance = 0;
-		private Animator ani;
+		public Animator ani;
 		private Transform _t;
 		private CharacterController _controller;
+        private ThirdPersonCameraControl thirdPersonController;
     //***********KeyBinding*******************************
         public string triggerAxis = "Fire1";
     //*********Trainer Variables ***************************
        public Trainer trainer;
-    //*********Pokemon  variables***************************
-        public int PokePartyIndex = -1;
-        public static PokeballState pokeballState = PokeballState.None;
+
 
        //pokeballState = PokeballState.Selecting;
 		//private PlayerAnimatorController _animator;
@@ -104,6 +103,7 @@ public class TrainerController : MonoBehaviour
 				_t = transform;
 				_controller = GetComponent<CharacterController> ();
                 trainer = GetComponent<Trainer>();
+                thirdPersonController = Camera.main.GetComponent<ThirdPersonCameraControl>();
 				//_animator = GetComponent<PlayerAnimatorController> ();
 				ani = GetComponent<Animator> ();
 				_controller.slopeLimit = slopeLimit;
@@ -322,37 +322,10 @@ public class TrainerController : MonoBehaviour
             //***********************************************************************************************************
             #endregion
 
-            #region Pokemon Selection
-            //***************************Pokemon Selection*********************************//
-            if (pokeballState == PokeballState.None || pokeballState == PokeballState.Selecting)  //two states for now. We might decide to have a selecting state
-            {
-                PokePartyIndex = Input.GetKeyDown(KeyCode.Alpha1) ? 0 : PokePartyIndex;
-                PokePartyIndex = Input.GetKeyDown(KeyCode.Alpha2) ? 1 : PokePartyIndex;
-                PokePartyIndex = Input.GetKeyDown(KeyCode.Alpha3) ? 2 : PokePartyIndex;
-                PokePartyIndex = Input.GetKeyDown(KeyCode.Alpha4) ? 3 : PokePartyIndex;
-                PokePartyIndex = Input.GetKeyDown(KeyCode.Escape) ? -1 : PokePartyIndex;
-                pokeballState = (PokePartyIndex > 0 && PokePartyIndex < 4) ? PokeballState.Selecting : PokeballState.None;
-
-                if (pokeballState == PokeballState.Selecting)
-                {
-                    if (Input.GetAxis(triggerAxis) > 0)
-                    {
-                        if(trainer.ThrowPokemon( PokePartyIndex ) == 1)  //The Throw was succesful
-                        {
-                            //ThirdPersonCameraControl.Controllable = false;
-
-                            
-                            PlayerManager.playerControlState = PlayerControlState.Pokemon;
-                        }
-
-                    }
-
-                }
-
-                //*****************************************************************************//
-            #endregion
-
-            }
+          
+    
+         
+            
         }
 #region helper methods
         void OnControllerColliderHit (ControllerColliderHit col)

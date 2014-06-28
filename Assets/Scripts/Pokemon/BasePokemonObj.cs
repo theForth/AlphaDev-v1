@@ -2,7 +2,10 @@ using UnityEngine;
 using System.Collections;
 
 public class PokemonObj : MonoBehaviour
-{
+{          
+        //*****Pokeball Variables***************
+        public bool canReturn = true;
+        //*****Pokemon Variables *************
 		public float speed = 5;
 		public Pokemon pokemon = null;
 		public PokemonObj enemy = null;
@@ -10,6 +13,7 @@ public class PokemonObj : MonoBehaviour
 		public int level = 5;
 		Vector3 velocity = Vector3.zero;
 		bool returning = false;
+   
 		/*
 		void Update ()
 		{ 

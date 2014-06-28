@@ -10,8 +10,6 @@ namespace BehaviorDesigner.Runtime
         [SerializeField]
         private GameObject mValue;
 
-        public SharedGameObject() { mValueType = SharedVariableTypes.GameObject; }
-
         public override object GetValue() { return mValue; }
         public override void SetValue(object value) { mValue = (GameObject)value; }
 

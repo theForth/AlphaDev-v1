@@ -10,8 +10,6 @@ namespace BehaviorDesigner.Runtime
         [SerializeField]
         private Rect mValue;
 
-        public SharedRect() { mValueType = SharedVariableTypes.Rect; }
-
         public override object GetValue() { return mValue; }
         public override void SetValue(object value) { mValue = (Rect)value; }
 

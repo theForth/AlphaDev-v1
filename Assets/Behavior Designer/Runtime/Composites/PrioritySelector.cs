@@ -55,6 +55,13 @@ namespace BehaviorDesigner.Runtime.Tasks
             executionStatus = childStatus;
         }
 
+        public override void OnObservationalAbort(int childIndex)
+        {
+            // Set the current child index to the index that caused the abort
+            currentChildIndex = childIndex;
+            executionStatus = TaskStatus.Inactive;
+        }
+
         public override void OnEnd()
         {
             // All of the children have run. Reset the variables back to their starting values.

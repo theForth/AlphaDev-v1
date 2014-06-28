@@ -49,6 +49,15 @@ namespace BehaviorDesigner.Runtime.Tasks
             executionStatus[childIndex] = childStatus;
         }
 
+        public override void OnObservationalAbort(int childIndex)
+        {
+            // Start from the beginning on an abort
+            currentChildIndex = 0;
+            for (int i = 0; i < executionStatus.Length; ++i) {
+                executionStatus[i] = TaskStatus.Inactive;
+            }
+        }
+
         public override TaskStatus OverrideStatus(TaskStatus status)
         {
             // Assume all of the children have finished executing. Loop through the execution status of every child and check to see if any tasks are currently running

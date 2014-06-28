@@ -21,7 +21,7 @@ namespace BehaviorDesigner.Runtime.Tasks
         public override bool CanExecute()
         {
             // Continue executing until we've reached the count or the child task returned failure and we should stop on a failure.
-            return repeatForever || (executionCount < count && (!endOnFailure || (endOnFailure && executionStatus != TaskStatus.Failure)));
+            return (repeatForever || executionCount < count) && (!endOnFailure || (endOnFailure && executionStatus != TaskStatus.Failure));
         }
 
         public override void OnChildExecuted(TaskStatus childStatus)

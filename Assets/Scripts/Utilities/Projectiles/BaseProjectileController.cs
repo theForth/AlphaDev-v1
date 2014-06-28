@@ -44,6 +44,7 @@ public class BaseProjectileController : MonoBehaviour
 		public AudioClip reloadingSound;
 		public AudioClip reloadedSound;
 		public AudioClip emptyClickSound;
+    
 	
 		void Start ()
 		{

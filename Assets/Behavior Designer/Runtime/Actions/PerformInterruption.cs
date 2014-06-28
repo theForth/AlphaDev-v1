@@ -14,7 +14,7 @@
         {
             // Loop through all of the tasks and fire an interruption. Once complete return success.
             for (int i = 0; i < interruptTasks.Length; ++i) {
-                interruptTasks[i].interrupt(interruptSuccess ? TaskStatus.Success : TaskStatus.Failure);
+                interruptTasks[i].DoInterrupt(interruptSuccess ? TaskStatus.Success : TaskStatus.Failure);
             }
             return TaskStatus.Success;
         }

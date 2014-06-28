@@ -10,8 +10,6 @@ namespace BehaviorDesigner.Runtime
         [SerializeField]
         private Transform mValue;
 
-        public SharedTransform() { mValueType = SharedVariableTypes.Transform; }
-
         public override object GetValue() { return mValue; }
         public override void SetValue(object value) { mValue = (Transform)value; }
 

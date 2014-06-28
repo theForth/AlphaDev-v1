@@ -24,13 +24,13 @@ namespace BehaviorDesigner.Runtime.Tasks
             executionStatus = childStatus;
         }
 
-        public void interrupt(TaskStatus status)
+        public void DoInterrupt(TaskStatus status)
         {
             // An interruption has occurred. Update the interrupt status and notify the Behavior Manager. The Behavior Manager will stop all
             // child tasks from running.
             interruptStatus = status;
 
-            BehaviorManager.instance.interrupt(Owner, this);
+            BehaviorManager.instance.Interrupt(Owner, this);
         }
 
         public override TaskStatus OverrideStatus()

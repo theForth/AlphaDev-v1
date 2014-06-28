@@ -9,11 +9,11 @@ using UnityEngine;
 
 public class TrainerData: MonoBehaviour //This purely controls the trainer aspect of the player
 {
-		GlobalGameManager globalGameManager;
-		GameObject player;
+		//GlobalGameManager globalGameManager;
+		//GameObject player;
 	
         //badges
-    //party
+      //party  info PokeID's in a list
 		//Vector3 playerPosition;
 /*
 		void Start ()

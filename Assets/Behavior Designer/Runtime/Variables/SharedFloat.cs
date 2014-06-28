@@ -10,8 +10,6 @@ namespace BehaviorDesigner.Runtime
         [SerializeField]
         private float mValue;
 
-        public SharedFloat() { mValueType = SharedVariableTypes.Float; }
-
         public override object GetValue() { return mValue; }
         public override void SetValue(object value) { mValue = (float)value; }
 

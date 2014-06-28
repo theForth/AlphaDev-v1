@@ -10,8 +10,6 @@ namespace BehaviorDesigner.Runtime
         [SerializeField]
         private bool mValue;
 
-        public SharedBool() { mValueType = SharedVariableTypes.Bool; }
-
         public override object GetValue() { return mValue; }
         public override void SetValue(object value) { mValue = (bool)value; }
 

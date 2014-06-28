@@ -7,16 +7,36 @@ namespace BehaviorDesigner.Runtime.Tasks
     [TaskIcon("{SkinColor}StopBehaviorTreeIcon.png")]
     public class StopBehaviorTree : Action
     {
-        [Tooltip("The behavior tree that we want to stop. If null use the current behavior")]
-        public Behavior behavior;
+        [Tooltip("The GameObject of the behavior tree that should be stopped. If null use the current behavior")]
+        public GameObject behaviorGameObject;
+        [Tooltip("The group of the behavior tree that should be stopped")]
+        public int group;
         [Tooltip("Should the behavior be paused or completely disabled")]
         public bool pauseBehavior = false;
 
+        private Behavior behavior;
+
         public override void OnAwake()
         {
-            // If behavior is null use the behavior that this task is attached to.
-            if (behavior == null) {
+            // If GameObject is null use the behavior that this task is attached to.
+            if (behaviorGameObject == null) {
                 behavior = Owner;
+            } else { // search for the behavior tree based on the group number
+                var behaviorTrees = behaviorGameObject.GetComponents<Behavior>();
+                if (behaviorTrees.Length == 1) {
+                    behavior = behaviorTrees[0];
+                } else {
+                    for (int i = 0; i < behaviorTrees.Length; ++i) {
+                        if (behaviorTrees[i].group == group) {
+                            behavior = behaviorTrees[i];
+                            break;
+                        }
+                    }
+                    // If the group can't be found then use the first behavior tree
+                    if (behavior == null) {
+                        behavior = behaviorTrees[0];
+                    }
+                }
             }
         }
 

@@ -41,14 +41,8 @@ namespace BehaviorDesigner.Runtime.Tasks
 
         public override void OnStart()
         {
-            // Use Fischer-Yates shuffle to randomize the child index order.
-            for (int i = childIndexList.Count; i > 0; --i) {
-                int j = Random.Range(0, i);
-                int index = childIndexList[j];
-                childrenExecutionOrder.Push(index);
-                childIndexList[j] = childIndexList[i - 1];
-                childIndexList[i - 1] = index;
-            }
+            // Randomize the indecies
+            ShuffleChilden();
         }
 
         public override int CurrentChildIndex()
@@ -72,6 +66,14 @@ namespace BehaviorDesigner.Runtime.Tasks
             executionStatus = childStatus;
         }
 
+        public override void OnObservationalAbort(int childIndex)
+        {
+            // Start from the beginning on an abort
+            childrenExecutionOrder.Clear();
+            executionStatus = TaskStatus.Inactive;
+            ShuffleChilden();
+        }
+
         public override void OnEnd()
         {
             // All of the children have run. Reset the variables back to their starting values.
@@ -84,6 +86,18 @@ namespace BehaviorDesigner.Runtime.Tasks
             // Reset the public properties back to their original values
             seed = 0;
             useSeed = false;
+        }
+
+        private void ShuffleChilden()
+        {
+            // Use Fischer-Yates shuffle to randomize the child index order.
+            for (int i = childIndexList.Count; i > 0; --i) {
+                int j = Random.Range(0, i);
+                int index = childIndexList[j];
+                childrenExecutionOrder.Push(index);
+                childIndexList[j] = childIndexList[i - 1];
+                childIndexList[i - 1] = index;
+            }
         }
     }
 }

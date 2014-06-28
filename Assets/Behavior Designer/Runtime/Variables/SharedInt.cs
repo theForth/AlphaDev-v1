@@ -10,8 +10,6 @@ namespace BehaviorDesigner.Runtime
         [SerializeField]
         private int mValue;
 
-        public SharedInt() { mValueType = SharedVariableTypes.Int; }
-
         public override object GetValue() { return mValue; }
         public override void SetValue(object value) { mValue = (int)value; }
 

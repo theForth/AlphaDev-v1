@@ -10,8 +10,6 @@ namespace BehaviorDesigner.Runtime
         [SerializeField]
         private Quaternion mValue;
 
-        public SharedQuaternion() { mValueType = SharedVariableTypes.Quaternion; }
-
         public override object GetValue() { return mValue; }
         public override void SetValue(object value) { mValue = (Quaternion)value; }
 

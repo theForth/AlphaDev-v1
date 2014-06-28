@@ -29,7 +29,8 @@ public class PokeballProjectileController_Editor : Editor
 		public SerializedProperty reloadingSound;
 		public SerializedProperty reloadedSound;
 		public SerializedProperty emptyClickSound;
-	
+        public SerializedProperty openPokeball;
+        public SerializedProperty trainer;
 		public bool speedEditMode;
 		public bool lifeEditMode;
 	
@@ -58,6 +59,8 @@ public class PokeballProjectileController_Editor : Editor
 				reloadingSound = this.serializedObject.FindProperty ("reloadingSound");
 				reloadedSound = this.serializedObject.FindProperty ("reloadedSound");
 				emptyClickSound = this.serializedObject.FindProperty ("emptyClickSound");
+                openPokeball = this.serializedObject.FindProperty("openPokeball");
+                trainer = this.serializedObject.FindProperty("trainer");
 		}
 	
 		override public void OnInspectorGUI ()
@@ -150,6 +153,10 @@ public class PokeballProjectileController_Editor : Editor
 				EditorGUILayout.PrefixLabel ("Empty click sound");
 				emptyClickSound.objectReferenceValue = (AudioClip)EditorGUILayout.ObjectField (emptyClickSound.objectReferenceValue, typeof(AudioClip), false);
 				EditorGUILayout.EndHorizontal ();
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.PrefixLabel("Open Pokeball");
+                openPokeball.objectReferenceValue = (AudioClip)EditorGUILayout.ObjectField(openPokeball.objectReferenceValue, typeof(AudioClip), false);
+                EditorGUILayout.EndHorizontal();
 		
 				//Value clamps & update
 				projectileSpeed.floatValue = (float)Mathf.Clamp (projectileSpeed.floatValue, 1, Mathf.Infinity);

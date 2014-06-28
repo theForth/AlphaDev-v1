@@ -10,8 +10,6 @@ namespace BehaviorDesigner.Runtime
         [SerializeField]
         private Color mValue;
 
-        public SharedColor() { mValueType = SharedVariableTypes.Color; }
-
         public override object GetValue() { return mValue; }
         public override void SetValue(object value) { mValue = (Color)value; }
 
