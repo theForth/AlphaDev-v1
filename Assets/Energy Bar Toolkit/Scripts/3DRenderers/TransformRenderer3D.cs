@@ -150,6 +150,9 @@ public class TransformRenderer3D : EnergyBar3DBase {
         hash.Add(rotateFunction);
         hash.Add(scaleFunction);
 
+        hash.Add(labelEnabled);
+        hash.Add(labelFont);
+
         hash.Add(premultipliedAlpha);
 
         int hashNumber = hash.GetHashCode();

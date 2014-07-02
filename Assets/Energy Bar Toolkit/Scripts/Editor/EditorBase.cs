@@ -298,7 +298,18 @@ public class EditorBase : Editor {
                         EditorGUILayout.BeginVertical();
                         renderer(go);
                         EditorGUILayout.EndVertical();
-                        
+
+                        GUI.enabled = CanMoveDown(property, i);
+                        if (GUILayout.Button("\u25BC", GUILayout.ExpandWidth(false))) {
+                            MoveDown(property, i);
+                        }
+
+                        GUI.enabled = CanMoveUp(i);
+                        if (GUILayout.Button("\u25B2", GUILayout.ExpandWidth(false))) {
+                            MoveUp(property, i);
+                        }
+
+                        GUI.enabled = true;
                         GUI.color = Color.red;
                         if (GUILayout.Button("X", GUILayout.ExpandWidth(false))) {
                             property.DeleteArrayElementAtIndex(i);
@@ -336,6 +347,23 @@ public class EditorBase : Editor {
                 EditorGUILayout.EndHorizontal();
             });
         }
+
+    }
+
+    private void MoveUp(SerializedProperty property, int i) {
+        property.MoveArrayElement(i, i - 1);
+    }
+
+    private void MoveDown(SerializedProperty property, int i) {
+        property.MoveArrayElement(i, i + 1);
+    }
+
+    private bool CanMoveUp(int i) {
+        return i > 0;
+    }
+
+    private bool CanMoveDown(SerializedProperty property, int i) {
+        return i < property.arraySize - 1;
     }
     
     #region ActionQueue

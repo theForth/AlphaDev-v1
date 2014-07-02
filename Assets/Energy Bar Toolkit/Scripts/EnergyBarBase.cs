@@ -394,7 +394,7 @@ public abstract class EnergyBarBase : MonoBehaviour {
         public override int GetHashCode() {
             int hash = MadHashCode.FirstPrime;
             hash = HashAddTexture(hash, texture);
-            hash = HashAdd(hash, color);
+            //hash = HashAdd(hash, color);
             
             return hash;
         }

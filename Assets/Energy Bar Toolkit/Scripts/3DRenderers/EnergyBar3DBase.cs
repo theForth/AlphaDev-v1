@@ -409,7 +409,11 @@ public abstract class EnergyBar3DBase : EnergyBarBase {
                 sprite.textureAtlasSpriteGUID = atlasTex.spriteGUID;
             }
             
-            sprite.tint = tex != null ? tex.color : atlasTex.color;;
+            sprite.tint = tex != null ? tex.color : atlasTex.color;
+
+            // binds color to not trigger rebuild when color is changed
+            var colorBind = sprite.gameObject.AddComponent<ColorBind>();
+            colorBind.tex = tex;
             
             sprites.Add(sprite);
             
