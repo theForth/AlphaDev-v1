@@ -50,7 +50,7 @@ public class RVOAgentPlacer : MonoBehaviour {
 	const float rad2Deg = 360.0f/ ((float)System.Math.PI*2);
 	
 	public Color GetColor (float angle) {
-		return HSVToRGB (angle * rad2Deg, 1, 1);
+		return HSVToRGB (angle * rad2Deg, 0.8f, 0.6f);
 	}
 	
 	/**

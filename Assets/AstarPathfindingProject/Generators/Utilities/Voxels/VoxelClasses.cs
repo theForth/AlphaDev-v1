@@ -8,8 +8,9 @@ using Pathfinding;
 using Pathfinding.Voxels;
 
 namespace Pathfinding.Voxels {
+#if ASTAR_RECAST_VOXEL_DEBUG
 	public static class VoxelSerializeUtility {
-		
+
 		public static byte[] SerializeVoxelAreaCompactData (VoxelArea v) {
 			System.IO.MemoryStream stream = new System.IO.MemoryStream();
 			System.IO.BinaryWriter writer = new System.IO.BinaryWriter(stream);
@@ -218,7 +219,8 @@ namespace Pathfinding.Voxels {
 		}
 		
 	}
-	
+#endif
+
 	/** \astarpro */
 	public class VoxelArea {
 		

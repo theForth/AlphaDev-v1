@@ -63,10 +63,12 @@ But this time, edit the setting named "Forward" to "Z forward" (not -Z as it is 
 		 * Uses more memory if enabled.
 		 */
 		public bool dynamic = true;
-		
+
+#if ASTAR_RECAST_VOXEL_DEBUG
 		public bool importMode = false;
 		public bool exportMode = false;
-		
+#endif
+
 		[JsonMember]
 		/** Radius of the agent which will traverse the navmesh.
 		 * The navmesh will be eroded with this radius.
@@ -145,7 +147,12 @@ But this time, edit the setting named "Forward" to "Z forward" (not -Z as it is 
 		/** If true, divide the graph into tiles, otherwise use a single tile covering the whole graph */
 		[JsonMember]
 		public bool useTiles = false;
-		
+
+		/** If true, scanning the graph will yield a completely empty graph.
+		 * Useful if you want to replace the graph with a custom navmesh for example
+		 */
+		public bool scanEmptyGraph = false;
+
 		public enum RelevantGraphSurfaceMode {
 			DoNotRequire,
 			OnlyForCompletelyInsideTile,
@@ -383,7 +390,9 @@ But this time, edit the setting named "Forward" to "Z forward" (not -Z as it is 
 		
 		/** Returns tile coordinates from a tile index */
 		public void GetTileCoordinates (int tileIndex, out int x, out int z) {
-			z = System.Math.DivRem (tileIndex, tileXCount, out x);
+			//z = System.Math.DivRem (tileIndex, tileXCount, out x);
+			z = tileIndex/tileXCount;
+			x = tileIndex - z*tileXCount;
 		}
 		
 		/** Get all tiles.
@@ -711,6 +720,31 @@ But this time, edit the setting named "Forward" to "Z forward" (not -Z as it is 
 			}
 		}
 		
+		/** Returns a rect containing the indices of all tiles touching the specified bounds */
+		public IntRect GetTouchingTiles ( Bounds b )
+		{
+			b.center -= forcedBounds.min;
+			
+			//Calculate world bounds of all affected tiles
+			IntRect r = new IntRect (Mathf.FloorToInt (b.min.x / (tileSizeX*cellSize)), Mathf.FloorToInt (b.min.z / (tileSizeZ*cellSize)), Mathf.FloorToInt (b.max.x / (tileSizeX*cellSize)), Mathf.FloorToInt (b.max.z / (tileSizeZ*cellSize)));
+			//Clamp to bounds
+			r = IntRect.Intersection (r, new IntRect (0,0,tileXCount-1,tileZCount-1));
+			return r;
+		}
+		
+		/** Returns a rect containing the indices of all tiles by rounding the specified bounds to tile borders */
+		public IntRect GetTouchingTilesRound ( Bounds b )
+		{
+			b.center -= forcedBounds.min;
+			
+			//Calculate world bounds of all affected tiles
+			IntRect r = new IntRect (Mathf.RoundToInt (b.min.x / (tileSizeX*cellSize)), Mathf.RoundToInt (b.min.z / (tileSizeZ*cellSize)), Mathf.RoundToInt (b.max.x / (tileSizeX*cellSize))-1, Mathf.RoundToInt (b.max.z / (tileSizeZ*cellSize))-1);
+			//Clamp to bounds
+			r = IntRect.Intersection (r, new IntRect (0,0,tileXCount-1,tileZCount-1));
+			return r;
+		}
+
+		/** \bug This can cause exceptions because RecastMeshObj is a component, so it must not be used in a separate thread */
 		public GraphUpdateThreading CanUpdateAsync (GraphUpdateObject o) {
 			if ( o.updatePhysics ) {
 				return GraphUpdateThreading.SeparateAndUnityInit;
@@ -737,13 +771,14 @@ But this time, edit the setting named "Forward" to "Z forward" (not -Z as it is 
 			
 			List<ExtraMesh> extraMeshes;
 			
-			Bounds b = o.bounds;
+			/*Bounds b = o.bounds;
 			b.center -= forcedBounds.min;
 			
 			//Calculate world bounds of all affected tiles
 			IntRect r = new IntRect (Mathf.FloorToInt (b.min.x / (tileSizeX*cellSize)), Mathf.FloorToInt (b.min.z / (tileSizeZ*cellSize)), Mathf.FloorToInt (b.max.x / (tileSizeX*cellSize)), Mathf.FloorToInt (b.max.z / (tileSizeZ*cellSize)));
 			//Clamp to bounds
-			r = IntRect.Intersection (r, new IntRect (0,0,tileXCount-1,tileZCount-1));
+			r = IntRect.Intersection (r, new IntRect (0,0,tileXCount-1,tileZCount-1));*/
+			IntRect r = GetTouchingTiles ( o.bounds );
 			
 			Bounds tileBounds = new Bounds();
 			
@@ -1174,15 +1209,6 @@ But this time, edit the setting named "Forward" to "Z forward" (not -Z as it is 
 			Console.WriteLine ("Recast Graph -- Collecting Meshes");
 #endif	
 			
-			AstarProfiler.StartProfile ("Finding Meshes");
-			List<ExtraMesh> extraMeshes;
-			
-			System.Console.WriteLine ("Collecting Meshes");
-			
-			CollectMeshes (out extraMeshes, forcedBounds);
-			
-			AstarProfiler.EndProfile ("Finding Meshes");
-			
 			//----
 			
 			//Voxel grid size
@@ -1214,7 +1240,27 @@ But this time, edit the setting named "Forward" to "Z forward" (not -Z as it is 
 #if ASTARDEBUG
 			Console.WriteLine ("Recast Graph -- Creating Voxel Base");
 #endif
+
+			// If this is true, just fill the graph with empty tiles
+			if ( scanEmptyGraph ) {
+				for (int z=0;z<td;z++) {
+					for (int x=0;x<tw;x++) {
+						tiles[z*tileXCount + x] = NewEmptyTile(x,z);
+					}
+				}
+				return;
+			}
+
+			AstarProfiler.StartProfile ("Finding Meshes");
+			List<ExtraMesh> extraMeshes;
+
+#if !NETFX_CORE
+			System.Console.WriteLine ("Collecting Meshes");
+#endif
+			CollectMeshes (out extraMeshes, forcedBounds);
 			
+			AstarProfiler.EndProfile ("Finding Meshes");
+
 			//Create the voxelizer and set all settings
 			Voxelize vox = new Voxelize (cellHeight, cellSize, walkableClimb, walkableHeight, maxSlope);
 			vox.inputExtraMeshes = extraMeshes;
@@ -1230,7 +1276,10 @@ But this time, edit the setting named "Forward" to "Z forward" (not -Z as it is 
 				for (int x=0;x<tw;x++) {
 					
 					int tileNum = z*tileXCount + x;
+
+#if !NETFX_CORE
 					System.Console.WriteLine ("Generating Tile #"+(tileNum) + " of " + td*tw);
+#endif
 					
 					//Call statusCallback only 10 times since it is very slow in the editor
 					if ((tileNum*10/tiles.Length > lastUp || watch.ElapsedMilliseconds > 2000) && statusCallback != null) {
@@ -1244,8 +1293,11 @@ But this time, edit the setting named "Forward" to "Z forward" (not -Z as it is 
 					BuildTileMesh (vox, x,z);
 				}
 			}
-			
+
+#if !NETFX_CORE
 			System.Console.WriteLine ("Assigning Graph Indices");
+#endif
+
 			if (statusCallback != null) statusCallback (new Progress (0.9f, "Connecting tiles"));
 			
 			//Assign graph index to nodes
@@ -1259,7 +1311,9 @@ But this time, edit the setting named "Forward" to "Z forward" (not -Z as it is 
 			
 			for (int z=0;z<td;z++) {
 				for (int x=0;x<tw;x++) {
+#if !NETFX_CORE
 					System.Console.WriteLine ("Connecing Tile #"+(z*tileXCount + x) + " of " + td*tw);
+#endif
 					if (x < tw-1) ConnectTiles (tiles[x + z*tileXCount], tiles[x+1 + z*tileXCount]);
 					if (z < td-1) ConnectTiles (tiles[x + z*tileXCount], tiles[x + (z+1)*tileXCount]);
 				}
@@ -1320,7 +1374,8 @@ But this time, edit the setting named "Forward" to "Z forward" (not -Z as it is 
 			vox.VoxelizeInput ();
 			
 			AstarProfiler.StartProfile ("Filter Ledges");
-			
+
+#if ASTAR_RECAST_VOXEL_DEBUG
 			if (importMode) {
 				if (System.IO.File.Exists(Application.dataPath+"/tile."+x+"."+z)) {
 					System.IO.FileStream fs = System.IO.File.OpenRead (Application.dataPath+"/tile."+x+"."+z);
@@ -1337,7 +1392,8 @@ But this time, edit the setting named "Forward" to "Z forward" (not -Z as it is 
 				fs.Write(bytes,0,bytes.Length);
 				fs.Close();
 			}
-			
+#endif
+
 			vox.FilterLedges (vox.voxelWalkableHeight, vox.voxelWalkableClimb, vox.cellSize, vox.cellHeight, vox.forcedBounds.min);
 			
 			AstarProfiler.EndProfile ("Filter Ledges");
@@ -1588,7 +1644,7 @@ But this time, edit the setting named "Forward" to "Z forward" (not -Z as it is 
 						for (int b=0;b<bv;b++) {
 							/** \todo This will fail on edges which are only partially shared */
 							if (other.GetVertexIndex (b) == second && other.GetVertexIndex ((b+1) % bv) == first) {
-								uint cost = (uint)(node.position - other.position).costMagnitude;									
+								uint cost = (uint)(node.position - other.position).costMagnitude;
 								connections.Add (other);
 								connectionCosts.Add (cost);
 								break;
@@ -1784,7 +1840,7 @@ But this time, edit the setting named "Forward" to "Z forward" (not -Z as it is 
 				throw new System.ArgumentException ("Tile is placed at an out of bounds position or extends out of the graph bounds ("+x+", " + z + " [" + w + ", " + d+ "] " + tileXCount + " " + tileZCount + ")");
 			}
 			
-			if (w < 1 || d < 1) throw new System.ArgumentException ("width and depth must be greater or equal to 1");
+			if (w < 1 || d < 1) throw new System.ArgumentException ("width and depth must be greater or equal to 1. Was " + w + ", " + d);
 			
 			//Remove previous tiles
 			for (int cz=z; cz < z+d;cz++) {
@@ -2182,17 +2238,23 @@ But this time, edit the setting named "Forward" to "Z forward" (not -Z as it is 
 					float[,] heights = terrainData.GetHeights (0,0,terrainData.heightmapWidth,terrainData.heightmapHeight);
 					
 					terrainSampleSize = terrainSampleSize < 1 ? 1 : terrainSampleSize;//Clamp to at least 1
-					
-					int hWidth = terrainData.heightmapWidth / terrainSampleSize;
-					int hHeight = terrainData.heightmapHeight / terrainSampleSize;
+
+					int rwidth = terrainData.heightmapWidth;
+					int rheight = terrainData.heightmapHeight;
+
+					int hWidth = (terrainData.heightmapWidth+terrainSampleSize-1) / terrainSampleSize + 1;
+					int hHeight = (terrainData.heightmapHeight+terrainSampleSize-1) / terrainSampleSize + 1;
 					Vector3[] terrainVertices = new Vector3[hWidth*hHeight];
 					
 					Vector3 hSampleSize = terrainData.heightmapScale;
 					float heightScale = terrainData.size.y;
-					
+
 					for (int z = 0, nz = 0;nz < hHeight;z+= terrainSampleSize, nz++) {
 						for (int x = 0, nx = 0; nx < hWidth;x+= terrainSampleSize, nx++) {
-							terrainVertices[nz*hWidth + nx] = new Vector3 (z * hSampleSize.z,heights[x,z]*heightScale, x * hSampleSize.x) + offset;
+							int rx = System.Math.Min (x,rwidth-1);
+							int rz = System.Math.Min (z,rheight-1);
+
+							terrainVertices[nz*hWidth + nx] = new Vector3 (rz * hSampleSize.z,heights[rx,rz]*heightScale, rx * hSampleSize.x) + offset;
 						}
 					}
 					

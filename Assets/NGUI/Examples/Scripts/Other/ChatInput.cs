@@ -45,9 +45,9 @@ public class ChatInput : MonoBehaviour
 			string text = "Player 1 : " + NGUIText.StripSymbols(mInput.value);
 			Debug.Log ("Broken?");
 			if(NGUIText.StripSymbols(mInput.value).Length == 1){
-				Pokemon returner = new Pokemon();
-				returner = PopulateDB.getBasicPokemon(float.Parse (NGUIText.StripSymbols(mInput.value)));
-				Debug.Log(returner.name);
+				//Pokemon returner = new Pokemon();
+				//returner = PopulateDB.getBasicPokemon(float.Parse (NGUIText.StripSymbols(mInput.value)));
+				//Debug.Log(returner.name);
 			}
 			if (!string.IsNullOrEmpty(text))
 			{

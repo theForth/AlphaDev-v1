@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Pathfinding.RVO;
+using Pathfinding.RVO.Sampled;
 
 /** RVO Example Scene Unit Controller.
  * Controls AIs and camera in the RVO example scene.
@@ -23,7 +24,13 @@ public class GroupController : MonoBehaviour {
 	
 	public void Start () {
 		cam = Camera.main;
-		sim = (FindObjectOfType(typeof(RVOSimulator)) as RVOSimulator).GetSimulator();
+		var simu = FindObjectOfType(typeof(RVOSimulator)) as RVOSimulator;
+		if ( simu == null ) {
+			this.enabled = false;
+			throw new System.Exception ("No RVOSimulator in the scene. Please add one");
+		}
+
+		sim = simu.GetSimulator();
 	}
 	
 	public void Update () {
@@ -37,7 +44,7 @@ public class GroupController : MonoBehaviour {
 			
 			float max = 0;
 			for (int i=0;i<agents.Count;i++) {
-				float d = Mathf.Max(Mathf.Abs(agents[i].Position.x), Mathf.Abs(agents[i].Position.z));
+				float d = Mathf.Max(Mathf.Abs(agents[i].InterpolatedPosition.x), Mathf.Abs(agents[i].InterpolatedPosition.z));
 				if (d > max) {
 					max = d;
 				}
@@ -126,7 +133,7 @@ public class GroupController : MonoBehaviour {
 	
 	/** Color from an angle */
 	public Color GetColor (float angle) {
-		return HSVToRGB (angle * rad2Deg, 1, 1);
+		return HSVToRGB (angle * rad2Deg, 0.8f, 0.6f);
 	}
 	
 	/**

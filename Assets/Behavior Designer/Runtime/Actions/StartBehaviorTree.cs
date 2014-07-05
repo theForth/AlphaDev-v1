@@ -16,10 +16,11 @@ namespace BehaviorDesigner.Runtime.Tasks
 
         public override void OnAwake()
         {
-            // If GameObject is null use the behavior that this task is attached to.
+            // If behaviorGameObject is null use the GameObject that this task is attached to.
             if (behaviorGameObject == null) {
-                behavior = Owner;
-            } else { // search for the behavior tree based on the group number
+                behaviorGameObject = gameObject;
+            }
+            if (behaviorGameObject != null) {// search for the behavior tree based on the group number
                 var behaviorTrees = behaviorGameObject.GetComponents<Behavior>();
                 if (behaviorTrees.Length == 1) {
                     behavior = behaviorTrees[0];

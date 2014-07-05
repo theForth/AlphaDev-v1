@@ -1,9 +1,12 @@
 //#define ASTARDEBUG    //Some debugging
+//#define ASTAR_NO_JSON
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Pathfinding.Serialization.JsonFx;
 using Pathfinding.Serialization;
+using Pathfinding;
+
 
 namespace Pathfinding {
 	public interface INavmesh {
@@ -191,7 +194,7 @@ and have a low memory footprint because of their smaller size to describe the sa
 			}
 			
 			//Searches in radiuses of 0.05 - 0.2 - 0.45 ... 1.28 times the average of the width and depth of the bbTree
-			float w = (graph.bbTree.root.rect.width + graph.bbTree.root.rect.height)*0.5F*0.02F;
+			float w = (graph.bbTree.Size.width + graph.bbTree.Size.height)*0.5F*0.02F;
 			
 			NNInfo query = graph.bbTree.QueryCircle (position,w,constraint);//graph.bbTree.Query (position,constraint);
 			
@@ -780,7 +783,8 @@ and have a low memory footprint because of their smaller size to describe the sa
 		/** Generates a navmesh. Based on the supplied vertices and triangles. Memory usage is about O(n) */
 		public void GenerateNodes (Vector3[] vectorVertices, int[] triangles, out Vector3[] originalVertices, out Int3[] vertices) {
 			
-			
+			Profiler.BeginSample ("Init");
+
 			if (vectorVertices.Length == 0 || triangles.Length == 0) {
 				originalVertices = vectorVertices;
 				vertices = new Int3[0];
@@ -797,34 +801,19 @@ and have a low memory footprint because of their smaller size to describe the sa
 			//}
 			
 			int c = 0;
-			/*int maxX = 0;
-			int maxZ = 0;
-			
-			//Almost infinity
-			int minX = 0xFFFFFFF;
-			int minZ = 0xFFFFFFF;*/
 			
 			for (int i=0;i<vertices.Length;i++) {
 				vertices[i] = (Int3)matrix.MultiplyPoint3x4 (vectorVertices[i]);
-				/*maxX = Mathfx.Max (vertices[i].x, maxX);
-				maxZ = Mathfx.Max (vertices[i].z, maxZ);
-				minX = Mathfx.Min (vertices[i].x, minX);
-				minZ = Mathfx.Min (vertices[i].z, minZ);*/
 			}
-			
-			//maxX = maxX-minX;
-			//maxZ = maxZ-minZ;
 			
 			Dictionary<Int3,int> hashedVerts = new Dictionary<Int3,int> ();
 			
 			int[] newVertices = new int[vertices.Length];
 				
-			for (int i=0;i<vertices.Length-1;i++) {
-				
-				//int hash = Mathfx.ComputeVertexHash (vertices[i].x,vertices[i].y,vertices[i].z);
-				
-				//(vertices[i].x-minX)+(vertices[i].z-minX)*maxX+vertices[i].y*maxX*maxZ;
-				//if (sortedVertices[i] != sortedVertices[i+1]) {
+			Profiler.EndSample ();
+			Profiler.BeginSample ("Hashing");
+
+			for (int i=0;i<vertices.Length;i++) {
 				if (!hashedVerts.ContainsKey (vertices[i])) {
 					newVertices[c] = i;
 					hashedVerts.Add (vertices[i], c);
@@ -834,22 +823,17 @@ and have a low memory footprint because of their smaller size to describe the sa
 				//}
 			}
 			
-			newVertices[c] = vertices.Length-1;
-			
-			//int hash2 = (newVertices[c].x-minX)+(newVertices[c].z-minX)*maxX+newVertices[c].y*maxX*maxZ;
-			//int hash2 = Mathfx.ComputeVertexHash (newVertices[c].x,newVertices[c].y,newVertices[c].z);
+			/*newVertices[c] = vertices.Length-1;
+
 			if (!hashedVerts.ContainsKey (vertices[newVertices[c]])) {
 				
 				hashedVerts.Add (vertices[newVertices[c]], c);
 				c++;
-			}
+			}*/
 			
 			for (int x=0;x<triangles.Length;x++) {
 				Int3 vertex = vertices[triangles[x]];
-				
-				//int hash3 = (vertex.x-minX)+(vertex.z-minX)*maxX+vertex.y*maxX*maxZ;
-				//int hash3 = Mathfx.ComputeVertexHash (vertex.x,vertex.y,vertex.z);
-				//for (int y=0;y<newVertices.Length;y++) {
+
 				triangles[x] = hashedVerts[vertex];
 			}
 			
@@ -861,8 +845,6 @@ and have a low memory footprint because of their smaller size to describe the sa
 				Debug.DrawLine (newVertices[triangles[i+2]]+offset,newVertices[triangles[i]]+offset,Color.blue);
 			}*/
 			
-			//Debug.Log ("NavMesh - Old vertice count "+vertices.Length+", new vertice count "+c+" "+maxX+" "+maxZ+" "+maxX*maxZ);
-			
 			Int3[] totalIntVertices = vertices;
 			vertices = new Int3[c];
 			originalVertices = new Vector3[c];
@@ -871,7 +853,10 @@ and have a low memory footprint because of their smaller size to describe the sa
 				vertices[i] = totalIntVertices[newVertices[i]];//(Int3)graph.matrix.MultiplyPoint (vectorVertices[i]);
 				originalVertices[i] = (Vector3)vectorVertices[newVertices[i]];//vectorVertices[newVertices[i]];
 			}
-			
+
+			Profiler.EndSample ();
+			Profiler.BeginSample ("Constructing Nodes");
+
 			//graph.CreateNodes (triangles.Length/3);//new Node[triangles.Length/3];
 			nodes = new TriangleMeshNode[triangles.Length/3];
 			
@@ -907,52 +892,40 @@ and have a low memory footprint because of their smaller size to describe the sa
 				// Make sure position is correctly set
 				node.UpdatePositionFromVertices();
 			}
+
+			Profiler.EndSample ();
+
+			Dictionary<Int2,TriangleMeshNode> sides = new Dictionary<Int2, TriangleMeshNode>();
 			
+			for (int i=0, j=0;i<triangles.Length; j+=1, i+=3) {
+				sides[new Int2(triangles[i+0],triangles[i+1])] = nodes[j];
+				sides[new Int2(triangles[i+1],triangles[i+2])] = nodes[j];
+				sides[new Int2(triangles[i+2],triangles[i+0])] = nodes[j];
+			}
+
+			Profiler.BeginSample ("Connecting Nodes");
+
 			List<MeshNode> connections = new List<MeshNode> ();
 			List<uint> connectionCosts = new List<uint> ();
 			
 			int identicalError = 0;
-			
-			for (int i=0;i<triangles.Length;i+=3) {
-				
+
+			for (int i=0, j=0;i<triangles.Length; j+=1, i+=3) {
 				connections.Clear ();
 				connectionCosts.Clear ();
 				
 				//Int3 indices = new Int3(triangles[i],triangles[i+1],triangles[i+2]);
 				
-				TriangleMeshNode node = nodes[i/3];
-				
-				for (int x=0;x<triangles.Length;x+=3) {
-					
-					if (x == i) {
-						continue;
-					}
-					
-					int count = 0;
-					if (triangles[x] 	== 	triangles[i]) { count++; }
-					if (triangles[x+1]	== 	triangles[i]) { count++; }
-					if (triangles[x+2] 	== 	triangles[i]) { count++; }
-					if (triangles[x] 	== 	triangles[i+1]) { count++; }
-					if (triangles[x+1] 	== 	triangles[i+1]) { count++; }
-					if (triangles[x+2] 	== 	triangles[i+1]) { count++; }
-					if (triangles[x] 	== 	triangles[i+2]) { count++; }
-					if (triangles[x+1] 	== 	triangles[i+2]) { count++; }
-					if (triangles[x+2] 	== 	triangles[i+2]) { count++; }
-					
-					if (count >= 3) {
-						identicalError++;
-						Debug.DrawLine ((Vector3)vertices[triangles[x]],(Vector3)vertices[triangles[x+1]],Color.red);
-						Debug.DrawLine ((Vector3)vertices[triangles[x]],(Vector3)vertices[triangles[x+2]],Color.red);
-						Debug.DrawLine ((Vector3)vertices[triangles[x+2]],(Vector3)vertices[triangles[x+1]],Color.red);
-					}
-					
-					if (count == 2) {
-						GraphNode other = nodes[x/3];
-						connections.Add (other as MeshNode);
+				TriangleMeshNode node = nodes[j];
+
+				for ( int q = 0; q < 3; q++ ) {
+					TriangleMeshNode other;
+					if (sides.TryGetValue ( new Int2 (triangles[i+((q+1)%3)], triangles[i+q]), out other ) ) {
+						connections.Add (other);
 						connectionCosts.Add ((uint)(node.position-other.position).costMagnitude);
 					}
 				}
-				
+
 				node.connections = connections.ToArray ();
 				node.connectionCosts = connectionCosts.ToArray ();
 			}
@@ -960,8 +933,14 @@ and have a low memory footprint because of their smaller size to describe the sa
 			if (identicalError > 0) {
 				Debug.LogError ("One or more triangles are identical to other triangles, this is not a good thing to have in a navmesh\nIncreasing the scale of the mesh might help\nNumber of triangles with error: "+identicalError+"\n");
 			}
+
+			Profiler.EndSample ();
+			Profiler.BeginSample ("Rebuilding BBTree");
+
 			RebuildBBTree (this);
-			
+
+			Profiler.EndSample ();
+
 #if ASTARDEBUG
 			for (int i=0;i<nodes.Length;i++) {
 				TriangleMeshNode node = nodes[i] as TriangleMeshNode;
@@ -993,9 +972,13 @@ and have a low memory footprint because of their smaller size to describe the sa
 			//Build Axis Aligned Bounding Box Tree
 			
 			NavMeshGraph meshGraph = graph as NavMeshGraph;
-			
-			BBTree bbTree = new BBTree (graph as INavmeshHolder);
-			
+
+			BBTree bbTree = meshGraph.bbTree;
+			if ( bbTree == null ) {
+				bbTree = new BBTree (graph as INavmeshHolder);
+			}
+			bbTree.Clear ();
+
 			TriangleMeshNode[] nodes = meshGraph.TriNodes;
 			
 			for (int i=nodes.Length-1;i>=0;i--) {
@@ -1059,7 +1042,7 @@ and have a low memory footprint because of their smaller size to describe the sa
 			if (!drawNodes) {
 				return;
 			}
-			
+
 			Matrix4x4 preMatrix = matrix;
 			
 			GenerateMatrix ();
@@ -1071,7 +1054,11 @@ and have a low memory footprint because of their smaller size to describe the sa
 			if (nodes == null) {
 				return;
 			}
-			
+
+			if ( bbTree != null ) {
+				bbTree.OnDrawGizmos ();
+			}
+
 			if (preMatrix != matrix) {
 				//Debug.Log ("Relocating Nodes");
 				RelocateNodes (preMatrix, matrix);
@@ -1091,7 +1078,7 @@ and have a low memory footprint because of their smaller size to describe the sa
 						Gizmos.DrawLine ((Vector3)node.position,(Vector3)debugData.GetPathNode(node).parent.node.position);
 					} else {
 						for (int q=0;q<node.connections.Length;q++) {
-							Gizmos.DrawLine ((Vector3)node.position,(Vector3)node.connections[q].position);
+							Gizmos.DrawLine ((Vector3)node.position,Vector3.Lerp ((Vector3)node.position, (Vector3)node.connections[q].position, 0.45f));
 						}
 					}
 				
@@ -1201,43 +1188,124 @@ and have a low memory footprint because of their smaller size to describe the sa
 			
 			RebuildBBTree (graph);
 		}
-		
-		//These functions are for serialization, the static ones are there so other graphs using mesh nodes can serialize them more easily
-		public static byte[] SerializeMeshNodes (NavMeshGraph graph, GraphNode[] nodes) {
+
+#if ASTAR_NO_JSON
+		void SerializeUnityObject ( UnityEngine.Object ob, GraphSerializationContext ctx ) {
+
+			if ( ob == null ) {
+				ctx.writer.Write (int.MaxValue);
+				return;
+			}
+
+			int inst = ob.GetInstanceID();
+			string name = ob.name;
+			string type = ob.GetType().AssemblyQualifiedName;
+			string guid = "";
 			
-			System.IO.MemoryStream mem = new System.IO.MemoryStream();
-			System.IO.BinaryWriter stream = new System.IO.BinaryWriter(mem);
+			//Write scene path if the object is a Component or GameObject
+			Component component = ob as Component;
+			GameObject go = ob as GameObject;
 			
-			for (int i=0;i<nodes.Length;i++) {
-				TriangleMeshNode node = nodes[i] as TriangleMeshNode;
-				
-				if (node == null) {
-					Debug.LogError ("Serialization Error : Couldn't cast the node to the appropriate type - NavMeshGenerator. Omitting node data.");
-					return null;
+			if (component != null || go != null) {
+				if (component != null && go == null) {
+					go = component.gameObject;
 				}
 				
-				stream.Write (node.v0);
-				stream.Write (node.v1);
-				stream.Write (node.v2);
+				UnityReferenceHelper helper = go.GetComponent<UnityReferenceHelper>();
+				
+				if (helper == null) {
+					Debug.Log ("Adding UnityReferenceHelper to Unity Reference '"+ob.name+"'");
+					helper = go.AddComponent<UnityReferenceHelper>();
+				}
+				
+				//Make sure it has a unique GUID
+				helper.Reset ();
+				
+				guid = helper.GetGUID ();
 			}
 			
-			Int3[] vertices = graph.vertices;
 			
-			if (vertices == null) {
-				vertices = new Int3[0];
+			ctx.writer.Write(inst);
+			ctx.writer.Write(name);
+			ctx.writer.Write(type);
+			ctx.writer.Write(guid);
+		}
+
+
+		UnityEngine.Object DeserializeUnityObject ( GraphSerializationContext ctx ) {
+			int inst = ctx.reader.ReadInt32();
+
+			if ( inst == int.MaxValue ) {
+				return null;
+			}
+
+			string name = ctx.reader.ReadString();
+			string typename = ctx.reader.ReadString();
+			string guid = ctx.reader.ReadString();
+			
+			System.Type type = System.Type.GetType (typename);
+			
+			if (type == null) {
+				Debug.LogError ("Could not find type '"+typename+"'. Cannot deserialize Unity reference");
+				return null;
 			}
 			
-			stream.Write (vertices.Length);
-			
-			for (int i=0;i<vertices.Length;i++) {
-				stream.Write (vertices[i].x);
-				stream.Write (vertices[i].y);
-				stream.Write (vertices[i].z);
+			if (!string.IsNullOrEmpty(guid)) {
+				
+				UnityReferenceHelper[] helpers = UnityEngine.Object.FindObjectsOfType(typeof(UnityReferenceHelper)) as UnityReferenceHelper[];
+				
+				for (int i=0;i<helpers.Length;i++) {
+					if (helpers[i].GetGUID () == guid) {
+						if (System.Type.Equals ( type, typeof(GameObject) )) {
+							return helpers[i].gameObject;
+						} else {
+							return helpers[i].GetComponent (type);
+						}
+					}
+				}
+				
 			}
 			
-			stream.Close ();
-			return mem.ToArray();
+			//Try to load from resources
+			UnityEngine.Object[] objs = Resources.LoadAll (name,type);
+			
+			for (int i=0;i<objs.Length;i++) {
+				if (objs[i].name == name || objs.Length == 1) {
+					return objs[i];
+				}
+			}
+			
+			return null;
+		}
+
+		public override void SerializeSettings ( GraphSerializationContext ctx ) {
+			base.SerializeSettings (ctx);
+
+			SerializeUnityObject ( sourceMesh, ctx );
+
+			ctx.writer.Write(offset.x);
+			ctx.writer.Write(offset.y);
+			ctx.writer.Write(offset.z);
+
+			ctx.writer.Write(rotation.x);
+			ctx.writer.Write(rotation.y);
+			ctx.writer.Write(rotation.z);
+
+			ctx.writer.Write(scale);
+			ctx.writer.Write(accurateNearestNode);
 		}
 		
+		public override void DeserializeSettings ( GraphSerializationContext ctx ) {
+
+			base.DeserializeSettings (ctx);
+			
+			sourceMesh = DeserializeUnityObject (ctx) as Mesh;
+
+			offset = new Vector3 (ctx.reader.ReadSingle(),ctx.reader.ReadSingle(),ctx.reader.ReadSingle());
+			rotation = new Vector3 (ctx.reader.ReadSingle(),ctx.reader.ReadSingle(),ctx.reader.ReadSingle());
+			scale = ctx.reader.ReadSingle();
+			accurateNearestNode = ctx.reader.ReadBoolean();
+		}
+#endif
 	}
 }

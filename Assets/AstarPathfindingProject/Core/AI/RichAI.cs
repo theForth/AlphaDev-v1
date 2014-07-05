@@ -118,6 +118,7 @@ namespace Pathfinding {
 			seeker = GetComponent<Seeker>();
 			controller = GetComponent<CharacterController>();
 			rvoController = GetComponent<RVOController>();
+			if ( rvoController != null ) rvoController.enableRotation = false;
 			tr = transform;
 		}
 			
@@ -451,7 +452,7 @@ namespace Pathfinding {
 					velocity += deltaTime * gravity;
 					
 					if (rvoController != null && rvoController.enabled) {
-						
+
 						//Use RVOController
 						tr.position = position;
 						rvoController.Move (velocity);

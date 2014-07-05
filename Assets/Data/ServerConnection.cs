@@ -69,7 +69,7 @@ public class ServerConnection : MonoBehaviour {
 		for (int i = 0; i<moveJSON.Count; i++) {
 			JSONObject obj = moveJSON [i];
 			moveData.Add (new MoveData{
-				Id = float.Parse(obj["move_id"].str),
+				Id = int.Parse(obj["move_id"].str),
 				Name = obj["name"].str,
 				ShortEffect = obj["short_effect"].str,
 				LongText = obj["text"].str,

@@ -342,7 +342,7 @@ namespace Pathfinding {
 			
 			if (tiles == null) {
 				if (EditorUtility.DisplayDialog	 ("Scan graph before exporting?","The graph does not contain any mesh data. Do you want to scan it?","Ok","Cancel")) {
-					AstarPath.MenuScan ();
+					AstarPathEditor.MenuScan ();
 					tiles = target.GetTiles();
 					if (tiles == null) return;
 				} else {

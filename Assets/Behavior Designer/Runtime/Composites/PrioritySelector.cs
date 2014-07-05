@@ -55,7 +55,7 @@ namespace BehaviorDesigner.Runtime.Tasks
             executionStatus = childStatus;
         }
 
-        public override void OnObservationalAbort(int childIndex)
+        public override void OnConditionalAbort(int childIndex)
         {
             // Set the current child index to the index that caused the abort
             currentChildIndex = childIndex;

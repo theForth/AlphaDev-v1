@@ -4,13 +4,12 @@
 SceneSettings:
   m_ObjectHideFlags: 0
   m_PVSData: 
-  m_QueryMode: 1
   m_PVSObjectsArray: []
   m_PVSPortalsArray: []
   m_OcclusionBakeSettings:
-    viewCellSize: 1
-    bakeMode: 2
-    memoryUsage: 10485760
+    smallestOccluder: 5
+    smallestHole: .25
+    backfaceThreshold: 100
 --- !u!104 &2
 RenderSettings:
   m_Fog: 0
@@ -23,6 +22,7 @@ RenderSettings:
   m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: .5
   m_FlareStrength: 1
+  m_FlareFadeSpeed: 3
   m_HaloTexture: {fileID: 0}
   m_SpotCookie: {fileID: 0}
   m_ObjectHideFlags: 0
@@ -746,6 +746,7 @@ Camera:
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_HDR: 0
+  m_OcclusionCulling: 1
 --- !u!23 &52
 Renderer:
   m_ObjectHideFlags: 0
@@ -764,6 +765,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!23 &53
 Renderer:
   m_ObjectHideFlags: 0
@@ -782,6 +786,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!23 &54
 Renderer:
   m_ObjectHideFlags: 0
@@ -800,6 +807,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!23 &55
 Renderer:
   m_ObjectHideFlags: 0
@@ -818,6 +828,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!23 &56
 Renderer:
   m_ObjectHideFlags: 0
@@ -836,6 +849,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!23 &57
 Renderer:
   m_ObjectHideFlags: 0
@@ -854,6 +870,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!23 &58
 Renderer:
   m_ObjectHideFlags: 0
@@ -872,6 +891,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!23 &59
 Renderer:
   m_ObjectHideFlags: 0
@@ -890,6 +912,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!23 &60
 Renderer:
   m_ObjectHideFlags: 0
@@ -908,6 +933,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!23 &61
 Renderer:
   m_ObjectHideFlags: 0
@@ -926,6 +954,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!23 &62
 Renderer:
   m_ObjectHideFlags: 0
@@ -944,6 +975,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!23 &63
 Renderer:
   m_ObjectHideFlags: 0
@@ -962,6 +996,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!23 &64
 Renderer:
   m_ObjectHideFlags: 0
@@ -980,6 +1017,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!23 &65
 Renderer:
   m_ObjectHideFlags: 0
@@ -998,6 +1038,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!33 &66
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1214,9 +1257,6 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
-  m_UserAABB:
-    m_Center: {x: 1.02519989e-05, y: -.0005671978, z: .679157794}
-    m_Extent: {x: 1.02633405, y: 1.02490377, z: .689673245}
 --- !u!111 &88
 Animation:
   m_ObjectHideFlags: 0
@@ -1233,9 +1273,6 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
-  m_UserAABB:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0, y: 0, z: 0}
 --- !u!119 &89
 Projector:
   m_ObjectHideFlags: 0
@@ -1427,7 +1464,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   astarData:
     hasBeenReverted: 0
-    data: 504b030414000008080091928b437b0acc4fc9010000470300000b0024006772617068302e6a736f6e0a0020000000000001001800b660714d95f6ce01a260714d95f6ce018e60714d95f6ce017d924d6fdb300c86ff8bce6ee1af364e8e4b8beeb03483dd43b1a2075aa66da1b294497293a6c87f1fe5d849b601850e025fbea2c487fa644d2f2ab6f864ef207b640b8659084934e71c789d9611bf2ac3599c66597293c5653a2f811d02c65b30c01d9a1c2ad15bb608af6f48d5cae9deac60776f8c366c110d2a4a59883d7a5338c6df5134ad9b942dc83728254e6a7c96965274e558be835d21f5860a25e110dd570dfe40d5b896ce7849a81c1ba1d5f1ba24605809a7cd93907894a2380b981bc3e77fe25f63ac100c5a57d0c6dbb5921fcf94a9415a0c586fd157b327c1a0c47750eec1c0a62d7a5303c795ae3cc93bfda85d8ebf7b619091132c01a37b965a4a51a1b92832a556685b5fdc99fe527e426340a8ff758367371fcbe653f60e1d08494d119a5a1b8ed537ddabca2e5191c1cf7ce7c9a6f324ca6e03f6e18379c0f6b41ffe3e718437f8239ae96d1ac6833f1edc91b77760df2ebed1d56c1691eaa0590d8997d780d9566f7d83ebde49a1707ab7971f89d8522b85dcd1f8ce60dcb1f102bacd34429aaa50c209903f518174fed901a36f71c2a3a0f3f873e44462980bd1af0c6c1fc4bed3275e42d5bae04450ad87c3e3951d382376a756c8fe12065faed7c3e10f504b030414000008080091928b43f95a6e2a7800000086000000090024006d6574612e6a736f6e0a0020000000000001001800c21c724d95f6ce01c21c724d95f6ce01c21c724d95f6ce011d8cb10ec2201400ffe5cd9540c148bb3ab819e36a3a3ce0b565f0d1146a628cff6e71bbe1ee3ef0a235c7c4d083165a28030d4c2b2e73865eedb8c5b0d303c84ad4aaf31efd689cf207274fadb1561f6deb4ce7108606ca7ba12b3ee95fdcb0cc63e410791277f298cba57eabc729d0396d5caa2887ef0f504b01022d0014000008080091928b437b0acc4fc9010000470300000b00240000000000000000000000000000006772617068302e6a736f6e0a0020000000000001001800b660714d95f6ce01a260714d95f6ce018e60714d95f6ce01504b01022d0014000008080091928b43f95a6e2a78000000860000000900240000000000000000000000160200006d6574612e6a736f6e0a0020000000000001001800c21c724d95f6ce01c21c724d95f6ce01c21c724d95f6ce01504b05060000000002000200b8000000d90200000000
+    data: 504b03041400000808000e8bcc447b0acc4fc9010000470300000b0024006772617068302e6a736f6e0a0020000000000001001800f25803675286cf01f25803675286cf01e85803675286cf017d924d6fdb300c86ff8bce6ee1af364e8e4b8beeb03483dd43b1a2075aa66da1b294497293a6c87f1fe5d849b601850e025fbea2c487fa644d2f2ab6f864ef207b640b8659084934e71c789d9611bf2ac3599c66597293c5653a2f811d02c65b30c01d9a1c2ad15bb608af6f48d5cae9deac60776f8c366c110d2a4a59883d7a5338c6df5134ad9b942dc83728254e6a7c96965274e558be835d21f5860a25e110dd570dfe40d5b896ce7849a81c1ba1d5f1ba24605809a7cd93907894a2380b981bc3e77fe25f63ac100c5a57d0c6dbb5921fcf94a9415a0c586fd157b327c1a0c47750eec1c0a62d7a5303c795ae3cc93bfda85d8ebf7b619091132c01a37b965a4a51a1b92832a556685b5fdc99fe527e426340a8ff758367371fcbe653f60e1d08494d119a5a1b8ed537ddabca2e5191c1cf7ce7c9a6f324ca6e03f6e18379c0f6b41ffe3e718437f8239ae96d1ac6833f1edc91b77760df2ebed1d56c1691eaa0590d8997d780d9566f7d83ebde49a1707ab7971f89d8522b85dcd1f8ce60dcb1f102bacd34429aaa50c209903f518174fed901a36f71c2a3a0f3f873e44462980bd1af0c6c1fc4bed3275e42d5bae04450ad87c3e3951d382376a756c8fe12065faed7c3e10f504b03041400000808000e8bcc44dede02127600000083000000090024006d6574612e6a736f6e0a0020000000000001001800666703675286cf01666703675286cf01666703675286cf011d8cb10e82301400ffe5cd485a5a6261756033c6d530bcb60fe8e02ba1c5c418ff5dea76c3dd7de0455b0a91a10755b750c1bce1ba24e8e5817bf0073d808c40253be7d04dda4a77b2e2dc6863546b1aab3b8b305690df2b5df149ffe286799902fbc0737d2787290fe55b3c8e9e2e71e75c44317e7f504b01022d001400000808000e8bcc447b0acc4fc9010000470300000b00240000000000000000000000000000006772617068302e6a736f6e0a0020000000000001001800f25803675286cf01f25803675286cf01e85803675286cf01504b01022d001400000808000e8bcc44dede021276000000830000000900240000000000000000000000160200006d6574612e6a736f6e0a0020000000000001001800666703675286cf01666703675286cf01666703675286cf01504b05060000000002000200b8000000d70200000000
     data_backup: 
     data_cachedStartup: 
     revertData: 
@@ -1563,6 +1600,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!33 &159916901
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1715,6 +1755,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!33 &1001148685
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1781,6 +1824,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!33 &1520191393
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1849,6 +1895,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!33 &1708366344
 MeshFilter:
   m_ObjectHideFlags: 0

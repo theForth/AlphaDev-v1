@@ -4,13 +4,12 @@
 SceneSettings:
   m_ObjectHideFlags: 0
   m_PVSData: 
-  m_QueryMode: 1
   m_PVSObjectsArray: []
   m_PVSPortalsArray: []
   m_OcclusionBakeSettings:
-    viewCellSize: 1
-    bakeMode: 2
-    memoryUsage: 10485760
+    smallestOccluder: 5
+    smallestHole: .25
+    backfaceThreshold: 100
 --- !u!104 &2
 RenderSettings:
   m_Fog: 0
@@ -23,6 +22,7 @@ RenderSettings:
   m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: .5
   m_FlareStrength: 1
+  m_FlareFadeSpeed: 3
   m_HaloTexture: {fileID: 0}
   m_SpotCookie: {fileID: 0}
   m_ObjectHideFlags: 0
@@ -232,7 +232,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 6}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.7170682, y: -1.8904314, z: -.896556854}
+  m_LocalPosition: {x: -6.04057169, y: 16.2051067, z: -14.4385128}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -319,7 +319,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 12}
   m_LocalRotation: {x: 0, y: .0654783249, z: 0, w: -.997853994}
-  m_LocalPosition: {x: -1.32024384, y: 1.06129861, z: .482648253}
+  m_LocalPosition: {x: -.440097809, y: 1.06129861, z: -.0486053228}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 20}
@@ -377,6 +377,7 @@ Camera:
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_HDR: 0
+  m_OcclusionCulling: 1
 --- !u!20 &26
 Camera:
   m_ObjectHideFlags: 0
@@ -405,6 +406,7 @@ Camera:
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_HDR: 0
+  m_OcclusionCulling: 1
 --- !u!23 &27
 Renderer:
   m_ObjectHideFlags: 0
@@ -423,6 +425,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!23 &28
 Renderer:
   m_ObjectHideFlags: 0
@@ -441,6 +446,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!33 &29
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -497,9 +505,6 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
-  m_UserAABB:
-    m_Center: {x: -9.28672504, y: .00142192841, z: 1.49999976}
-    m_Extent: {x: 11.3895712, y: 6.80123043, z: 1.50000119}
 --- !u!119 &36
 Projector:
   m_ObjectHideFlags: 0
@@ -616,7 +621,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   astarData:
     hasBeenReverted: 0
-    data: 504b03041400000808004f838b43deaab98622010000ca0100000b0024006772617068302e6a736f6e0a0020000000000001001800b8ea615e85f6ce01aeea615e85f6ce019aea615e85f6ce0175515d4b033110fc2b479e634915cfe3a04f2aa58867c1ea8b88acc95e0de636473e6aafa5ffdda4ad1f0fcac2929dd91966c9962da356acdeb2159888ac66aa52aa2a95b890ea1ce0559c085589569e8d2b6ccb525682ed38f3363a89b7e8dfb274463e00499c5db1fab4149c35d0652b825597565e700d5d6fb03cce8cb3c5d0e78507d261b8a6a5261c65335efc4278f188ce6b4b1331da172f2ea309d1e1843006078617f3f86ab4bcc16161df9126148dc9f16cdb7a0c39da9ad529cfb0ef9bd413e96c80906cffa1bd0493b28d390329a383800d82431f1aab121e5c44ce748aa9c1cc91c08483dcf6485f341dee6f6095af9a3ae8f3d1cac1c7546f3aeb7f6c5a7b2f1d22ddedd52d189fe00e82d3ebef4f49eb4f632e8ef5e7eb79b7fb04504b03041400000808004f838b43b043fa8a7700000087000000090024006d6574612e6a736f6e0a00200000000000010018006894625e85f6ce016894625e85f6ce015e94625e85f6ce011d8cb10ec2201400ffe5cd954050245d1d9c6cdc4d8727ef511884a6d026c6f8ef16b71beeee031b2f25e6043d68a1853a4207d3827328d0ab1dd7483b3d802c913524cf8e4e884f799064a5775a59f6c6382b61eca0be671ef0c5ffe28e35f89828a6490cb8ddb8846b1b373165e24b5e536da61cbf3f504b01022d001400000808004f838b43deaab98622010000ca0100000b00240000000000000000000000000000006772617068302e6a736f6e0a0020000000000001001800b8ea615e85f6ce01aeea615e85f6ce019aea615e85f6ce01504b01022d001400000808004f838b43b043fa8a770000008700000009002400000000000000000000006f0100006d6574612e6a736f6e0a00200000000000010018006894625e85f6ce016894625e85f6ce015e94625e85f6ce01504b05060000000002000200b8000000310200000000
+    data: 504b0304140000080800f38acc442e0dfc4acd0000003d0100000b0024006772617068302e6a736f6e0a00200000000000010018004afe32495286cf014afe32495286cf0140fe32495286cf017550cb6a03310cfc179d5db0bb69f7f10339755be8b1e4a0d87263f0dac196d33cd87f8f377d5d5a048398d148832ef05e9c81e10207f4856000299b667b6f946abb4e37b2bb5bf5fdca3eb60fadd2ade91b0db3801c4bd2f44479074328de0b88d666e265d1110629e074c373c53a9e2223bb18fe91b3465f4f2b01a87549c8341226ca3c4653794e8504b8e0d8a17fa1809e3fed714fe15b0e382de9473c2ca9d609f73b1060127eacdd798af9778d8daf3a1185e79bdba2cf959e90933bfefca18ebf2921bfeacf6e33cf57504b0304140000080800f38acc441738a3377700000084000000090024006d6574612e6a736f6e0a0020000000000001001800600b33495286cf01560b33495286cf01560b33495286cf011d8cb10e83201400ffe5cdd640d102ae1d3ad5746f1c28ef290c821134699afe7ba5db0d77f7819dd6e463800e44dd4205d36a1697a0e3076e1e0f7a026342bccec8b954ca0aa64e8dd6cd7891ade456a21616860af27ba1deccf42f1e26bbd107f461aa7bb3df29b95b19173144a46bdc422e261bbe3f504b01022d00140000080800f38acc442e0dfc4acd0000003d0100000b00240000000000000000000000000000006772617068302e6a736f6e0a00200000000000010018004afe32495286cf014afe32495286cf0140fe32495286cf01504b01022d00140000080800f38acc441738a337770000008400000009002400000000000000000000001a0100006d6574612e6a736f6e0a0020000000000001001800600b33495286cf01560b33495286cf01560b33495286cf01504b05060000000002000200b8000000dc0100000000
     data_backup: 
     data_cachedStartup: 
     revertData: 
@@ -629,7 +634,7 @@ MonoBehaviour:
   debugRoof: 10000
   showSearchTree: 1
   unwalkableNodeDebugSize: .300000012
-  logPathResults: 2
+  logPathResults: 0
   maxNearestNodeDistance: 10
   scanOnStartup: 1
   fullGetNearestSearch: 0
@@ -684,7 +689,7 @@ MonoBehaviour:
   minAreaSize: 10
   limitGraphUpdates: 1
   maxGraphUpdateFreq: .200000003
-  lastScanTime: .00737300003
+  lastScanTime: .216437995
   inGameDebugPath: 
   isScanning: 0
   showGraphs: 1
@@ -698,11 +703,6 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9593f64d71aa84f3b8edc10cab754762, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
-  m_EditorClassIdentifier: 
-  m_EditorClassIdentifier: 
-  m_EditorClassIdentifier: 
-  m_EditorClassIdentifier: 
   m_EditorClassIdentifier: 
 --- !u!114 &47
 MonoBehaviour:
@@ -782,6 +782,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!33 &578526425
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -951,11 +954,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9593f64d71aa84f3b8edc10cab754762, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EditorClassIdentifier: 
-  m_EditorClassIdentifier: 
-  m_EditorClassIdentifier: 
-  m_EditorClassIdentifier: 
-  m_EditorClassIdentifier: 
 --- !u!119 &1086680573
 Projector:
   m_ObjectHideFlags: 0
@@ -1037,6 +1035,7 @@ Camera:
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_HDR: 0
+  m_OcclusionCulling: 1
 --- !u!1 &1697862784
 GameObject:
   m_ObjectHideFlags: 0
@@ -1083,6 +1082,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!33 &1697862788
 MeshFilter:
   m_ObjectHideFlags: 0

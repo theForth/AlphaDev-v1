@@ -302,7 +302,7 @@ public class ThirdPersonCameraControl : MonoBehaviour
 		private void ThirdPersonCamera ()
 		{
             minDistance = -5f;
-            targetOffset.y = 1.5f;
+            targetOffset.y = 0.9f;
 		}
 		private void FirstPersonCamera ()
 		{

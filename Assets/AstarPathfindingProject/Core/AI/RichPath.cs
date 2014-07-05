@@ -650,7 +650,7 @@ namespace Pathfinding {
 		void FindWalls (int nodeIndex, List<Vector3> wallBuffer, Vector3 position, float range) {
 			
 			if (range <= 0) return;
-			
+
 			bool negAbort = false;
 			bool posAbort = false;
 			
@@ -659,7 +659,7 @@ namespace Pathfinding {
 			position.y = 0;
 			//Looping as 0,-1,1,-2,2,-3,3,-4,4 etc. Avoids code duplication by keeping it to one loop instead of two
 			for (int i=0; !negAbort || !posAbort; i = i < 0 ? -i : -i-1) {
-				
+
 				if (i < 0 && negAbort) continue;
 				if (i > 0 && posAbort) continue;
 				
@@ -676,7 +676,11 @@ namespace Pathfinding {
 				TriangleMeshNode prev = nodeIndex+i-1 < 0 ? null : nodes[nodeIndex+i-1];
 				TriangleMeshNode node = nodes[nodeIndex+i];
 				TriangleMeshNode next = nodeIndex+i+1 >= nodes.Count ? null : nodes[nodeIndex+i+1];
-				
+
+				if ( node.Destroyed ) {
+					break;
+				}
+
 				if ((node.ClosestPointOnNodeXZ (position)-position).sqrMagnitude > range) {
 					if (i < 0) negAbort = true;
 					else posAbort = true;

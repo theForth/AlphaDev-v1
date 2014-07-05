@@ -6,6 +6,7 @@ using System.Collections.Generic;
 //[RequireComponent(typeof(SimpleRpgAnimator))]
 public class PokemonController : MonoBehaviour
 {
+    //********************Movement*************************************************
 		public bool clickToMove = false;
 		public List<string> clickableTags = new List<string> ();
 		public bool keyboardControl = true;
@@ -40,7 +41,11 @@ public class PokemonController : MonoBehaviour
 		private Transform _t;
 		private CharacterController _controller;
 		//private PlayerAnimatorController _animator;
-	
+	//*********************************************************************************************
+
+    //**********************************SkillListener*********************************************
+      public static int selectedMoveIndex = 0;
+      private PokemonObj pokemonObj;
 		public bool Grounded {
 				get { return _grounded; }
 				set { _grounded = value; }
@@ -81,6 +86,7 @@ public class PokemonController : MonoBehaviour
 		{
 				_t = transform;
 				_controller = GetComponent<CharacterController> ();
+                pokemonObj = GetComponent<PokemonObj>();
 				//_animator = GetComponent<PlayerAnimatorController> ();
 				ani = GetComponent<Animator> ();
 				_controller.slopeLimit = slopeLimit;
@@ -96,7 +102,18 @@ public class PokemonController : MonoBehaviour
 			_running = !_running;
 		}
 		*/
-		
+          
+                selectedMoveIndex = Input.GetKeyDown(KeyCode.Alpha1) ? 0 : selectedMoveIndex;
+                selectedMoveIndex = Input.GetKeyDown(KeyCode.Alpha2) ? 1 : selectedMoveIndex;
+                selectedMoveIndex= Input.GetKeyDown(KeyCode.Alpha3) ? 2 : selectedMoveIndex;
+               selectedMoveIndex= Input.GetKeyDown(KeyCode.Alpha4) ? 3 : selectedMoveIndex;
+               if (Input.GetMouseButtonDown(1))
+               {
+                   pokemonObj.CastMove(selectedMoveIndex);
+               }
+        
+
+            
 				// If user middle-clicks, toggle autorun on/off
 				if (Input.GetMouseButtonDown (2)) {
 						_autorun = !_autorun;

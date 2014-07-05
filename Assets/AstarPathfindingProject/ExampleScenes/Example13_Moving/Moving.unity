@@ -4,13 +4,12 @@
 SceneSettings:
   m_ObjectHideFlags: 0
   m_PVSData: 
-  m_QueryMode: 1
   m_PVSObjectsArray: []
   m_PVSPortalsArray: []
   m_OcclusionBakeSettings:
-    viewCellSize: 1
-    bakeMode: 2
-    memoryUsage: 10485760
+    smallestOccluder: 5
+    smallestHole: .25
+    backfaceThreshold: 100
 --- !u!104 &2
 RenderSettings:
   m_Fog: 0
@@ -23,6 +22,7 @@ RenderSettings:
   m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: .5
   m_FlareStrength: 1
+  m_FlareFadeSpeed: 3
   m_HaloTexture: {fileID: 0}
   m_SpotCookie: {fileID: 0}
   m_ObjectHideFlags: 0
@@ -231,6 +231,7 @@ Camera:
   m_RenderingPath: 1
   m_TargetTexture: {fileID: 0}
   m_HDR: 0
+  m_OcclusionCulling: 1
 --- !u!23 &327
 Renderer:
   m_ObjectHideFlags: 0
@@ -249,6 +250,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!33 &429
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -306,7 +310,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   astarData:
     hasBeenReverted: 0
-    data: 504b0304140000080800f8a48a43a0952fefdb010000530300000b0024006772617068302e6a736f6e0a00200000000000010018008ad3ab96dff5ce018ad3ab96dff5ce0180d3ab96dff5ce017d924d6fa3301086ff8bcf24229000e1d8b4ea1e36cd0a7aa8b6ea616206b06aecac31cd4795ffbe63c8d76ea58a039ac7ef8c99f7e593559d2858fac93e4076c852369fc688b318a69094eba04c4625c4d12c0a79c08b290418b3a3c7780d06b845934121ba96a5fe3821aa95d59d59c2eec1186d581a10432973714027990ce50f14556d1df0671edb827c87b5c4330dae682145b3763a9235b0cba5ded09cd0efab87a2c29fa82a5b538f4342655809ad86db428f6121ac36cf42e28026017da33d952fffd5bf4fb54230d8da9c5ebc5e29b97fa19312648b1eeb5a74d3da0b3028f103947d34b0a9f3ce94c071a90b67e3bd7ed236c33f9d30c848092db945f72cb494a2407333e47cb4c4b676c3ade96ef1331a03427de506af6a7e1a9b9d4fefd18290b41459536ac3b1b8d39d2ada052a12b8c077e4acc7f62c4dc6611484f1dc6307968ec2f13c8ca3701e4c8fff760e26f67d93a131a00427613c0bfacea93f8efd244ea2a3cba77dbff9a946336216aa658f5fdf3cd6d67aebf65d75560a85e7351c7e2203175a29e496d2bcfa64071f726836e7442964a18415207fa10269f7fd4af4975cdc52d0b83432e4644c1f13855118d83e8a43a32ff60955ea9c93a16ad5379fae6cc01ab1bb2c42f257dffbf6793b1eff02504b0304140000080800f8a48a43bd2f60107800000086000000090024006d6574612e6a736f6e0a00200000000000010018004ee2ab96dff5ce0144e2ab96dff5ce0144e2ab96dff5ce011d8cb10e82301400ffe5cdd8485b28b23ab819e36a189eed2b74e095d062628cff2e75bbe1ee3ef0a23585c8d083124ad41a2a18575ca6047dbde316dc4e0f386943d418d4d8f9a7f4ddc1a3699b5659699d464906860af27ba12bcef42f6e98271fd8051ec59d2ca67c29dfe27174748e1be7221e87ef0f504b01022d00140000080800f8a48a43a0952fefdb010000530300000b00240000000000000000000000000000006772617068302e6a736f6e0a00200000000000010018008ad3ab96dff5ce018ad3ab96dff5ce0180d3ab96dff5ce01504b01022d00140000080800f8a48a43bd2f601078000000860000000900240000000000000000000000280200006d6574612e6a736f6e0a00200000000000010018004ee2ab96dff5ce0144e2ab96dff5ce0144e2ab96dff5ce01504b05060000000002000200b8000000eb0200000000
+    data: 504b0304140000080800558ecc44a3c5ca50d80100004b0300000b0024006772617068302e6a736f6e0a00200000000000010018000a96ce105686cf010096ce105686cf01f695ce105686cf017d924f6fa33010c5bf8bcf34221002e5b869d53d6c9a15f4506dd5c3c40c60d5d859639a3f15df7dc71092ac565a7140f3f39b31f31e5facea44c1d22ff609b24396b2fb458c18c5b080a4dc0665725742bc8c96210f78b1800063d67b8cd760805b341914a26b59eacf12a25a59dd99351c1e8dd186a50131943217277492f9587e4751d5d6013ff2d81ee4076c254e34b8a29514cdd6e948d6c021977a4773427fa81e8b0a7fa0aa6c4d3d0e09956125b41a6f0b3d8685b0dabc0889239a07f48df65cbe52edfbd7fa174b177eec318560b0b539bd78bd51f2f84a2725c8163dd6b5e8a6b5176050e22728fb646057e79d2981e35a17cec607fdac6d86bf3b619091125a728bee5969294581e666c874b4c6b676c3ade96ef10b1a0342fdcb0d5ed5fc3c369b4e1fd082906e498f95da702cbee94e15ed0a15095ce00772d663479626b3701984f1bdc74e4390fddf1da379837e3e360494dc3c8ca360e858f8b3d84fe264d9bb5cda8f9b9fe92e2266a15a0ff8eddd636dadf76ecf4d67a550387dbec3cf64dc4a2b85dc528a577fecb87f0ecd6e4a92c2154a5801f2272a90f638ac427fc7c525058d4b21434e860cf150088581fd933835fa629b50a5ce3919a93643f3f9ca06ac1187cb22247ff3bdff3eef7dff07504b0304140000080800558ecc449aab0c287600000083000000090024006d6574612e6a736f6e0a002000000000000100180014a5ce105686cf0114a5ce105686cf0114a5ce105686cf011d8cb10e82301400ffe5cd48b4b414591ddc8c61350ccff6153af84a683121847f97badd70771b7c698e3e30b450950a0a18669cc608ede5c0c5db835e70959a486994d8b8b770cdc9a1ae555d1961ac44411afa02d23ad1033ff42f9e9846e7d97a1eca8e0cc674cfdfec71b0740b0ba72c9efbfd07504b01022d00140000080800558ecc44a3c5ca50d80100004b0300000b00240000000000000000000000000000006772617068302e6a736f6e0a00200000000000010018000a96ce105686cf010096ce105686cf01f695ce105686cf01504b01022d00140000080800558ecc449aab0c2876000000830000000900240000000000000000000000250200006d6574612e6a736f6e0a002000000000000100180014a5ce105686cf0114a5ce105686cf0114a5ce105686cf01504b05060000000002000200b8000000e60200000000
     data_backup: 
     data_cachedStartup: 
     revertData: 
@@ -374,7 +378,7 @@ MonoBehaviour:
   minAreaSize: 0
   limitGraphUpdates: 1
   maxGraphUpdateFreq: .200000003
-  lastScanTime: .258976996
+  lastScanTime: .530700982
   inGameDebugPath: 
   isScanning: 0
   showGraphs: 1
@@ -439,6 +443,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!33 &75320169
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -493,6 +500,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!33 &119187358
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -600,6 +610,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!33 &210472794
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -668,6 +681,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!33 &217078093
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -778,6 +794,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!33 &282797980
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -831,6 +850,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!33 &398554068
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -957,6 +979,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!33 &669218225
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1281,6 +1306,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!33 &1197591320
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1334,6 +1362,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!33 &1233996660
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1389,6 +1420,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!33 &1249349047
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1474,9 +1508,6 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
-  m_UserAABB:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0, y: 0, z: 0}
 --- !u!4 &1301288359
 Transform:
   m_ObjectHideFlags: 0
@@ -1600,9 +1631,6 @@ Animation:
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
-  m_UserAABB:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0, y: 0, z: 0}
 --- !u!1 &1408774412
 GameObject:
   m_ObjectHideFlags: 0
@@ -1672,7 +1700,7 @@ GUIText:
   m_FontStyle: 0
   m_Color:
     serializedVersion: 2
-    rgba: 4280756007
+    rgba: 4294967295
   m_PixelCorrect: 1
   m_RichText: 1
 --- !u!23 &1411031183
@@ -1693,6 +1721,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!4 &1411031184
 Transform:
   m_ObjectHideFlags: 0
@@ -1751,6 +1782,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!33 &1431238253
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1873,6 +1907,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!33 &1595050251
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1979,6 +2016,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!33 &1677584531
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2032,6 +2072,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!33 &1750886336
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2111,6 +2154,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!33 &1923660327
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2164,6 +2210,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!33 &1929568311
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2208,6 +2257,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!33 &1973545645
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2302,6 +2354,9 @@ Renderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortingLayerID: 0
 --- !u!33 &1993601891
 MeshFilter:
   m_ObjectHideFlags: 0

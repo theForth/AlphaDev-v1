@@ -27,7 +27,7 @@ public class PopulateDB : MonoBehaviour {
 		moveData = new List<MoveData>{};
 		pokeData = new List<PokeData>{};
 		moveData.Add (new MoveData{
-			Id = 33f,
+			Id = 33,
 			Name = "Tackle",
 			LongText = "Tackle mock textS",
 			PP = 35f,
@@ -39,7 +39,7 @@ public class PopulateDB : MonoBehaviour {
 		});
 
 		moveData.Add (new MoveData{
-			Id = 45f,
+			Id = 45,
 			Name = "Growl",
 			LongText = "Growl mock textS",
 			PP = 40f,
@@ -51,7 +51,7 @@ public class PopulateDB : MonoBehaviour {
 		});
 
 		moveData.Add (new MoveData{
-			Id = 73f,
+			Id = 73,
 			Name = "Leech Seed",
 			LongText = "Leech Seed mock textS",
 			PP = 10f,
@@ -63,7 +63,7 @@ public class PopulateDB : MonoBehaviour {
 		});
 
 		moveData.Add (new MoveData{
-			Id = 22f,
+			Id = 22,
 			Name = "Vine Whip",
 			LongText = "Vine Whip mock textS",
 			PP = 25f,
@@ -71,11 +71,13 @@ public class PopulateDB : MonoBehaviour {
 			DamageType = "Grass",
 			Power = 45f,
 			PokemonId = 1,
-			ShortEffect = "Vine Whip mock textL"
+			ShortEffect = "Vine Whip mock textL",
+            CoolDown = 1
+
 		});
 
 		moveData.Add (new MoveData{
-			Id = 98f,
+			Id = 98,
 			Name = "Quick Attack",
 			LongText = "Quick Attack mock textS",
 			PP = 30f,
@@ -83,23 +85,25 @@ public class PopulateDB : MonoBehaviour {
 			DamageType = "Physical",
 			Power = 40f,
 			PokemonId = 25,
-			ShortEffect = "Quick Attack mock textL"
+			ShortEffect = "Quick Attack mock textL",
+              CoolDown = 1
 		});
 
 		moveData.Add (new MoveData{
-			Id = 85f,
-			Name = "Thunderbolt",
+			Id = 85,
+			Name = "Thunder",
 			LongText = "Thunderbolt mock textS",
 			PP = 15f,
 			Accuracy = 100f,
 			DamageType = "Electric",
 			Power = 90f,
 			PokemonId = 25,
-			ShortEffect = "Thunderbolt mock textL"
+			ShortEffect = "Thunderbolt mock textL",
+            CoolDown = 1
 		});
 
 		moveData.Add (new MoveData{
-			Id = 104f,
+			Id = 104,
 			Name = "Double Team",
 			LongText = "Double Team mock textS",
 			PP = 15f,
@@ -111,7 +115,7 @@ public class PopulateDB : MonoBehaviour {
 		});
 
 		moveData.Add (new MoveData{
-			Id = 45f,
+			Id = 45,
 			Name = "Growl",
 			LongText = "Growl mock textS",
 			PP = 40f,
@@ -123,7 +127,7 @@ public class PopulateDB : MonoBehaviour {
 		});
 
 		moveData.Add (new MoveData{
-			Id = 55f,
+			Id = 55,
 			Name = "Water Gun",
 			LongText = "Water Gun mock textS",
 			PP = 25f,
@@ -135,7 +139,7 @@ public class PopulateDB : MonoBehaviour {
 		});
 
 		moveData.Add (new MoveData{
-			Id = 45f,
+			Id = 45,
 			Name = "Growl",
 			LongText = "Growl mock textS",
 			PP = 40f,
@@ -147,7 +151,7 @@ public class PopulateDB : MonoBehaviour {
 		});
 
 		moveData.Add (new MoveData{
-			Id = 33f,
+			Id = 33,
 			Name = "Tackle",
 			LongText = "Tackle mock textS",
 			PP = 35f,
@@ -159,7 +163,7 @@ public class PopulateDB : MonoBehaviour {
 		});
 
 		moveData.Add (new MoveData{
-			Id = 110f,
+			Id = 110,
 			Name = "Withdraw",
 			LongText = "Withdraw mock textS",
 			PP = 40f,
@@ -171,7 +175,7 @@ public class PopulateDB : MonoBehaviour {
 		});
 
 		moveData.Add (new MoveData{
-			Id = 10f,
+			Id = 10,
 			Name = "Scratch",
 			LongText = "Scratch mock textS",
 			PP = 35f,
@@ -183,7 +187,7 @@ public class PopulateDB : MonoBehaviour {
 		});
 
 		moveData.Add (new MoveData{
-			Id = 45f,
+			Id = 45,
 			Name = "Growl",
 			LongText = "Growl mock textS",
 			PP = 40f,
@@ -195,7 +199,7 @@ public class PopulateDB : MonoBehaviour {
 		});
 
 		moveData.Add (new MoveData{
-			Id = 52f,
+			Id = 52,
 			Name = "Ember",
 			LongText = "Ember mock textS",
 			PP = 25f,
@@ -207,7 +211,7 @@ public class PopulateDB : MonoBehaviour {
 		});
 
 		moveData.Add (new MoveData{
-			Id = 108f,
+			Id = 108,
 			Name = "Smokescreen",
 			LongText = "Smokescreen mock textS",
 			PP = 20f,
@@ -300,7 +304,7 @@ public class PopulateDB : MonoBehaviour {
 			string accuracy = obj["accuracy"].str;
 			if(accuracy == null){accuracy = "-1";} 
 			moveData.Add (new MoveData{
-				Id = float.Parse(obj["move_id"].str),
+				Id = int.Parse(obj["move_id"].str),
 				Name = obj["name"].str,
 				LongText = obj["text"].str,
 				PP = float.Parse(obj["pp"].str),

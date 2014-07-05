@@ -1,9 +1,14 @@
 //#define ASTARDEBUG
+#if UNITY_4_3 || UNITY_4_4 || UNITY_4_2 || UNITY_4_1 || UNITY_4_0
+#define UNITY_LESS_4_5
+#endif
+
 using UnityEngine;
 using System.Collections;
 using Pathfinding;
 using Pathfinding.RVO;
 using System.Collections.Generic;
+using Pathfinding.RVO.Sampled;
 
 namespace Pathfinding.RVO {
 	/** RVO Character Controller.
@@ -25,47 +30,97 @@ namespace Pathfinding.RVO {
 	public class RVOController : MonoBehaviour {
 		
 		/** Radius of the agent */
+#if !UNITY_LESS_4_5
+		[Tooltip("Radius of the agent")]
+#endif
 		public float radius = 5;
 		
 		/** Max speed of the agent. In units/second */
+#if !UNITY_LESS_4_5
+		[Tooltip("Max speed of the agent. In world units/second")]
+#endif
 		public float maxSpeed = 2;
 		
 		/** Height of the agent. In world units */
+#if !UNITY_LESS_4_5
+		[Tooltip("Height of the agent. In world units")]
+#endif
 		public float height = 1;
 		
 		/** A locked unit cannot move. Other units will still avoid it. But avoidance quailty is not the best. */ 
+#if !UNITY_LESS_4_5
+		[Tooltip("A locked unit cannot move. Other units will still avoid it. But avoidance quailty is not the best")]
+#endif
 		public bool locked = false;
 		
 		/** Automatically set #locked to true when desired velocity is approximately zero.
 		 * This prevents other units from pushing them away when they are supposed to e.g block a choke point.
 		 */
+#if !UNITY_LESS_4_5
+		[Tooltip("Automatically set #locked to true when desired velocity is approximately zero")]
+#endif
 		public bool lockWhenNotMoving = true;
 		
 		/** How far in the time to look for collisions with other agents */
+#if !UNITY_LESS_4_5
+		[Tooltip("How far in the time to look for collisions with other agents")]
+#endif
 		public float agentTimeHorizon = 2;
-		
+
+		[HideInInspector]
 		/** How far in the time to look for collisions with obstacles */
 		public float obstacleTimeHorizon = 2;
 		
 		/** Maximum distance to other agents to take them into account for collisions.
 		  * Decreasing this value can lead to better performance, increasing it can lead to better quality of the simulation.
 		  */
+#if !UNITY_LESS_4_5
+		[Tooltip("Maximum distance to other agents to take them into account for collisions.\n" +
+		         "Decreasing this value can lead to better performance, increasing it can lead to better quality of the simulation")]
+#endif
 		public float neighbourDist = 10;
 		
 		/** Max number of other agents to take into account.
 		 * A smaller value can reduce CPU load, a higher value can lead to better local avoidance quality.
 		 */
+#if !UNITY_LESS_4_5
+		[Tooltip("Max number of other agents to take into account.\n" +
+		         "A smaller value can reduce CPU load, a higher value can lead to better local avoidance quality.")]
+#endif
 		public int maxNeighbours = 10;
 		
 		/** Layer mask for the ground.
-		 * The RVOController will raycast down to check for the ground to figure out where to place the agent */
+		 * The RVOController will raycast down to check for the ground to figure out where to place the agent.
+		 */
+#if !UNITY_LESS_4_5
+		[Tooltip("Layer mask for the ground. The RVOController will raycast down to check for the ground to figure out where to place the agent")]
+#endif
 		public LayerMask mask = -1;
+
+		/** Specifies the avoidance layer for this agent.
+		 * The #CollidesWith mask on other agents will determine if they will avoid this agent.
+		 */
+		public RVOLayer layer = RVOLayer.DefaultAgent;
 		
+		/** Layer mask specifying which layers this agent will avoid.
+		 * You can set it as CollidesWith = RVOLayer.DefaultAgent | RVOLayer.Layer3 | RVOLayer.Layer6 ...
+		 * 
+		 * This can be very useful in games which have multiple teams of some sort.
+		 * For example you usually want that the team agents avoid each other, but you do not want
+		 * them to avoid the enemies.
+		 * 
+		 * \see http://en.wikipedia.org/wiki/Mask_(computing)
+		 */
+		[Pathfinding.AstarEnumFlag]
+		public RVOLayer collidesWith = (RVOLayer)(-1);
+
+		[HideInInspector]
 		/** An extra force to avoid walls.
 		 * This can be good way to reduce "wall hugging" behaviour.
 		 */
 		public float wallAvoidForce = 1;
-		
+
+		[HideInInspector]
 		/** How much the wallAvoidForce decreases with distance.
 		 * The strenght of avoidance is:
 		 * \code str = 1/dist*wallAvoidFalloff \endcode
@@ -75,11 +130,17 @@ namespace Pathfinding.RVO {
 		public float wallAvoidFalloff = 1;
 		
 		/** Center of the agent relative to the pivot point of this game object */
+#if !UNITY_LESS_4_5
+		[Tooltip("Center of the agent relative to the pivot point of this game object")]
+#endif
 		public Vector3 center;
-		
+
 		/** Reference to the internal agent */
 		private IAgent rvoAgent;
-		
+
+		public bool enableRotation = true;
+		public float rotationSpeed = 30;
+
 		/** Reference to the rvo simulator */
 		private Simulator simulator;
 		
@@ -95,7 +156,7 @@ namespace Pathfinding.RVO {
 		//Can cause unity serialization failures if the variable is not always included
 		public bool debug = false;
 	#else
-		[HideInInspector]
+		//[HideInInspector]
 		public bool debug = false;
 	#endif
 		
@@ -115,6 +176,9 @@ namespace Pathfinding.RVO {
 		}
 		
 		public void OnDisable () {
+
+			if ( simulator == null ) return;
+
 			//Remove the agent from the simulation but keep the reference
 			//this component might get enabled and then we can simply
 			//add it to the simulation again
@@ -133,6 +197,9 @@ namespace Pathfinding.RVO {
 		}
 		
 		public void OnEnable () {
+
+			if ( simulator == null ) return;
+
 			//We might have an rvoAgent
 			//which was disabled previously
 			//if so, we can simply add it to the simulation again
@@ -155,10 +222,12 @@ namespace Pathfinding.RVO {
 			rvoAgent.ObstacleTimeHorizon = obstacleTimeHorizon;
 			rvoAgent.Locked = locked;
 			rvoAgent.MaxNeighbours = maxNeighbours;
-	#if ASTARDEBUG
+	//#if ASTARDEBUG
 			rvoAgent.DebugDraw = debug;
-	#endif
+	//#endif
 			rvoAgent.NeighbourDist = neighbourDist;
+			rvoAgent.Layer = layer;
+			rvoAgent.CollidesWith = collidesWith;
 		}
 		
 		/** Set the desired velocity for the agent */
@@ -183,6 +252,9 @@ namespace Pathfinding.RVO {
 		}
 		
 		public void Update () {
+
+			if ( rvoAgent == null ) return;
+
 			if (lastPosition != tr.position) {
 				Teleport (tr.position);
 			}
@@ -213,7 +285,7 @@ namespace Pathfinding.RVO {
 			if (wallAvoidFalloff > 0 && wallAvoidForce > 0) {
 				List<ObstacleVertex> obst = rvoAgent.NeighbourObstacles;
 	
-				for (int i=0;i<obst.Count;i++) {
+				if ( obst != null ) for (int i=0;i<obst.Count;i++) {
 					Vector3 a = obst[i].position;
 					Vector3 b = obst[i].next.position;
 	
@@ -234,6 +306,8 @@ namespace Pathfinding.RVO {
 	
 			tr.position = realPos + Vector3.up*height*0.5f - center;
 			lastPosition = tr.position;
+
+			if ( enableRotation && velocity != Vector3.zero ) transform.rotation = Quaternion.Lerp (transform.rotation, Quaternion.LookRotation ( velocity ), Time.deltaTime * rotationSpeed * Mathf.Min (velocity.magnitude, 0.2f) );
 		}
 		
 		private static readonly Color GizmoColor = new Color(240/255f,213/255f,30/255f);

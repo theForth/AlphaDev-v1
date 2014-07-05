@@ -1,4 +1,7 @@
 //#define ASTARDEBUG
+#define TUPLE
+#pragma warning disable 162
+#pragma warning disable 429
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,293 +10,72 @@ using Pathfinding;
 namespace Pathfinding {
 //Binary Heap
 	
-#if false
-	/** Binary heap implementation. Binary heaps are really fast for ordering nodes in a way that makes it possible to get the node with the lowest F score. Also known as a priority queue.
-	 * \see http://en.wikipedia.org/wiki/Binary_heap
-	 */
-	public class BinaryHeap { 
-		public GraphNode[] binaryHeap; 
-		public int numberOfItems; 
-	
-		public BinaryHeap( int numberOfElements ) { 
-			binaryHeap = new GraphNode[numberOfElements]; 
-			numberOfItems = 2;
-		} 
-		
-		/** Adds a node to the heap */
-		public void Add(GraphNode node) {
-			
-			if (node == null) {
-				Debug.Log ("Sending null node to BinaryHeap");
-				return;
-			}
-			
-			if (numberOfItems == binaryHeap.Length) {
-				Debug.Log ("Forced to discard nodes because of binary heap size limit, please consider increasing the size ("+numberOfItems +" "+binaryHeap.Length+")");
-				numberOfItems--;
-			}
-			
-			binaryHeap[numberOfItems] = node;
-			//node.heapIndex = numberOfItems;//Heap index
-			
-			int bubbleIndex = numberOfItems;
-			uint nodeF = node.f;
-			
-			while (bubbleIndex != 1) {
-				int parentIndex = bubbleIndex / 2;
-				
-				/*if (binaryHeap[parentIndex] == null) {
-					Debug.Log ("WUT!!");
-					return;
-				}*/
-				
-				if (nodeF <= binaryHeap[parentIndex].f) {
-				   
-					//binaryHeap[bubbleIndex].f <= binaryHeap[parentIndex].f) { /** \todo Wouldn't it be more efficient with '<' instead of '<=' ? * /
-					//Node tmpValue = binaryHeap[parentIndex];
-					
-					//tmpValue.heapIndex = bubbleIndex;//HeapIndex
-					
-					binaryHeap[bubbleIndex] = binaryHeap[parentIndex];
-					binaryHeap[parentIndex] = node;//binaryHeap[bubbleIndex];
-					
-					//binaryHeap[bubbleIndex].heapIndex = bubbleIndex; //Heap index
-					//binaryHeap[parentIndex].heapIndex = parentIndex; //Heap index
-					
-					bubbleIndex = parentIndex;
-				} else {
-				/*if (binaryHeap[bubbleIndex].f <= binaryHeap[parentIndex].f) { /** \todo Wouldn't it be more efficient with '<' instead of '<=' ? *
-					Node tmpValue = binaryHeap[parentIndex];
-					
-					//tmpValue.heapIndex = bubbleIndex;//HeapIndex
-					
-					
-					binaryHeap[parentIndex] = binaryHeap[bubbleIndex];
-					binaryHeap[bubbleIndex] = tmpValue;
-					
-					bubbleIndex = parentIndex;
-				} else {*/
-					break;
-				}
-			}
-								 
-			numberOfItems++;
-		}
-		
-		/** Returns the node with the lowest F score from the heap */
-		public GraphNode Remove() {
-			numberOfItems--;
-			GraphNode returnItem = binaryHeap[1];
-			
-		 	//returnItem.heapIndex = 0;//Heap index
-			
-			binaryHeap[1] = binaryHeap[numberOfItems];
-			//binaryHeap[1].heapIndex = 1;//Heap index
-			
-			int swapItem = 1, parent = 1;
-			
-			do {
-				parent = swapItem;
-				int p2 = parent * 2;
-				if ((p2 + 1) <= numberOfItems) {
-					// Both children exist
-					if (binaryHeap[parent].f >= binaryHeap[p2].f) {
-						swapItem = p2;//2 * parent;
-					}
-					if (binaryHeap[swapItem].f >= binaryHeap[p2 + 1].f) {
-						swapItem = p2 + 1;
-					}
-				} else if ((p2) <= numberOfItems) {
-					// Only one child exists
-					if (binaryHeap[parent].f >= binaryHeap[p2].f) {
-						swapItem = p2;
-					}
-				}
-				
-				// One if the parent's children are smaller or equal, swap them
-				if (parent != swapItem) {
-					GraphNode tmpIndex = binaryHeap[parent];
-					//tmpIndex.heapIndex = swapItem;//Heap index
-					
-					binaryHeap[parent] = binaryHeap[swapItem];
-					binaryHeap[swapItem] = tmpIndex;
-					
-					//binaryHeap[parent].heapIndex = parent;//Heap index
-				}
-			} while (parent != swapItem);
-			
-			return returnItem;
-		}
-		
-		/** \deprecated Use #Add instead */
-		public void BubbleDown (GraphNode node) {
-			
-			//int bubbleIndex = node.heapIndex;
-			int bubbleIndex = 0;
-			
-			if (bubbleIndex < 1 || bubbleIndex > numberOfItems) {
-				Debug.LogError ("Node is not in the heap (index "+bubbleIndex+")");
-				Add (node);
-				return;
-			}
-			
-			while (bubbleIndex != 1) {
-				int parentIndex = bubbleIndex / 2;
-				
-				/* Can be optimized to use 'node' instead of 'binaryHeap[bubbleIndex]' */
-				if (binaryHeap[bubbleIndex].f <= binaryHeap[parentIndex].f) {
-					GraphNode tmpValue = binaryHeap[parentIndex];
-					binaryHeap[parentIndex] = binaryHeap[bubbleIndex];
-					binaryHeap[bubbleIndex] = tmpValue;
-					
-					//binaryHeap[parentIndex].heapIndex = parentIndex;
-					//binaryHeap[bubbleIndex].heapIndex = bubbleIndex;
-					
-					bubbleIndex = parentIndex;
-				} else {
-					return;
-				}
-			}
-		}
-		
-		/** Rebuilds the heap by trickeling down all items. Called after the hTarget on a path has been changed */
-		public void Rebuild () {
-if DEBUG
-			int changes = 0;
-endif
-			
-			for (int i=2;i<numberOfItems;i++) {
-				int bubbleIndex = i;
-				GraphNode node = binaryHeap[i];
-				uint nodeF = node.f;
-				while (bubbleIndex != 1) {
-					int parentIndex = bubbleIndex / 2;
-					
-					if (nodeF < binaryHeap[parentIndex].f) {
-						//Node tmpValue = binaryHeap[parentIndex];
-						binaryHeap[bubbleIndex] = binaryHeap[parentIndex];
-						binaryHeap[parentIndex] = node;
-						bubbleIndex = parentIndex;
-if DEBUG
-						changes++;
-endif
-					} else {
-						break;
-					}
-				}
-				
-			}
-			
-if DEBUG
-			Debug.Log ("+++ Rebuilt Heap - "+changes+" changes +++");
-endif
-			
-		}
-		
-		/** Rearranges a node in the heap which has got it's F score changed (only works for a lower F score). \warning This is slow, often it is more efficient to just add the node to the heap again */
-		public void Rearrange (Node node) {
-			
-			for (int i=0;i<numberOfItems;i++) {
-				if (binaryHeap[i] == node) {
-					
-					int bubbleIndex = i;
-					while (bubbleIndex != 1) {
-						int parentIndex = bubbleIndex / 2;
-						
-						if (binaryHeap[bubbleIndex].f <= binaryHeap[parentIndex].f) {
-							Node tmpValue = binaryHeap[parentIndex];
-							binaryHeap[parentIndex] = binaryHeap[bubbleIndex];
-							binaryHeap[bubbleIndex] = tmpValue;
-							bubbleIndex = parentIndex;
-						} else {
-							return;
-						}
-					}
-				}
-			}
-		}
-		
-		/** Returns a nicely formatted string describing the tree structure. '!!!' marks after a value means that the tree is not correct at that node (i.e it should be swapped with it's parent) */
-		public override string ToString () {
-			System.Text.StringBuilder text = new System.Text.StringBuilder ();
-			
-			text.Append ("\n=== Writing Binary Heap ===\n");
-			text.Append ("Number of items: ").Append (numberOfItems-2);
-			text.Append ("Capacity: ").Append (binaryHeap.Length);
-			text.Append ("\n");
-			if (numberOfItems > 2) {
-				WriteBranch (1,1,text);
-			}
-			text.Append ("\n\n");
-			return text.ToString ();
-		}
-		
-		/** Writes a branch of the tree to a StringBuilder. Used by #ToString */
-		private void WriteBranch (int index, int depth, System.Text.StringBuilder text) {
-			text.Append ("\n");
-			for (int i=0;i<depth;i++) {
-				text.Append ("   ");
-			}
-			
-			text.Append (binaryHeap[index].f);
-			
-			if (index > 1) {
-				int parentIndex = index / 2;
-						
-				if (binaryHeap[index].f < binaryHeap[parentIndex].f) {
-					text.Append ("	!!!");
-				}
-			}
-			
-			int p2 = index * 2;
-			if ((p2 + 1) <= numberOfItems) {
-				// Both children exist
-				WriteBranch (p2,depth+1,text);
-				WriteBranch (p2+1,depth+1,text);
-			} else if (p2 <= numberOfItems) {
-				// Only one child exists
-				WriteBranch (p2,depth+1,text);
-			}
-		}
-		
-	}
-#endif
-	
 	/** Binary heap implementation. Binary heaps are really fast for ordering nodes in a way that makes it possible to get the node with the lowest F score. Also known as a priority queue.
 	 * \see http://en.wikipedia.org/wiki/Binary_heap
 	 */
 	public class BinaryHeapM { 
-		private PathNode[] binaryHeap; 
+
 		public int numberOfItems; 
 		
 		public float growthFactor = 2;
-		
+
+		public const int D = 4;
+
+#if TUPLE
+		private Tuple[] binaryHeap; 
+
+		private struct Tuple {
+			public uint F;
+			public PathNode node;
+
+			public Tuple ( uint F, PathNode node ) {
+				this.F = F;
+				this.node = node;
+			}
+		}
+#else
+		private PathNode[] binaryHeap; 
+#endif
+
 		public BinaryHeapM ( int numberOfElements ) { 
+#if TUPLE
+			binaryHeap = new Tuple[numberOfElements]; 
+#else
 			binaryHeap = new PathNode[numberOfElements]; 
-			numberOfItems = 2;
-		} 
+#endif
+			numberOfItems = 0;
+		}
 		
 		public void Clear () {
-			numberOfItems = 1;
+			numberOfItems = 0;
 		}
 		
 		public PathNode GetNode (int i) {
+#if TUPLE
+			return binaryHeap[i].node;
+#else
 			return binaryHeap[i];
+#endif
 		}
-		
+
 		/** Adds a node to the heap */
 		public void Add(PathNode node) {
 			
 			if (node == null) throw new System.ArgumentNullException ("Sending null node to BinaryHeap");
-			
+
 			if (numberOfItems == binaryHeap.Length) {
 				int newSize = System.Math.Max(binaryHeap.Length+4,(int)System.Math.Round(binaryHeap.Length*growthFactor));
 				if (newSize > 1<<18) {
 					throw new System.Exception ("Binary Heap Size really large (2^18). A heap size this large is probably the cause of pathfinding running in an infinite loop. " +
 						"\nRemove this check (in BinaryHeap.cs) if you are sure that it is not caused by a bug");
 				}
-				
+
+#if TUPLE
+				Tuple[] tmp = new Tuple[newSize];
+#else
 				PathNode[] tmp = new PathNode[newSize];
+#endif
+
 				for (int i=0;i<binaryHeap.Length;i++) {
 					tmp[i] = binaryHeap[i];
 				}
@@ -305,17 +87,28 @@ endif
 				//Debug.Log ("Forced to discard nodes because of binary heap size limit, please consider increasing the size ("+numberOfItems +" "+binaryHeap.Length+")");
 				//numberOfItems--;
 			}
-			
-			binaryHeap[numberOfItems] = node;
+
+#if TUPLE
+			Tuple obj = new Tuple(node.F,node);
+			binaryHeap[numberOfItems] = obj;
+#else
+			PathNode obj = node;
+			binaryHeap[numberOfItems] = obj;
+#endif
+
 			//node.heapIndex = numberOfItems;//Heap index
-			
+
 			int bubbleIndex = numberOfItems;
 			uint nodeF = node.F;
+			//Debug.Log ( "Adding node with " + nodeF + " to index " + numberOfItems);
 			
-			while (bubbleIndex != 1) {
-				int parentIndex = bubbleIndex / 2;
-				
+			while (bubbleIndex != 0 ) {
+				int parentIndex = (bubbleIndex-1) / D;
+
+				//Debug.Log ("Testing " + nodeF + " < " + binaryHeap[parentIndex].F);
+
 				if (nodeF < binaryHeap[parentIndex].F) {
+
 				   	
 					//binaryHeap[bubbleIndex].f <= binaryHeap[parentIndex].f) { /* \todo Wouldn't it be more efficient with '<' instead of '<=' ? * /
 					//Node tmpValue = binaryHeap[parentIndex];
@@ -323,76 +116,136 @@ endif
 					//tmpValue.heapIndex = bubbleIndex;//HeapIndex
 					
 					binaryHeap[bubbleIndex] = binaryHeap[parentIndex];
-					binaryHeap[parentIndex] = node;//binaryHeap[bubbleIndex];
+					binaryHeap[parentIndex] = obj;
 					
 					//binaryHeap[bubbleIndex].heapIndex = bubbleIndex; //Heap index
 					//binaryHeap[parentIndex].heapIndex = parentIndex; //Heap index
 					
 					bubbleIndex = parentIndex;
 				} else {
-				/*if (binaryHeap[bubbleIndex].f <= binaryHeap[parentIndex].f) { /* \todo Wouldn't it be more efficient with '<' instead of '<=' ? *
-					Node tmpValue = binaryHeap[parentIndex];
-					
-					//tmpValue.heapIndex = bubbleIndex;//HeapIndex
-					
-					
-					binaryHeap[parentIndex] = binaryHeap[bubbleIndex];
-					binaryHeap[bubbleIndex] = tmpValue;
-					
-					bubbleIndex = parentIndex;
-				} else {*/
 					break;
 				}
 			}
-								 
+
 			numberOfItems++;
+
+			//Validate();
 		}
 		
 		/** Returns the node with the lowest F score from the heap */
 		public PathNode Remove() {
 			numberOfItems--;
-			PathNode returnItem = binaryHeap[1];
-			
+#if TUPLE
+			PathNode returnItem = binaryHeap[0].node;
+#else
+			PathNode returnItem = binaryHeap[0];
+#endif
+
 		 	//returnItem.heapIndex = 0;//Heap index
 			
-			binaryHeap[1] = binaryHeap[numberOfItems];
+			binaryHeap[0] = binaryHeap[numberOfItems];
 			//binaryHeap[1].heapIndex = 1;//Heap index
 			
-			int swapItem = 1, parent = 1;
+			int swapItem = 0, parent = 0;
 			
 			do {
-				parent = swapItem;
-				int p2 = parent * 2;
-				if (p2 + 1 <= numberOfItems) {
-					// Both children exist
-					if (binaryHeap[parent].F >= binaryHeap[p2].F) {
-						swapItem = p2;//2 * parent;
+
+				if (D == 0) {
+					parent = swapItem;
+					int p2 = parent * D;
+					if (p2 + 1 <= numberOfItems) {
+						// Both children exist
+						if (binaryHeap[parent].F > binaryHeap[p2].F) {
+							swapItem = p2;//2 * parent;
+						}
+						if (binaryHeap[swapItem].F > binaryHeap[p2 + 1].F) {
+							swapItem = p2 + 1;
+						}
+					} else if ((p2) <= numberOfItems) {
+						// Only one child exists
+						if (binaryHeap[parent].F > binaryHeap[p2].F) {
+							swapItem = p2;
+						}
 					}
-					if (binaryHeap[swapItem].F >= binaryHeap[p2 + 1].F) {
-						swapItem = p2 + 1;
+				} else {
+					parent = swapItem;
+					uint swapF = binaryHeap[swapItem].F;
+					int pd = parent * D + 1;
+					
+					if (D >= 1 && pd+0 <= numberOfItems && binaryHeap[pd+0].F < swapF ) {
+						swapF = binaryHeap[pd+0].F;
+						swapItem = pd+0;
 					}
-				} else if ((p2) <= numberOfItems) {
-					// Only one child exists
-					if (binaryHeap[parent].F >= binaryHeap[p2].F) {
-						swapItem = p2;
+					
+					if (D >= 2 && pd+1 <= numberOfItems && binaryHeap[pd+1].F < swapF ) {
+						swapF = binaryHeap[pd+1].F;
+						swapItem = pd+1;
+					}
+					
+					if (D >= 3 && pd+2 <= numberOfItems && binaryHeap[pd+2].F < swapF ) {
+						swapF = binaryHeap[pd+2].F;
+						swapItem = pd+2;
+					}
+					
+					if (D >= 4 && pd+3 <= numberOfItems && binaryHeap[pd+3].F < swapF ) {
+						swapF = binaryHeap[pd+3].F;
+						swapItem = pd+3;
+					}
+					
+					if (D >= 5 && pd+4 <= numberOfItems && binaryHeap[pd+4].F < swapF ) {
+						swapF = binaryHeap[pd+4].F;
+						swapItem = pd+4;
+					}
+					
+					if (D >= 6 && pd+5 <= numberOfItems && binaryHeap[pd+5].F < swapF ) {
+						swapF = binaryHeap[pd+5].F;
+						swapItem = pd+5;
+					}
+					
+					if (D >= 7 && pd+6 <= numberOfItems && binaryHeap[pd+6].F < swapF ) {
+						swapF = binaryHeap[pd+6].F;
+						swapItem = pd+6;
+					}
+					
+					if (D >= 8 && pd+7 <= numberOfItems && binaryHeap[pd+7].F < swapF ) {
+						swapF = binaryHeap[pd+7].F;
+						swapItem = pd+7;
+					}
+					
+					if (D >= 9 && pd+8 <= numberOfItems && binaryHeap[pd+8].F < swapF ) {
+						swapF = binaryHeap[pd+8].F;
+						swapItem = pd+8;
 					}
 				}
 				
 				// One if the parent's children are smaller or equal, swap them
 				if (parent != swapItem) {
-					PathNode tmpIndex = binaryHeap[parent];
+					var tmpIndex = binaryHeap[parent];
 					//tmpIndex.heapIndex = swapItem;//Heap index
 					
 					binaryHeap[parent] = binaryHeap[swapItem];
 					binaryHeap[swapItem] = tmpIndex;
 					
 					//binaryHeap[parent].heapIndex = parent;//Heap index
+				} else {
+					break;
 				}
-			} while (parent != swapItem);
-			
+			} while (true);//parent != swapItem);
+
+			//Validate ();
+
 			return returnItem;
 		}
-		
+
+		void Validate () {
+			for ( int i = 1; i < numberOfItems; i++ ) {
+				int parentIndex = (i-1)/D;
+				if ( binaryHeap[parentIndex].F > binaryHeap[i].F ) {
+					throw new System.Exception ("Invalid state at " + i + ":" +  parentIndex + " ( " + binaryHeap[parentIndex].F + " > " + binaryHeap[i].F + " ) " );
+				}
+			}
+		}
+
 		/** Rebuilds the heap by trickeling down all items.
 		 * Usually called after the hTarget on a path has been changed */
 		public void Rebuild () {
@@ -402,10 +255,10 @@ endif
 			
 			for (int i=2;i<numberOfItems;i++) {
 				int bubbleIndex = i;
-				PathNode node = binaryHeap[i];
+				var node = binaryHeap[i];
 				uint nodeF = node.F;
 				while (bubbleIndex != 1) {
-					int parentIndex = bubbleIndex / 2;
+					int parentIndex = bubbleIndex / D;
 					
 					if (nodeF < binaryHeap[parentIndex].F) {
 						//Node tmpValue = binaryHeap[parentIndex];

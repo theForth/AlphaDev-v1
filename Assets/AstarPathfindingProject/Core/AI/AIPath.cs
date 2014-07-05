@@ -161,6 +161,7 @@ public class AIPath : MonoBehaviour {
 		controller = GetComponent<CharacterController>();
 		navController = GetComponent<NavmeshController>();
 		rvoController = GetComponent<RVOController>();
+		if ( rvoController != null ) rvoController.enableRotation = false;
 		rigid = rigidbody;
 	}
 	

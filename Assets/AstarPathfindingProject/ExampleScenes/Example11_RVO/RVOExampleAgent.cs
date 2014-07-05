@@ -72,8 +72,8 @@ public class RVOExampleAgent : MonoBehaviour {
 			rvoAgent.ObstacleTimeHorizon = obstacleTimeHorizon;
 		}
 		
-		SetTarget (-transform.position);// + transform.forward * 400);
 #endif
+		SetTarget (-transform.position);// + transform.forward * 400);
 		controller = GetComponent<RVOController> ();
 		
 	}
@@ -82,7 +82,8 @@ public class RVOExampleAgent : MonoBehaviour {
 		this.target = target;
 		RecalculatePath ();
 	}
-	
+
+	/** Animate the change of color */
 	public void SetColor (Color col) {
 		if (rends == null) rends = GetComponentsInChildren<MeshRenderer>();
 		foreach (MeshRenderer rend in rends) {
@@ -156,11 +157,6 @@ public class RVOExampleAgent : MonoBehaviour {
 			RecalculatePath ();
 		}
 		
-		Vector3 velocity = controller.velocity;
-		
-		if (velocity != Vector3.zero)
-			transform.rotation = Quaternion.LookRotation (velocity);
-		
 		Vector3 dir = Vector3.zero;
 		
 		Vector3 pos = transform.position;
@@ -185,71 +181,5 @@ public class RVOExampleAgent : MonoBehaviour {
 		}
 		
 		controller.Move (dir);
-		
-		/*Vector3 pos = position;
-		
-		RaycastHit hit;
-#if !AstarRelease
-		float height = astarRVO ? rvoAgent.Height : RVO.Simulator.Instance.getAgentHeight	(agentID);
-#else
-		float height = rvoAgent.Height;
-#endif
-		
-		Vector3 realPos = rvoAgent.Position;
-		
-		if (Physics.Raycast	(realPos + Vector3.up*height,Vector3.down, out hit, float.PositiveInfinity, mask)) {
-			realPos.y = hit.point.y;
-		} else {
-			realPos.y = 0;
-		}
-		
-#if !AstarRelease
-		if (!astarRVO)
-			RVO.Simulator.Instance.setAgentYPosition(agentID,pos.y);
-		else
-#endif
-			rvoAgent.Position = realPos;
-		
-		Vector3 velocity;
-		
-#if !AstarRelease
-		if (!astarRVO) {
-			RVO.Vector2 _vel = RVO.Simulator.Instance.getAgentVelocity (agentID);
-			velocity = new Vector3(-_vel.x(),0,-_vel.y());
-		} else
-#endif
-			velocity = rvoAgent.Velocity;
-		
-		transform.position = pos;
-		
-		
-		
-		//Debug.DrawRay (pos,dir*10,Color.blue);
-		
-		if (astarRVO) {
-			List<ObstacleVertex> obst = rvoAgent.NeighbourObstacles;
-			
-			Vector3 force = Vector3.zero;
-			
-			for (int i=0;i<obst.Count;i++) {
-				Vector3 a = obst[i].position;
-				Vector3 b = obst[i].next.position;
-				
-				Vector3 closest = position - Mathfx.NearestPointStrict (a,b,position);
-				
-				if (closest == a || closest == b) continue;
-				
-				float dist = closest.sqrMagnitude;
-				closest /= dist*falloff;
-				force += closest;
-			}
-			Debug.DrawRay (position, dir + force*wallAvoidForce);
-			
-			rvoAgent.DesiredVelocity = dir + force*wallAvoidForce; 
-		} else {
-#if !AstarRelease
-			RVO.Simulator.Instance.setAgentPrefVelocity (agentID, new RVO.Vector2 (dir.x,dir.z));
-#endif
-		}*/
 	}
 }

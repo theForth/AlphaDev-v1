@@ -308,7 +308,7 @@ namespace Pathfinding {
 		
 		protected void RebuildOpenList () {
 			BinaryHeapM heap = pathHandler.GetHeap();
-			for (int j=1;j<heap.numberOfItems;j++) {
+			for (int j=0;j<heap.numberOfItems;j++) {
 				PathNode nodeR = heap.GetNode(j);
 				nodeR.H = this.CalculateHScore (nodeR.node);
 			}

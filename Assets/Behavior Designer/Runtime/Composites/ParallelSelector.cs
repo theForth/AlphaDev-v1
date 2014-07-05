@@ -49,7 +49,7 @@ namespace BehaviorDesigner.Runtime.Tasks
             executionStatus[childIndex] = childStatus;
         }
 
-        public override void OnObservationalAbort(int childIndex)
+        public override void OnConditionalAbort(int childIndex)
         {
             // Start from the beginning on an abort
             currentChildIndex = 0;

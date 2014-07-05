@@ -175,7 +175,7 @@ namespace Pathfinding {
 					//Make sure the width & depths stay the same
 					graph.width = newWidth;
 					graph.depth = newDepth;
-					AstarPath.active.AutoScan ();
+					AutoScan ();
 				}
 			}
 			
@@ -526,7 +526,7 @@ namespace Pathfinding {
 				Vector3 newCenter = graph.matrix.MultiplyPoint3x4 (new Vector3 (newWidth/2F,0,newDepth/2F));
 				graph.center = newCenter;
 				graph.GenerateMatrix ();
-				AstarPath.active.AutoScan ();
+				AutoScan ();
 			//}
 			
 			GUI.changed = true;
@@ -603,7 +603,7 @@ namespace Pathfinding {
 			
 			if ((graph.GetType() == typeof(GridGraph) && graph.nodes == null) || (graph.uniformWidthDepthGrid && graph.depth*graph.width != graph.nodes.Length) || graph.matrix != matrixPre) {
 				//Rescan the graphs
-				if (AstarPath.active.AutoScan ()) {
+				if (AutoScan ()) {
 					GUI.changed = true;
 				}
 			}

@@ -494,12 +494,18 @@ namespace Pathfinding
 		
 		public void WriteChildren (int level) {
 			for (int i=0;i<level;i++) {
+#if !NETFX_CORE
 				Console.Write ("  ");
+#endif
 			}
 			if (mesh != null) {
+#if !NETFX_CORE
 				Console.WriteLine ("Leaf ");//+triangle.ToString ());
+#endif
 			} else {
+#if !NETFX_CORE
 				Console.WriteLine ("Box ");//+rect.ToString ());
+#endif
 				c1.WriteChildren (level+1);
 				c2.WriteChildren (level+1);
 			}

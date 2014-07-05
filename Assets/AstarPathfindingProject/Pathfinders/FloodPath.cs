@@ -6,14 +6,14 @@ using System.Collections.Generic;
 namespace Pathfinding
 {
 	/** Floods the area completely for easy computation of any path to a single point.
-This path is a bit special, because it does not do anything useful by itself. What it does is that it calculates paths to all nodes it can reach, floods it.
+This path is a bit special, because it does not do anything useful by itself. What it does is that it calculates paths to all nodes it can reach, it floods the graph.
 This data will remain stored in the path. Then you can call a FloodPathTracer path, that path will trace the path from it's starting point all the way to where this path started flooding and thus generating a path extremely quickly.\n
 It is very useful in for example TD (Tower Defence) games where all your AIs will walk to the same point, but from different places, and you do not update the graph or change the target point very often,
 what changes is their positions and new AIs spawn all the time (which makes it hard to use the MultiTargetPath).\n
 
 With this path type, it can all be handled easily.
 - At start, you simply start ONE FloodPath and save the reference (it will be needed later).
-- Then when a unit is spawned or needs it's path recalculated, start a FloodPathTracer path from it's position.
+- Then when a unit is spawned or needs its path recalculated, start a FloodPathTracer path from it's position.
    It will then find the shortest path to the point specified when you called the FloodPath extremely quickly.
 - If you update the graph (for example place a tower in a TD game) or need to change the target point, you simply call a new FloodPath (and store it's reference).
  
@@ -25,36 +25,19 @@ Here follows some example code of the above list of steps:
 public static FloodPath fpath;
 
 public void Start () {
-	fpath = new FloodPath (someTargetPosition, null);
+	fpath = FloodPath.Construct (someTargetPosition, null);
 	AstarPath.StartPath (fpath);
 }
 \endcode
 
 When searching for a new path to \a someTargetPosition from let's say \a transform.position, you do
 \code
-FloodPathTracer fpathTrace = new FloodPathTracer (transform.position,fpath,null);
+FloodPathTracer fpathTrace = FloodPathTracer.Construct (transform.position,fpath,null);
 seeker.StartPath (fpathTrace,OnPathComplete);
 \endcode
 Where OnPathComplete is your callback function.
-
-\note This path type relies on pathIDs being stored in the graph, but pathIDs are only 16 bits, meaning they will overflow after 65536 paths.
-When that happens all pathIDs in the graphs will be cleared, so at that point you will also need to recalculate the FloodPath.\n
-To do so, register to the AstarPath.On65KOverflow callback:
-\code
-public void Start () {
-	AstarPath.On65KOverflow += MyCallbackFunction;
-}
-
-public void MyCallbackFunction () {
-	//The callback is nulled every time it is called, so we need to register again
-	AstarPath.On65KOverflow += MyCallbackFunction;
-	
-	//Recalculate the path
-} \endcode 
-This will happen after a very long time into the game, but it will happen eventually (look at the 'path number' value on the log messages when paths are completed for a hint about when)
 \n
-\n
-Anothing thing to note is that if you are using NNConstraints on the FloodPathTracer, they must always inherit from Pathfinding.PathIDConstraint.\n
+Another thing to note is that if you are using NNConstraints on the FloodPathTracer, they must always inherit from Pathfinding.PathIDConstraint.\n
 The easiest is to just modify the instance of PathIDConstraint which is created as the default one.
 
 \astarpro

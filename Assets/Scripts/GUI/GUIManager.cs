@@ -5,6 +5,9 @@ public class GUIManager : MonoBehaviour {
 
 
     public static bool FloatingHealthBarActive;
+    public GameObject ActivePokemonHPBar;
+    public GameObject ActivePokemonXPBar;
+    public GameObject ActivePokemonPPBar;
 	// Use this for initialization
 	void Start () {
 

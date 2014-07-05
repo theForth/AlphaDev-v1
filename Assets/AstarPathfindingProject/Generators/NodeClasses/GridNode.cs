@@ -1,5 +1,6 @@
 //#define ASTAR_NoTagPenalty
 #define ASTAR_GRID_CUSTOM_CONNECTIONS //Disabling this will reduce memory usage and improve performance slightly but you will not be able to add custom connections to grid nodes using e.g the NodeLink component.
+
 using System;
 using Pathfinding;
 using System.Collections.Generic;
@@ -9,13 +10,14 @@ using UnityEngine;
 namespace Pathfinding {
 	public class GridNode : GraphNode
 	{
-		
+
 		public GridNode (AstarPath astar) : base (astar) {
 		}
-		
+
+#if !ASTAR_NO_GRID_GRAPH
 		private static GridGraph[] _gridGraphs = new GridGraph[0];
 		public static GridGraph GetGridGraph (uint graphIndex) { return _gridGraphs[(int)graphIndex]; }
-		
+
 #if ASTAR_GRID_CUSTOM_CONNECTIONS
 		public GraphNode[] connections;
 		public uint[] connectionCosts;
@@ -54,15 +56,35 @@ namespace Pathfinding {
 		const int GridFlagsEdgeNodeOffset = 10;
 		const int GridFlagsEdgeNodeMask = 1 << GridFlagsEdgeNodeOffset;
 		
-		
+		/** Returns true if the node has a connection in the specified direction.
+		 * The dir parameter corresponds to directions in the grid as:
+		 \code
+[0] = -Y
+[1] = +X
+[2] = +Y
+[3] = -X
+[4] = -Y+X
+[5] = +Y+X
+[6] = +Y-X
+[7] = -Y-X
+		\endcode
+
+		* \see SetConnectionInternal
+		*/
 		public bool GetConnectionInternal (int dir) {
 			return (gridFlags >> dir & GridFlagsConnectionBit0) != 0;
 		}
 		
+		/** Enables or disables a connection in a specified direction on the graph.
+		 *	\see GetConnectionInternal
+		*/
 		public void SetConnectionInternal (int dir, bool value) {
 			unchecked { gridFlags = (ushort)(gridFlags & ~((ushort)1 << GridFlagsConnectionOffset << dir) | (value ? (ushort)1 : (ushort)0) << GridFlagsConnectionOffset << dir); }
 		}
 		
+		/** Disables all grid connections from this node.
+		 * \note Other nodes might still be able to get to this node. Therefore it is recommended to also disable the relevant connections on adjacent nodes.
+		*/
 		public void ResetConnectionsInternal () {
 			unchecked {
 				gridFlags = (ushort)(gridFlags & ~GridFlagsConnectionMask);
@@ -77,7 +99,10 @@ namespace Pathfinding {
 				unchecked { gridFlags = (ushort)(gridFlags & ~GridFlagsEdgeNodeMask | (value ? GridFlagsEdgeNodeMask : 0)); }
 			}
 		}
-			
+		
+		/** Stores walkability before erosion is applied.
+		  * Used by graph updating.
+		*/
 		public bool WalkableErosion {
 			get {
 				return (gridFlags & GridFlagsWalkableErosionMask) != 0;
@@ -87,6 +112,7 @@ namespace Pathfinding {
 			}
 		}
 		
+		/** Temporary variable used by graph updating */
 		public bool TmpWalkable {
 			get {
 				return (gridFlags & GridFlagsWalkableTmpMask) != 0;
@@ -446,5 +472,32 @@ namespace Pathfinding {
 			position = new Int3(ctx.reader.ReadInt32(), ctx.reader.ReadInt32(), ctx.reader.ReadInt32());
 			gridFlags = ctx.reader.ReadUInt16();
 		}
+#else
+
+		public override void AddConnection (GraphNode node, uint cost)
+		{
+			throw new NotImplementedException ();
+		}
+
+		public override void ClearConnections (bool alsoReverse)
+		{
+			throw new NotImplementedException ();
+		}
+
+		public override void GetConnections (GraphNodeDelegate del)
+		{
+			throw new NotImplementedException ();
+		}
+
+		public override void Open (Path path, PathNode pathNode, PathHandler handler)
+		{
+			throw new NotImplementedException ();
+		}
+
+		public override void RemoveConnection (GraphNode node)
+		{
+			throw new NotImplementedException ();
+		}
+#endif
 	}
 }

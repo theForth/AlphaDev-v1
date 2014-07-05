@@ -43,10 +43,14 @@ public class LightweightRVO : MonoBehaviour {
 	
 	/** How far in the future too look for agents */
 	public float agentTimeHorizon = 10;
+
+	[HideInInspector]
 	/** How far in the future too look for obstacles */
 	public float obstacleTimeHorizon = 10;
+
 	/** Max number of neighbour agents to take into account */
 	public int maxNeighbours = 10;
+
 	/** Max distance for other agents to take them into account */
 	public float neighbourDist = 15;
 	
@@ -73,7 +77,8 @@ public class LightweightRVO : MonoBehaviour {
 	Vector2[] uv;
 	int[] tris;
 	Color[] meshColors;
-	
+	Vector3[] interpolatedVelocities;
+
 	public void Start () {
 		mesh = new Mesh();
 		RVOSimulator rvoSim = FindObjectOfType (typeof(RVOSimulator)) as RVOSimulator;
@@ -89,9 +94,33 @@ public class LightweightRVO : MonoBehaviour {
 	
 	public void OnGUI () {
 		if (GUILayout.Button ("2")) CreateAgents (2);
+		if (GUILayout.Button ("10")) CreateAgents (10);
 		if (GUILayout.Button ("100")) CreateAgents (100);
+		if (GUILayout.Button ("500")) CreateAgents (500);
 		if (GUILayout.Button ("1000")) CreateAgents (1000);
 		if (GUILayout.Button ("5000")) CreateAgents (5000);
+
+		GUILayout.Space (5);
+
+		if (GUILayout.Button ("Random Streams")) {
+			type = RVOExampleType.RandomStreams;
+			CreateAgents ( agents != null ? agents.Count : 100 );
+		}
+
+		if (GUILayout.Button ("Line")) {
+			type = RVOExampleType.Line;
+			CreateAgents ( agents != null ? Mathf.Min (agents.Count, 100) : 10 );
+		}
+
+		if (GUILayout.Button ("Circle")) {
+			type = RVOExampleType.Circle;
+			CreateAgents ( agents != null ? agents.Count : 100 );
+		}
+
+		if (GUILayout.Button ("Point")) {
+			type = RVOExampleType.Point;
+			CreateAgents ( agents != null ? agents.Count : 100 );
+		}
 	}
 	
 	private float uniformDistance (float radius) {
@@ -118,7 +147,7 @@ public class LightweightRVO : MonoBehaviour {
 				IAgent agent = sim.AddAgent (pos);
 				agents.Add (agent);
 				goals.Add (-pos);
-				colors.Add (HSVToRGB (i*360.0f/agentCount,1,1));
+				colors.Add (HSVToRGB (i*360.0f/agentCount,0.8f,0.6f));
 			}
 		} else if (type == RVOExampleType.Line) {
 			
@@ -135,7 +164,7 @@ public class LightweightRVO : MonoBehaviour {
 				IAgent agent = sim.AddAgent (pos);
 				agents.Add (agent);
 				goals.Add (new Vector3 (0,pos.y,0));
-				colors.Add (HSVToRGB (i*360.0f/agentCount,1,1));
+				colors.Add (HSVToRGB (i*360.0f/agentCount,0.8f,0.6f));
 			}
 		} else if (type == RVOExampleType.RandomStreams) {
 			float circleRad = Mathf.Sqrt(agentCount*radius*radius*4 / Mathf.PI) * exampleScale * 0.05f;
@@ -147,7 +176,7 @@ public class LightweightRVO : MonoBehaviour {
 				IAgent agent = sim.AddAgent (pos);
 				agents.Add (agent);
 				goals.Add (new Vector3 (Mathf.Cos (targetAngle), 0, Mathf.Sin (targetAngle)) * uniformDistance(circleRad));
-				colors.Add (HSVToRGB (targetAngle*Mathf.Rad2Deg,1,1));
+				colors.Add (HSVToRGB (targetAngle*Mathf.Rad2Deg,0.8f,0.6f));
 			}
 			
 		}
@@ -183,16 +212,27 @@ public class LightweightRVO : MonoBehaviour {
 			dir = Vector3.ClampMagnitude (dir,1);
 			agents[i].DesiredVelocity = dir * agents[i].MaxSpeed;
 		}
-			
+
+		if ( interpolatedVelocities == null || interpolatedVelocities.Length < agents.Count ) {
+			var vel = new Vector3[agents.Count];
+			if ( interpolatedVelocities != null ) for ( int i = 0; i < interpolatedVelocities.Length; i++ ) {
+				vel[i] = interpolatedVelocities[i];
+			}
+			interpolatedVelocities = vel;
+		}
+
 		for (int i=0;i<agents.Count;i++) {
 			IAgent agent = agents[i];
 			
+			interpolatedVelocities[i] = Vector3.Lerp (interpolatedVelocities[i], agent.Velocity, agent.Velocity.magnitude * Time.deltaTime*4f);
+
 			//Create a square with the "forward" direction along the agent's velocity
-			Vector3 forward = agent.Velocity.normalized * agent.Radius;
+			Vector3 forward = interpolatedVelocities[i].normalized * agent.Radius;
 			if (forward == Vector3.zero) forward = new Vector3(0,0,agent.Radius);
 			Vector3 right = Vector3.Cross (Vector3.up, forward);
 			Vector3 orig = agent.InterpolatedPosition + renderingOffset;
-			
+
+
 			int vc = 4*i;
 			int tc = 2*3*i;
 			verts[vc+0] = (orig + forward - right);

@@ -101,6 +101,78 @@ namespace Pathfinding
 			return list;
 		}
 		
+		/** Returns all nodes within a given node-distance from the seed node.
+		 * This function performs a BFS (breadth-first-search) or flood fill of the graph and returns all nodes within a specified node distance which can be reached from
+		 * the seed node. In almost all cases when \a depth is large enough this will be identical to returning all nodes which have the same area as the seed node.
+		 * In the editor areas are displayed as different colors of the nodes.
+		 * The only case where it will not be so is when there is a one way path from some part of the area to the seed node
+		 * but no path from the seed node to that part of the graph.
+		 * 
+		 * The returned list is sorted by node distance from the seed node
+		 * i.e distance is measured in the number of nodes the shortest path from \a seed to that node would pass through.
+		 * Note that the distance measurement does not take heuristics, penalties or tag penalties.
+		 * 
+		 * Depending on the number of nodes, this function can take quite some time to calculate
+		 * so don't use it too often or it might affect the framerate of your game.
+		 * 
+		 * \param seed The node to start the search from.
+		 * \param depth The maximum node-distance from the seed node.
+		 * \param tagMask Optional mask for tags. This is a bitmask.
+		 *
+		 * \returns A List<Node> containing all nodes reachable within a specified node distance from the seed node.
+		 * For better memory management the returned list should be pooled, see Pathfinding.Util.ListPool
+		 */
+		public static List<GraphNode> BFS (GraphNode seed, int depth, int tagMask = -1) {
+			#if ASTAR_PROFILE
+			System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
+			watch.Start ();
+			#endif
+			List<GraphNode> que = Pathfinding.Util.ListPool<GraphNode>.Claim ();
+			List<GraphNode> list = Pathfinding.Util.ListPool<GraphNode>.Claim ();
+
+			/** \todo Pool */
+			Dictionary<GraphNode,int> map = new Dictionary<GraphNode,int>();
+
+			int currentDist = 0;
+			GraphNodeDelegate callback;
+			if (tagMask == -1) {
+				callback = delegate (GraphNode node) {
+					if (node.Walkable && !map.ContainsKey (node)) {
+						map.Add (node, currentDist+1);
+						list.Add (node);
+						que.Add (node);
+					}
+				};
+			} else {
+				callback = delegate (GraphNode node) {
+					if (node.Walkable && ((tagMask >> (int)node.Tag) & 0x1) != 0 && !map.ContainsKey (node)) {
+						map.Add (node, currentDist+1);
+						list.Add (node);
+						que.Add (node);
+					}
+				};
+			}
+
+			map[seed] = currentDist;
+			callback (seed);
+
+
+			while (que.Count > 0 && currentDist < depth ) {
+				GraphNode n = que[que.Count-1];
+				currentDist = map[n];
+				que.RemoveAt ( que.Count-1 );
+				n.GetConnections (callback);
+			}
+			
+			Pathfinding.Util.ListPool<GraphNode>.Release (que);
+			
+			#if ASTAR_PROFILE
+			watch.Stop ();
+			Debug.Log ((1000*watch.Elapsed.TotalSeconds).ToString("0.0 ms"));
+			#endif
+			return list;
+		}
+
 		/** Returns points in a spiral centered around the origin with a minimum clearance from other points.
 		 * The points are laid out on the involute of a circle
 		 * \see http://en.wikipedia.org/wiki/Involute
@@ -159,6 +231,22 @@ namespace Pathfinding
 		}
 		
 		/** Will calculate a number of points around \a p which are on the graph and are separated by \a clearance from each other.
+		 * This is like GetPointsAroundPoint except that \a previousPoints are treated as being in world space.
+		 * The average of the points will be found and then that will be treated as the group center.
+		 */
+		public static void GetPointsAroundPointWorld (Vector3 p, IRaycastableGraph g, List<Vector3> previousPoints, float radius, float clearanceRadius) {
+			if ( previousPoints.Count == 0 ) return;
+
+			Vector3 avg = Vector3.zero;
+			for ( int i = 0; i < previousPoints.Count; i++ ) avg += previousPoints[i];
+			avg /= previousPoints.Count;
+
+			for ( int i = 0; i < previousPoints.Count; i++ ) previousPoints[i] -= avg;
+
+			GetPointsAroundPoint ( p, g, previousPoints, radius, clearanceRadius );
+		}
+
+		/** Will calculate a number of points around \a p which are on the graph and are separated by \a clearance from each other.
 		 * The maximum distance from \a p to any point will be \a radius.
 		 * Points will first be tried to be laid out as \a previousPoints and if that fails, random points will be selected.
 		 * This is great if you want to pick a number of target points for group movement. If you pass all current agent points from e.g the group's average position
@@ -167,6 +255,7 @@ namespace Pathfinding
 		 * 
 		 * \param g The graph to use for linecasting. If you are only using one graph, you can get this by AstarPath.active.graphs[0] as IRaycastableGraph.
 		 * Note that not all graphs are raycastable, recast, navmesh and grid graphs are raycastable. On recast and navmesh it works the best.
+		 * \param previousPoints The points to use for reference. Note that these should not be in world space. They are treated as relative to \a p.
 		 */
 		public static void GetPointsAroundPoint (Vector3 p, IRaycastableGraph g, List<Vector3> previousPoints, float radius, float clearanceRadius) {
 			
@@ -184,10 +273,10 @@ namespace Pathfinding
 				return;
 			}
 			
-			clearanceRadius *= clearanceRadius;
 			
 			// Make sure the enclosing circle has a radius which can pack circles with packing density 0.5
-			radius = Mathf.Max (radius, Mathf.Sqrt(previousPoints.Count*clearanceRadius*2));
+			radius = Mathf.Max (radius, 1.4142f*clearanceRadius*Mathf.Sqrt(previousPoints.Count));//Mathf.Sqrt(previousPoints.Count*clearanceRadius*2));
+			clearanceRadius *= clearanceRadius;
 			
 			for (int i=0;i<previousPoints.Count;i++) {
 				
@@ -206,9 +295,8 @@ namespace Pathfinding
 				int tests = 0;
 				do {
 					
-					
 					Vector3 pt = p + dir;
-					
+
 					if (g.Linecast (p, pt, nn.node, out hit)) {
 						pt = hit.point;
 					}
@@ -230,6 +318,7 @@ namespace Pathfinding
 					}
 					
 					if (!worked) {
+
 						// Abort after 5 tries
 						if (tests > 8) {
 							worked = true;
@@ -277,7 +366,9 @@ namespace Pathfinding
 						float a = System.Math.Abs(Polygon.TriangleArea(tnode.GetVertex(0), tnode.GetVertex(1), tnode.GetVertex(2)));
 						tot += a;
 						accs.Add (tot);
-					} else {
+					}
+#if !ASTAR_NO_GRID_GRAPH
+					 else {
 						GridNode gnode = nodes[i] as GridNode;
 						
 						if (gnode != null) {
@@ -289,6 +380,7 @@ namespace Pathfinding
 							accs.Add(tot);
 						}
 					}
+#endif
 				}
 				
 				for (int i=0;i<count;i++) {
@@ -333,6 +425,7 @@ namespace Pathfinding
 							
 							p = ((Vector3)(node.GetVertex(1)-node.GetVertex(0)))*v1 + ((Vector3)(node.GetVertex(2)-node.GetVertex(0)))*v2 + (Vector3)node.GetVertex(0);
 						} else {
+#if !ASTAR_NO_GRID_GRAPH
 							GridNode gnode = nodes[v] as GridNode;
 							
 							if (gnode != null) {
@@ -341,7 +434,9 @@ namespace Pathfinding
 								float v1 = (float)rnd.NextDouble();
 								float v2 = (float)rnd.NextDouble();
 								p = (Vector3)gnode.position + new Vector3(v1 - 0.5f, 0, v2 - 0.5f) * gg.nodeSize;
-							} else {
+							} else
+#endif 
+							{
 								//Point nodes have no area, so we break directly instead
 								pts.Add ((Vector3)nodes[v].position);
 								break;

@@ -2,6 +2,8 @@
 	#define UNITY_LE_4_3
 #endif
 
+//#define ASTAR_NO_JSON
+
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -381,7 +383,43 @@ namespace Pathfinding {
 		 */
 		public virtual void PostDeserialization () {
 		}
-		
+
+#if ASTAR_NO_JSON
+		public virtual void SerializeSettings ( GraphSerializationContext ctx ) {
+
+			ctx.writer.Write (guid.ToByteArray());
+			ctx.writer.Write (initialPenalty);
+			ctx.writer.Write (open);
+			ctx.writer.Write (name);
+			ctx.writer.Write (drawGizmos);
+			ctx.writer.Write (infoScreenOpen);
+
+			for ( int i = 0; i < 4; i++ ) {
+				for ( int j = 0; j < 4; j++ ) {
+					ctx.writer.Write (matrix.GetRow(i)[j]);
+				}
+			}
+		}
+
+		public virtual void DeserializeSettings ( GraphSerializationContext ctx ) {
+
+			guid = new Guid(ctx.reader.ReadBytes (16));
+			initialPenalty = ctx.reader.ReadUInt32 ();
+			open = ctx.reader.ReadBoolean();
+			name = ctx.reader.ReadString();
+			drawGizmos = ctx.reader.ReadBoolean();
+			infoScreenOpen = ctx.reader.ReadBoolean();
+
+			for ( int i = 0; i < 4; i++ ) {
+				Vector4 row = Vector4.zero;
+				for ( int j = 0; j < 4; j++ ) {
+					row[j] = ctx.reader.ReadSingle ();
+				}
+				matrix.SetRow (i, row);
+			}
+		}
+#endif
+
 		/** Returns if the node is in the search tree of the path.
 		 * Only guaranteed to be correct if \a path is the latest path calculated.
 		 * Use for gizmo drawing only.

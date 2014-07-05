@@ -22,8 +22,9 @@ public class Trainer : MonoBehaviour
             pokeballProjectileController = hand.GetComponent<PokeballProjectileController>();
             pokeballProjectileController.trainer = this;
 				party = new PokeParty (this);
-           party.AddPokemon(new Pokemon());  //this is pikachu for now
-            
+           party.AddPokemon(PopulateDB.getBasicPokemon(25f));  //this is pikachu for now
+           party.AddPokemon(PopulateDB.getBasicPokemon(1f));
+           Debug.Log(party.GetSlot(0).pokemon.name + "Created");
             //we add all the pokemon into the party here with a for loop. The party also can return a list of ID's which can be used to 
             //prepopulate the pokemon into the RAM instead of hard-disk.
             //populate party

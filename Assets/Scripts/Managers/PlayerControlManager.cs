@@ -33,14 +33,16 @@ Hierarhcy Level 2
         //***********KeyBinding*********************************\\
         public string triggerAxis = "Fire1";
         public string triggerPokeReturn = "PokeReturn";
-        
+        private KGFMapSystem itsKGFMapSystem; 
  
         void Start()
         {
+            itsKGFMapSystem = KGFAccessor.GetObject<KGFMapSystem>();
             trainerObject = GameObject.FindGameObjectWithTag("Player");
             trainer = trainerObject.GetComponent<Trainer>();  
             trainerController = trainerObject.GetComponent<TrainerController>();               //Disable The component as the player will eventuall become AI.
             thirdPersonCameraControl = Camera.main.GetComponent<ThirdPersonCameraControl>();
+
         }
 
         void Update()
@@ -60,8 +62,8 @@ Hierarhcy Level 2
                 //Transition State to not disturb Camera
                    //Set Camera's new target    
                 //Set Camera's new target 
-                trainerController.ani.SetFloat("Speed", 0f); 
-                
+                itsKGFMapSystem.SetTarget(Trainer.ActivePokemon.gameObject);
+                trainerController.ani.SetFloat("Speed", 0f);
                 trainerController.enabled = false;                    //Disable the control script
                       //Set Camera's new target to the newly Active Pokemon   
                 pokeballState = PokeballState.None;                    // The pokemon
@@ -80,8 +82,8 @@ Hierarhcy Level 2
                           playerControlState = PlayerControlState.Trainer;             //Set Global Control State
                           thirdPersonCameraControl.StartTransition(trainerController.transform);     //Camera Transition to Pokemon +  Transition State to not disturb Camera  + Set Camera's new target back to the Trainer    
                           trainerController.enabled = true;
-                          pokeballState = PokeballState.None;                        
-                          
+                          pokeballState = PokeballState.None;
+                          itsKGFMapSystem.SetTarget(trainerObject);
                           // After the PokemonGameObject is disabled/Destroyed and the particle effect
                           // and animation is finished the statewill change
                       }
@@ -94,39 +96,40 @@ Hierarhcy Level 2
             //***************************Pokemon Selection*********************************//
             //This can be moved to the seperate Pokemon Selector script
             //Quick access as PokeIndex can easily updated and sent to GUI. GUI requires quick updates. Having to check into pokeparty everytime to update with slot info is CPU heavy.
+                  if (playerControlState == PlayerControlState.Trainer)
+                  {
+                      if (pokeballState == PokeballState.None || pokeballState == PokeballState.Selecting)  //two states for now. We might decide to have a selecting state
+                      {
+                          PokePartyIndex = Input.GetKeyDown(KeyCode.Alpha1) ? 0 : PokePartyIndex;
+                          PokePartyIndex = Input.GetKeyDown(KeyCode.Alpha2) ? 1 : PokePartyIndex;
+                          PokePartyIndex = Input.GetKeyDown(KeyCode.Alpha3) ? 2 : PokePartyIndex;
+                          PokePartyIndex = Input.GetKeyDown(KeyCode.Alpha4) ? 3 : PokePartyIndex;
+                          PokePartyIndex = Input.GetKeyDown(KeyCode.Escape) ? -1 : PokePartyIndex;
+                          pokeballState = (PokePartyIndex >= 0 && PokePartyIndex < 4) ? PokeballState.Selecting : PokeballState.None;
 
-               if (pokeballState == PokeballState.None || pokeballState == PokeballState.Selecting)  //two states for now. We might decide to have a selecting state
-            {
-                PokePartyIndex = Input.GetKeyDown(KeyCode.Alpha1) ? 0 : PokePartyIndex;
-                PokePartyIndex = Input.GetKeyDown(KeyCode.Alpha2) ? 1 : PokePartyIndex;
-                PokePartyIndex = Input.GetKeyDown(KeyCode.Alpha3) ? 2 : PokePartyIndex;
-                PokePartyIndex = Input.GetKeyDown(KeyCode.Alpha4) ? 3 : PokePartyIndex;
-                PokePartyIndex = Input.GetKeyDown(KeyCode.Escape) ? -1 : PokePartyIndex;
-                pokeballState = (PokePartyIndex >= 0 && PokePartyIndex < 4) ? PokeballState.Selecting : PokeballState.None;
+                          if (pokeballState == PokeballState.Selecting) //Animation State for Throw
+                          {
+                              if (Input.GetAxis(triggerAxis) > 0)
+                              {
+                                  if (trainer.ThrowPokemon(PokePartyIndex) == 1)  //Animation for release should happen here +The Throw was succesful
+                                  {
 
-                if (pokeballState == PokeballState.Selecting) //Animation State for Throw
-                {
-                    if (Input.GetAxis(triggerAxis) > 0)
-                    {
-                        if(trainer.ThrowPokemon( PokePartyIndex ) == 1)  //Animation for release should happen here +The Throw was succesful
-                        {
-                            
-                            //ThirdPersonCameraControl.Controllable = false;
-
-                            
-          
-                        }
-
-                    }
-
-                }
-
-                //*****************************************************************************//
+                                      //ThirdPersonCameraControl.Controllable = false;
 
 
-            }
+
+                                  }
+
+                              }
+
+                          }
+
+                          //*****************************************************************************//
+
+
+                      }
  #endregion
-
+                  }
         }
 
       

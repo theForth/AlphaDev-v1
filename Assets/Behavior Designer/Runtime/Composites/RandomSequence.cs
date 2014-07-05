@@ -66,7 +66,7 @@ namespace BehaviorDesigner.Runtime.Tasks
             executionStatus = childStatus;
         }
 
-        public override void OnObservationalAbort(int childIndex)
+        public override void OnConditionalAbort(int childIndex)
         {
             // Start from the beginning on an abort
             childrenExecutionOrder.Clear();
