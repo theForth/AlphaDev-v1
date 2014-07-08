@@ -7,6 +7,6 @@ Temp
 *.suo
 *.csproj
 *.sln
-*.dll
+
 Debug
 Release
