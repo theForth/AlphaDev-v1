@@ -1,0 +1,17 @@
+Event	ID	Name			Wwise Object Path	Notes
+	728354400	Stop_MusicDemo			\Default Work Unit\Stop_MusicDemo	
+	1954642026	Play_MusicDemo			\Default Work Unit\Play_MusicDemo	
+
+Game Parameter	ID	Name			Wwise Object Path	Notes
+	2346531308	MusicVolume			\Default Work Unit\MusicVolume	
+
+Audio Bus	ID	Name			Wwise Object Path	Notes
+	2346531308	MusicVolume			\Default Work Unit\Master Audio Bus\MusicVolume	
+	3803692087	Master Audio Bus			\Default Work Unit\Master Audio Bus	
+
+In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
+	230457006	Pokemon NXT - Pewter City	C:\Users\Even\Documents\WwiseProjects\PokemonNXTDev\.cache\Windows\sfx\music\pokemon nxt - pewter city_950ff8f3.wem		\Actor-Mixer Hierarchy\MusicPlaylist\MusicDemo\Pokemon NXT - Pewter City		7933786
+	391793705	Pokemon NXT - Arriving At The Indigo Plateau	C:\Users\Even\Documents\WwiseProjects\PokemonNXTDev\.cache\Windows\sfx\music\pokemon nxt - arriving at the indigo plateau_950ff8f3.wem		\Actor-Mixer Hierarchy\MusicPlaylist\MusicDemo\Pokemon NXT - Arriving At The Indigo Plateau		6557275
+	522335922	Pokemon NXT - Hero Theme(2)	C:\Users\Even\Documents\WwiseProjects\PokemonNXTDev\.cache\Windows\sfx\music\pokemon nxt - hero theme(2)_950ff8f3.wem		\Actor-Mixer Hierarchy\MusicPlaylist\MusicDemo\Pokemon NXT - Hero Theme(2)		4859288
+	971927148	Pokemon NXT - Route 1	C:\Users\Even\Documents\WwiseProjects\PokemonNXTDev\.cache\Windows\sfx\music\pokemon nxt - route 1_950ff8f3.wem		\Actor-Mixer Hierarchy\MusicPlaylist\MusicDemo\Pokemon NXT - Route 1		7451150
+
