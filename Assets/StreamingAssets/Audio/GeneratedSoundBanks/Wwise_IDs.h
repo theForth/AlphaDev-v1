@@ -13,13 +13,23 @@ namespace AK
 {
     namespace EVENTS
     {
+        static const AkUniqueID PLAY_HEROTHEME = 3464373413U;
+        static const AkUniqueID PLAY_MUSIC_INDIGOPLATEAU = 3470311514U;
         static const AkUniqueID PLAY_MUSICDEMO = 1954642026U;
+        static const AkUniqueID PLAY_OPENPOKEBALL = 3930672562U;
+        static const AkUniqueID PLAY_PEWTERCITY = 2684889074U;
+        static const AkUniqueID PLAY_POKEBALL = 2572900434U;
+        static const AkUniqueID PLAY_RELEASEPOKEBALL = 1029675917U;
+        static const AkUniqueID PLAY_ROUTE1 = 694852190U;
+        static const AkUniqueID PLAY_THROWPOKEBALL = 1851254290U;
         static const AkUniqueID STOP_MUSICDEMO = 728354400U;
+        static const AkUniqueID STOP_POKEBALL = 984852372U;
     } // namespace EVENTS
 
     namespace GAME_PARAMETERS
     {
         static const AkUniqueID MUSICVOLUME = 2346531308U;
+        static const AkUniqueID SFXVOLUME = 988953028U;
         static const AkUniqueID SS_AIR_FEAR = 1351367891U;
         static const AkUniqueID SS_AIR_FREEFALL = 3002758120U;
         static const AkUniqueID SS_AIR_FURY = 1029930033U;
@@ -43,6 +53,7 @@ namespace AK
         static const AkUniqueID MASTER_AUDIO_BUS = 3803692087U;
         static const AkUniqueID MASTER_SECONDARY_BUS = 805203703U;
         static const AkUniqueID MUSICVOLUME = 2346531308U;
+        static const AkUniqueID SFX = 393239870U;
     } // namespace BUSSES
 
 }// namespace AK

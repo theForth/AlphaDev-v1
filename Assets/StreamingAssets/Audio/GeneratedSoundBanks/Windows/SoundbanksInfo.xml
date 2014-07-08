@@ -24,8 +24,17 @@
 			<ShortName>demoMusic</ShortName>
 			<Path>demoMusic.bnk</Path>
 			<IncludedEvents>
+				<Event Id="3464373413" Name="Play_HeroTheme" />
+				<Event Id="3470311514" Name="Play_Music_IndigoPlateau" />
 				<Event Id="1954642026" Name="Play_MusicDemo" />
+				<Event Id="3930672562" Name="Play_OpenPokeball" />
+				<Event Id="2684889074" Name="Play_PewterCity" />
+				<Event Id="2572900434" Name="Play_PokeBall" />
+				<Event Id="1029675917" Name="Play_ReleasePokeball" />
+				<Event Id="694852190" Name="Play_Route1" />
+				<Event Id="1851254290" Name="Play_ThrowPokeball" />
 				<Event Id="728354400" Name="Stop_MusicDemo" />
+				<Event Id="984852372" Name="Stop_PokeBall" />
 			</IncludedEvents>
 			<IncludedDialogueEvents />
 			<ReferencedStreamedFiles />
@@ -45,6 +54,18 @@
 				<File Id="971927148" Language="SFX">
 					<ShortName>Music\Pokemon NXT - Route 1.wav</ShortName>
 					<Path>sfx\music\pokemon nxt - route 1_950ff8f3.wem</Path>
+				</File>
+				<File Id="1047822742" Language="SFX">
+					<ShortName>OpenPokeball.wav</ShortName>
+					<Path>sfx\openpokeball_950ff8f3.wem</Path>
+				</File>
+				<File Id="225769852" Language="SFX">
+					<ShortName>ReleasePokeball.wav</ShortName>
+					<Path>sfx\releasepokeball_950ff8f3.wem</Path>
+				</File>
+				<File Id="81916733" Language="SFX">
+					<ShortName>ThrowPokeball.wav</ShortName>
+					<Path>sfx\throwpokeball_950ff8f3.wem</Path>
 				</File>
 			</IncludedFullFiles>
 			<IncludedPrefetchFiles />
