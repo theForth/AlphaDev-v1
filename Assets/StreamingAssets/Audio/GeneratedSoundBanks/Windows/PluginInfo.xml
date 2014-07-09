@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PluginInfo Project="PokemonNXTDev" Platform="Windows" Key="882C7C3D-4" Motion="false">
-	<Plugins />
+<PluginInfo Project="PokemonNXTDev" Platform="Windows" Key="BBAAD363-4" Motion="false">
+	<Plugins>
+		<Plugin Name="Wwise Parametric EQ" ID="6881283" />
+		<Plugin Name="Wwise Pitch Shifter" ID="8912899" />
+	</Plugins>
 </PluginInfo>

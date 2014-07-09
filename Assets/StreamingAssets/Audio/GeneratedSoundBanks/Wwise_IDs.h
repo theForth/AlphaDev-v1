@@ -13,10 +13,12 @@ namespace AK
 {
     namespace EVENTS
     {
+        static const AkUniqueID PAUSE_FOOTSTEPS_STONE_SMALL = 2928670655U;
         static const AkUniqueID PLAY_ADAPTIVE_BATTLELOOPS = 3407709558U;
         static const AkUniqueID PLAY_ADAPTIVE_EXPLORELOOPS = 1723535977U;
         static const AkUniqueID PLAY_ADAPTIVE_PALLETTOWNLOOPS = 142412086U;
         static const AkUniqueID PLAY_ADAPTIVEDEMOSWITCH = 730661021U;
+        static const AkUniqueID PLAY_FOOTSTEPS_STONE_SMALL = 3808155561U;
         static const AkUniqueID PLAY_MUSIC_EXPLORELOOPS = 4008751620U;
         static const AkUniqueID PLAY_MUSIC_HEROTHEME = 3749534469U;
         static const AkUniqueID PLAY_MUSIC_INDIGOPLATEAU = 3470311514U;
@@ -28,7 +30,9 @@ namespace AK
         static const AkUniqueID PLAY_POKEMONSFX_THUNDER = 3759659601U;
         static const AkUniqueID PLAY_RELEASEPOKEBALL = 1029675917U;
         static const AkUniqueID PLAY_THROWPOKEBALL = 1851254290U;
+        static const AkUniqueID RESUME_FOOTSTEPS_STONE_SMALL = 3861789398U;
         static const AkUniqueID STOP_ADAPTIVEDEMOSWITCH = 1553919215U;
+        static const AkUniqueID STOP_FOOTSTEPS_STONE_SMALL = 3364357367U;
         static const AkUniqueID STOP_MUSICDEMO = 728354400U;
         static const AkUniqueID STOP_POKEBALL = 984852372U;
     } // namespace EVENTS

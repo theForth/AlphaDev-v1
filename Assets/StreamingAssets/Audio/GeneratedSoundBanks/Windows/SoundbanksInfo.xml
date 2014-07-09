@@ -3,7 +3,7 @@
 	<RootPaths>
 		<ProjectRoot>C:\Users\Even\Documents\WwiseProjects\PokemonNXTDev\</ProjectRoot>
 		<SourceFilesRoot>C:\Users\Even\Documents\WwiseProjects\PokemonNXTDev\.cache\Windows\</SourceFilesRoot>
-		<SoundBanksRoot>C:\Users\Even\Documents\WwiseProjects\PokemonNXTDev\GeneratedSoundBanks\Windows\</SoundBanksRoot>
+		<SoundBanksRoot>C:\Users\Even\Documents\Projects\PokemonNXT\Assets\StreamingAssets\Audio\GeneratedSoundBanks\Windows\</SoundBanksRoot>
 		<ExternalSourcesInputFile></ExternalSourcesInputFile>
 		<ExternalSourcesOutputRoot>C:\Users\Even\Documents\WwiseProjects\PokemonNXTDev\GeneratedSoundBanks\Windows</ExternalSourcesOutputRoot>
 	</RootPaths>
@@ -39,6 +39,7 @@
 				<Event Id="1029675917" Name="Play_ReleasePokeball" />
 				<Event Id="1851254290" Name="Play_ThrowPokeball" />
 				<Event Id="1553919215" Name="Stop_AdaptiveDemoSwitch" />
+				<Event Id="3364357367" Name="Stop_footsteps_stone_small" />
 				<Event Id="728354400" Name="Stop_MusicDemo" />
 				<Event Id="984852372" Name="Stop_PokeBall" />
 			</IncludedEvents>
@@ -129,11 +130,19 @@
 			<ShortName>PokemonSFX_Bank_1</ShortName>
 			<Path>PokemonSFX_Bank_1.bnk</Path>
 			<IncludedEvents>
+				<Event Id="2928670655" Name="Pause_footsteps_stone_small" />
+				<Event Id="3808155561" Name="Play_footsteps_stone_small" />
 				<Event Id="3759659601" Name="Play_PokemonSFX_Thunder" />
+				<Event Id="3861789398" Name="Resume_footsteps_stone_small" />
+				<Event Id="3364357367" Name="Stop_footsteps_stone_small" />
 			</IncludedEvents>
 			<IncludedDialogueEvents />
 			<ReferencedStreamedFiles />
 			<IncludedFullFiles>
+				<File Id="640096203" Language="SFX">
+					<ShortName>PokemonSFX\Footsteps\stone_small.wav</ShortName>
+					<Path>sfx\pokemonsfx\footsteps\stone_small_4786cda3.wem</Path>
+				</File>
 				<File Id="976642226" Language="SFX">
 					<ShortName>Thunder.wav</ShortName>
 					<Path>sfx\thunder_d299d8c1.wem</Path>

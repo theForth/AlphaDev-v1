@@ -25,7 +25,22 @@ public class WwiseAudioDemo : MonoBehaviour {
 		AkSoundEngine.SetSwitch ("AdaptiveDemo", "BaseLoops", gameObject);
 	}
 
-	/*void Update(){
+	void Update(){
+
+		//footsteps control
+		if(Input.GetKeyDown(KeyCode.Space)){
+			AkSoundEngine.PostEvent ("Pause_footsteps_stone_small", gameObject);
+		}
+		if(Input.GetKeyUp(KeyCode.Space)){
+			AkSoundEngine.PostEvent ("Resume_footsteps_stone_small", gameObject);	
+		}
+		if(Input.GetKeyDown("w") || Input.GetKeyDown("a") || Input.GetKeyDown("s") || Input.GetKeyDown("d")){
+			AkSoundEngine.PostEvent ("Stop_footsteps_stone_small", gameObject);	
+			AkSoundEngine.PostEvent ("Play_footsteps_stone_small", gameObject);
+		}//stops footsteps
+		if(Input.GetKey("w")!=true && Input.GetKey("a")!=true && Input.GetKey("s")!=true && Input.GetKey("d")!=true){
+			AkSoundEngine.PostEvent ("Stop_footsteps_stone_small", gameObject);	
+		}
 
 		if(leftBracket){
 			musicVolLevel -= 1;
@@ -37,16 +52,9 @@ public class WwiseAudioDemo : MonoBehaviour {
 		}
 		AkSoundEngine.SetRTPCValue (musicVolSlider, musicVolLevel);
 		AkSoundEngine.SetRTPCValue (sfxVolSlider, sfxVolLevel);
-		//footsteps control
-		if(Input.GetKeyDown("w") || Input.GetKeyDown("a") || Input.GetKeyDown("s") || Input.GetKeyDown("d")){
-			AkSoundEngine.PostEvent ("Stop_Footsteps", gameObject);	
-			AkSoundEngine.PostEvent ("Play_Footsteps", gameObject);
-		}//stops footsteps
-		if(Input.GetKey("w")!=true && Input.GetKey("a")!=true && Input.GetKey("s")!=true && Input.GetKey("d")!=true){
-			AkSoundEngine.PostEvent ("Stop_Footsteps", gameObject);	
-		}
 
 	}
+
 	void OnGUI () {
 			
 		//PokeBall
@@ -149,5 +157,5 @@ public class WwiseAudioDemo : MonoBehaviour {
 			sfxVolLevel -= 10;
 			AkSoundEngine.SetRTPCValue (sfxVolSlider, sfxVolLevel);
 		}
-	}*/
+	}
 }

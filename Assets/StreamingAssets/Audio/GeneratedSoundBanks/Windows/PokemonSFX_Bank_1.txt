@@ -1,6 +1,15 @@
 Event	ID	Name			Wwise Object Path	Notes
+	2928670655	Pause_footsteps_stone_small			\Default Work Unit\Pause_footsteps_stone_small	
+	3364357367	Stop_footsteps_stone_small			\Default Work Unit\Stop_footsteps_stone_small	
 	3759659601	Play_PokemonSFX_Thunder			\Default Work Unit\Play_PokemonSFX_Thunder	
+	3808155561	Play_footsteps_stone_small			\Default Work Unit\Play_footsteps_stone_small	
+	3861789398	Resume_footsteps_stone_small			\Default Work Unit\Resume_footsteps_stone_small	
+
+Effect plug-ins	ID	Name	Type				Notes
+	34044448	High_Pass_60Hz (Define custom)	Wwise Parametric EQ			
+	1068700747	Default (Custom)	Wwise Pitch Shifter			
 
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
+	640096203	stone_small	C:\Users\Even\Documents\WwiseProjects\PokemonNXTDev\.cache\Windows\sfx\pokemonsfx\footsteps\stone_small_4786cda3.wem		\Interactive Music Hierarchy\Footsteps\stone_small\stone_small\stone_small		4608
 	976642226	Thunder	C:\Users\Even\Documents\WwiseProjects\PokemonNXTDev\.cache\Windows\sfx\thunder_d299d8c1.wem		\Actor-Mixer Hierarchy\PokemonSFX\Thunder		91619
 

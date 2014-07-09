@@ -11,6 +11,7 @@ Event	ID	Name			Wwise Object Path	Notes
 	1954642026	Play_MusicDemo			\Default Work Unit\Play_MusicDemo	
 	2265689790	Play_Music_Route1			\Default Work Unit\Play_Music_Route1	
 	2572900434	Play_PokeBall			\Default Work Unit\Play_PokeBall	
+	3364357367	Stop_footsteps_stone_small			\Default Work Unit\Stop_footsteps_stone_small	
 	3407709558	Play_Adaptive_BattleLoops			\Default Work Unit\Play_Adaptive_BattleLoops	
 	3470311514	Play_Music_IndigoPlateau			\Default Work Unit\Play_Music_IndigoPlateau	
 	3749534469	Play_Music_HeroTheme			\Default Work Unit\Play_Music_HeroTheme	
