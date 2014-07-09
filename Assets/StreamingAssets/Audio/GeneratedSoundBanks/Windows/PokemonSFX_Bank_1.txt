@@ -1,0 +1,6 @@
+Event	ID	Name			Wwise Object Path	Notes
+	3759659601	Play_PokemonSFX_Thunder			\Default Work Unit\Play_PokemonSFX_Thunder	
+
+In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
+	976642226	Thunder	C:\Users\Even\Documents\WwiseProjects\PokemonNXTDev\.cache\Windows\sfx\thunder_a5062247.wem		\Actor-Mixer Hierarchy\PokemonSFX\Thunder		48245
+

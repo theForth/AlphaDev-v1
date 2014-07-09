@@ -125,5 +125,22 @@
 			<IncludedPrefetchFiles />
 			<ExternalSources />
 		</SoundBank>
+		<SoundBank Id="3413140902" Language="SFX">
+			<ShortName>PokemonSFX_Bank_1</ShortName>
+			<Path>PokemonSFX_Bank_1.bnk</Path>
+			<IncludedEvents>
+				<Event Id="3759659601" Name="Play_PokemonSFX_Thunder" />
+			</IncludedEvents>
+			<IncludedDialogueEvents />
+			<ReferencedStreamedFiles />
+			<IncludedFullFiles>
+				<File Id="976642226" Language="SFX">
+					<ShortName>Thunder.wav</ShortName>
+					<Path>sfx\thunder_a5062247.wem</Path>
+				</File>
+			</IncludedFullFiles>
+			<IncludedPrefetchFiles />
+			<ExternalSources />
+		</SoundBank>
 	</SoundBanks>
 </SoundBanksInfo>

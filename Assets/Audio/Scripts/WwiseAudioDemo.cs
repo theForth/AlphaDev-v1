@@ -3,8 +3,8 @@ using System.Collections;
 
 public class WwiseAudioDemo : MonoBehaviour {
 
-	public string bankName;
-	public string eventName;
+	public string demoBankName;
+	public string pokemonSFX_Bank_1;
 	float musicVolLevel = 100;
 	uint musicVolSlider = 2346531308U;
 	float sfxVolLevel = 100;
@@ -20,7 +20,8 @@ public class WwiseAudioDemo : MonoBehaviour {
 		AkSoundEngine.SetRTPCValue (musicVolSlider, musicVolLevel);
 		AkSoundEngine.SetRTPCValue (sfxVolSlider, sfxVolLevel);
 		//loads the sound bank for a specific level
-		AkSoundEngine.LoadBank( bankName, AkSoundEngine.AK_DEFAULT_POOL_ID, out bankID );
+		AkSoundEngine.LoadBank( demoBankName, AkSoundEngine.AK_DEFAULT_POOL_ID, out bankID );
+		AkSoundEngine.LoadBank( pokemonSFX_Bank_1, AkSoundEngine.AK_DEFAULT_POOL_ID, out bankID );
 		AkSoundEngine.SetSwitch ("AdaptiveDemo", "BaseLoops", gameObject);
 	}
 
@@ -69,7 +70,20 @@ public class WwiseAudioDemo : MonoBehaviour {
 			AkSoundEngine.PostEvent ("Play_OpenPokeBall", gameObject);
 		}
 
-
+		//PokeBall
+		GUI.Box(new Rect(10,160,140,150), "Pokemon SFX");	
+		//Plays all in a row
+		if(GUI.Button(new Rect(20,190,120,20), "Thunder")) {
+			AkSoundEngine.PostEvent ("Play_PokemonSFX_Thunder", gameObject);
+		}//Release
+		if(GUI.Button(new Rect(20,220,120,20), "null")) {
+		}//Throw
+		if(GUI.Button(new Rect(20,250,120,20), "null")) {
+		}//Open
+		if(GUI.Button(new Rect(20,280,120,20), "null")) {
+		}
+		
+		
 		//music
 		GUI.Box(new Rect(150,10,140,210), "Music Menu");		
 		//starts music playback and makes sure music doesn't play on top of each other

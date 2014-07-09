@@ -25,6 +25,7 @@ namespace AK
         static const AkUniqueID PLAY_MUSICDEMO = 1954642026U;
         static const AkUniqueID PLAY_OPENPOKEBALL = 3930672562U;
         static const AkUniqueID PLAY_POKEBALL = 2572900434U;
+        static const AkUniqueID PLAY_POKEMONSFX_THUNDER = 3759659601U;
         static const AkUniqueID PLAY_RELEASEPOKEBALL = 1029675917U;
         static const AkUniqueID PLAY_THROWPOKEBALL = 1851254290U;
         static const AkUniqueID STOP_ADAPTIVEDEMOSWITCH = 1553919215U;
@@ -68,6 +69,7 @@ namespace AK
     {
         static const AkUniqueID INIT = 1355168291U;
         static const AkUniqueID DEMOMUSIC = 1613752181U;
+        static const AkUniqueID POKEMONSFX_BANK_1 = 3413140902U;
     } // namespace BANKS
 
     namespace BUSSES
