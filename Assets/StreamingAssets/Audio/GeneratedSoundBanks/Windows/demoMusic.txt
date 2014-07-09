@@ -1,15 +1,21 @@
 Event	ID	Name			Wwise Object Path	Notes
-	694852190	Play_Route1			\Default Work Unit\Play_Route1	
+	142412086	Play_Adaptive_PalletTownLoops			\Default Work Unit\Play_Adaptive_PalletTownLoops	
+	165489874	Play_Music_PewterCity			\Default Work Unit\Play_Music_PewterCity	
 	728354400	Stop_MusicDemo			\Default Work Unit\Stop_MusicDemo	
+	730661021	Play_AdaptiveDemoSwitch			\Default Work Unit\Play_AdaptiveDemoSwitch	
 	984852372	Stop_PokeBall			\Default Work Unit\Stop_PokeBall	
 	1029675917	Play_ReleasePokeball			\Default Work Unit\Play_ReleasePokeball	
+	1553919215	Stop_AdaptiveDemoSwitch			\Default Work Unit\Stop_AdaptiveDemoSwitch	
+	1723535977	Play_Adaptive_ExploreLoops			\Default Work Unit\Play_Adaptive_ExploreLoops	
 	1851254290	Play_ThrowPokeball			\Default Work Unit\Play_ThrowPokeball	
 	1954642026	Play_MusicDemo			\Default Work Unit\Play_MusicDemo	
+	2265689790	Play_Music_Route1			\Default Work Unit\Play_Music_Route1	
 	2572900434	Play_PokeBall			\Default Work Unit\Play_PokeBall	
-	2684889074	Play_PewterCity			\Default Work Unit\Play_PewterCity	
-	3464373413	Play_HeroTheme			\Default Work Unit\Play_HeroTheme	
+	3407709558	Play_Adaptive_BattleLoops			\Default Work Unit\Play_Adaptive_BattleLoops	
 	3470311514	Play_Music_IndigoPlateau			\Default Work Unit\Play_Music_IndigoPlateau	
+	3749534469	Play_Music_HeroTheme			\Default Work Unit\Play_Music_HeroTheme	
 	3930672562	Play_OpenPokeball			\Default Work Unit\Play_OpenPokeball	
+	4008751620	Play_Music_ExploreLoops			\Default Work Unit\Play_Music_ExploreLoops	
 
 Game Parameter	ID	Name			Wwise Object Path	Notes
 	988953028	SFXVolume			\Default Work Unit\SFXVolume	
@@ -20,11 +26,23 @@ Audio Bus	ID	Name			Wwise Object Path	Notes
 	3803692087	Master Audio Bus			\Default Work Unit\Master Audio Bus	
 
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
-	81916733	ThrowPokeball	C:\Users\Even\Documents\WwiseProjects\PokemonNXTDev\.cache\Windows\sfx\throwpokeball_950ff8f3.wem		\Actor-Mixer Hierarchy\SFX\PokeBall\ThrowPokeball		6110
-	225769852	ReleasePokeball	C:\Users\Even\Documents\WwiseProjects\PokemonNXTDev\.cache\Windows\sfx\releasepokeball_950ff8f3.wem		\Actor-Mixer Hierarchy\SFX\PokeBall\ReleasePokeball		29594
-	230457006	Pokemon NXT - Pewter City	C:\Users\Even\Documents\WwiseProjects\PokemonNXTDev\.cache\Windows\sfx\music\pokemon nxt - pewter city_950ff8f3.wem		\Actor-Mixer Hierarchy\MusicPlaylist\MusicDemo\Pokemon NXT - Pewter City		7933786
-	391793705	Pokemon NXT - Arriving At The Indigo Plateau	C:\Users\Even\Documents\WwiseProjects\PokemonNXTDev\.cache\Windows\sfx\music\pokemon nxt - arriving at the indigo plateau_950ff8f3.wem		\Actor-Mixer Hierarchy\MusicPlaylist\MusicDemo\Pokemon NXT - Arriving At The Indigo Plateau		6557275
-	522335922	Pokemon NXT - Hero Theme(2)	C:\Users\Even\Documents\WwiseProjects\PokemonNXTDev\.cache\Windows\sfx\music\pokemon nxt - hero theme(2)_950ff8f3.wem		\Actor-Mixer Hierarchy\MusicPlaylist\MusicDemo\Pokemon NXT - Hero Theme(2)		4859288
-	971927148	Pokemon NXT - Route 1	C:\Users\Even\Documents\WwiseProjects\PokemonNXTDev\.cache\Windows\sfx\music\pokemon nxt - route 1_950ff8f3.wem		\Actor-Mixer Hierarchy\MusicPlaylist\MusicDemo\Pokemon NXT - Route 1		7451150
-	1047822742	OpenPokeball	C:\Users\Even\Documents\WwiseProjects\PokemonNXTDev\.cache\Windows\sfx\openpokeball_950ff8f3.wem		\Actor-Mixer Hierarchy\SFX\PokeBall\OpenPokeball		9687
+	81916733	ThrowPokeball	C:\Users\Even\Documents\WwiseProjects\PokemonNXTDev\.cache\Windows\sfx\throwpokeball_a5062247.wem		\Actor-Mixer Hierarchy\SFX\PokeBall\ThrowPokeball		3317
+	94472568	Pallet Town B1 Loop	C:\Users\Even\Documents\WwiseProjects\PokemonNXTDev\.cache\Windows\sfx\pallet town b1 loop_665231a0.wem		\Interactive Music Hierarchy\AdaptiveDemo\AdaptiveDemoSwitch\PalletTownLoops\Pallet Town B1 Loop\Pallet Town B1 Loop		344034
+	125028367	Route1 Explore Loop B1	C:\Users\Even\Documents\WwiseProjects\PokemonNXTDev\.cache\Windows\sfx\route1 explore loop b1_665231a0.wem		\Interactive Music Hierarchy\AdaptiveDemo\AdaptiveDemoSwitch\ExploreLoops\Route1 Explore Loop B1\Route1 Explore Loop B1		349356
+	167483638	Pallet Town A1 Loop	C:\Users\Even\Documents\WwiseProjects\PokemonNXTDev\.cache\Windows\sfx\pallet town a1 loop_665231a0.wem		\Interactive Music Hierarchy\AdaptiveDemo\AdaptiveDemoSwitch\PalletTownLoops\Pallet Town A1 Loop\Pallet Town A1 Loop		341060
+	225769852	ReleasePokeball	C:\Users\Even\Documents\WwiseProjects\PokemonNXTDev\.cache\Windows\sfx\releasepokeball_a5062247.wem		\Actor-Mixer Hierarchy\SFX\PokeBall\ReleasePokeball		10008
+	230457006	Pokemon NXT - Pewter City	C:\Users\Even\Documents\WwiseProjects\PokemonNXTDev\.cache\Windows\sfx\music\pokemon nxt - pewter city_a5062247.wem		\Actor-Mixer Hierarchy\MusicPlaylist\MusicDemo\Pokemon NXT - Pewter City		2345434
+	370969799	Route1 Battle Loop B1	C:\Users\Even\Documents\WwiseProjects\PokemonNXTDev\.cache\Windows\sfx\route1 battle loop b1_a85e714a.wem		\Interactive Music Hierarchy\AdaptiveDemo\AdaptiveDemoSwitch\BattleLoops\Route1 Battle Loop B1\Route1 Battle Loop B1		356222
+	376222054	Pallet Town B2 Loop	C:\Users\Even\Documents\WwiseProjects\PokemonNXTDev\.cache\Windows\sfx\pallet town b2 loop_665231a0.wem		\Interactive Music Hierarchy\AdaptiveDemo\AdaptiveDemoSwitch\PalletTownLoops\Pallet Town B2 Loop\Pallet Town B2 Loop		354442
+	391793705	Pokemon NXT - Arriving At The Indigo Plateau	C:\Users\Even\Documents\WwiseProjects\PokemonNXTDev\.cache\Windows\sfx\music\pokemon nxt - arriving at the indigo plateau_a5062247.wem		\Actor-Mixer Hierarchy\MusicPlaylist\MusicDemo\Pokemon NXT - Arriving At The Indigo Plateau		1980822
+	397309308	Route1 Explore Loop A1	C:\Users\Even\Documents\WwiseProjects\PokemonNXTDev\.cache\Windows\sfx\route1 explore loop a1_665231a0.wem		\Interactive Music Hierarchy\AdaptiveDemo\AdaptiveDemoSwitch\ExploreLoops\Route1 Explore Loop A1\Route1 Explore Loop A1		342000
+	522335922	Pokemon NXT - Hero Theme(2)	C:\Users\Even\Documents\WwiseProjects\PokemonNXTDev\.cache\Windows\sfx\music\pokemon nxt - hero theme(2)_a5062247.wem		\Actor-Mixer Hierarchy\MusicPlaylist\MusicDemo\Pokemon NXT - Hero Theme(2)		1558376
+	553706946	Route1 Battle Loop A2	C:\Users\Even\Documents\WwiseProjects\PokemonNXTDev\.cache\Windows\sfx\route1 battle loop a2_665231a0.wem		\Interactive Music Hierarchy\AdaptiveDemo\AdaptiveDemoSwitch\BattleLoops\Route1 Battle Loop A2\Route1 Battle Loop A2		354043
+	715785544	Route1 Explore Loop B2	C:\Users\Even\Documents\WwiseProjects\PokemonNXTDev\.cache\Windows\sfx\route1 explore loop b2_665231a0.wem		\Interactive Music Hierarchy\AdaptiveDemo\AdaptiveDemoSwitch\ExploreLoops\Route1 Explore Loop B2\Route1 Explore Loop B2		352823
+	776465249	Route1 Battle Loop A1	C:\Users\Even\Documents\WwiseProjects\PokemonNXTDev\.cache\Windows\sfx\route1 battle loop a1_665231a0.wem		\Interactive Music Hierarchy\AdaptiveDemo\AdaptiveDemoSwitch\BattleLoops\Route1 Battle Loop A1\Route1 Battle Loop A1		353367
+	810773312	Pallet Town A2 Loop	C:\Users\Even\Documents\WwiseProjects\PokemonNXTDev\.cache\Windows\sfx\pallet town a2 loop_665231a0.wem		\Interactive Music Hierarchy\AdaptiveDemo\AdaptiveDemoSwitch\PalletTownLoops\Pallet Town A2 Loop\Pallet Town A2 Loop		352390
+	832494200	Route1 Battle Loop B2	C:\Users\Even\Documents\WwiseProjects\PokemonNXTDev\.cache\Windows\sfx\route1 battle loop b2_a85e714a.wem		\Interactive Music Hierarchy\AdaptiveDemo\AdaptiveDemoSwitch\BattleLoops\Route1 Battle Loop B2\Route1 Battle Loop B2		355449
+	901181483	Route1 Explore Loop A2	C:\Users\Even\Documents\WwiseProjects\PokemonNXTDev\.cache\Windows\sfx\route1 explore loop a2_665231a0.wem		\Interactive Music Hierarchy\AdaptiveDemo\AdaptiveDemoSwitch\ExploreLoops\Route1 Explore Loop A2\Route1 Explore Loop A2		345596
+	971927148	Pokemon NXT - Route 1	C:\Users\Even\Documents\WwiseProjects\PokemonNXTDev\.cache\Windows\sfx\music\pokemon nxt - route 1_a5062247.wem		\Actor-Mixer Hierarchy\MusicPlaylist\MusicDemo\Pokemon NXT - Route 1		2390762
+	1047822742	OpenPokeball	C:\Users\Even\Documents\WwiseProjects\PokemonNXTDev\.cache\Windows\sfx\openpokeball_a5062247.wem		\Actor-Mixer Hierarchy\SFX\PokeBall\OpenPokeball		5762
 

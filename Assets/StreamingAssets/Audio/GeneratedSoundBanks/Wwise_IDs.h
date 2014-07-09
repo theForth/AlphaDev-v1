@@ -13,18 +13,40 @@ namespace AK
 {
     namespace EVENTS
     {
-        static const AkUniqueID PLAY_HEROTHEME = 3464373413U;
+        static const AkUniqueID PLAY_ADAPTIVE_BATTLELOOPS = 3407709558U;
+        static const AkUniqueID PLAY_ADAPTIVE_EXPLORELOOPS = 1723535977U;
+        static const AkUniqueID PLAY_ADAPTIVE_PALLETTOWNLOOPS = 142412086U;
+        static const AkUniqueID PLAY_ADAPTIVEDEMOSWITCH = 730661021U;
+        static const AkUniqueID PLAY_MUSIC_EXPLORELOOPS = 4008751620U;
+        static const AkUniqueID PLAY_MUSIC_HEROTHEME = 3749534469U;
         static const AkUniqueID PLAY_MUSIC_INDIGOPLATEAU = 3470311514U;
+        static const AkUniqueID PLAY_MUSIC_PEWTERCITY = 165489874U;
+        static const AkUniqueID PLAY_MUSIC_ROUTE1 = 2265689790U;
         static const AkUniqueID PLAY_MUSICDEMO = 1954642026U;
         static const AkUniqueID PLAY_OPENPOKEBALL = 3930672562U;
-        static const AkUniqueID PLAY_PEWTERCITY = 2684889074U;
         static const AkUniqueID PLAY_POKEBALL = 2572900434U;
         static const AkUniqueID PLAY_RELEASEPOKEBALL = 1029675917U;
-        static const AkUniqueID PLAY_ROUTE1 = 694852190U;
         static const AkUniqueID PLAY_THROWPOKEBALL = 1851254290U;
+        static const AkUniqueID STOP_ADAPTIVEDEMOSWITCH = 1553919215U;
         static const AkUniqueID STOP_MUSICDEMO = 728354400U;
         static const AkUniqueID STOP_POKEBALL = 984852372U;
     } // namespace EVENTS
+
+    namespace SWITCHES
+    {
+        namespace ADAPTIVEDEMO
+        {
+            static const AkUniqueID GROUP = 2869440958U;
+
+            namespace SWITCH
+            {
+                static const AkUniqueID BASELOOPS = 584599923U;
+                static const AkUniqueID BATTLELOOPS = 2915042768U;
+                static const AkUniqueID EXPLORELOOPS = 2627717107U;
+            } // namespace SWITCH
+        } // namespace ADAPTIVEDEMO
+
+    } // namespace SWITCHES
 
     namespace GAME_PARAMETERS
     {

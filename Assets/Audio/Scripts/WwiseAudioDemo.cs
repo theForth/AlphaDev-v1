@@ -21,6 +21,7 @@ public class WwiseAudioDemo : MonoBehaviour {
 		AkSoundEngine.SetRTPCValue (sfxVolSlider, sfxVolLevel);
 		//loads the sound bank for a specific level
 		AkSoundEngine.LoadBank( bankName, AkSoundEngine.AK_DEFAULT_POOL_ID, out bankID );
+		AkSoundEngine.SetSwitch ("AdaptiveDemo", "BaseLoops", gameObject);
 	}
 
 	void Update(){
@@ -85,15 +86,34 @@ public class WwiseAudioDemo : MonoBehaviour {
 		}
 		if(GUI.Button(new Rect(160,130,120,20), "Pewter City")) {
 			AkSoundEngine.PostEvent ("Stop_MusicDemo", gameObject);
-			AkSoundEngine.PostEvent ("PLAY_PEWTERCITY", gameObject);
+			AkSoundEngine.PostEvent ("PLAY_MUSIC_PEWTERCITY", gameObject);
 		}
 		if(GUI.Button(new Rect(160,160,120,20), "Route 1")) {
 			AkSoundEngine.PostEvent ("Stop_MusicDemo", gameObject);
-			AkSoundEngine.PostEvent ("PLAY_ROUTE1", gameObject);
+			AkSoundEngine.PostEvent ("PLAY_MUSIC_ROUTE1", gameObject);
 		}
 		if(GUI.Button(new Rect(160,190,120,20), "Hero Theme")) {
 			AkSoundEngine.PostEvent ("Stop_MusicDemo", gameObject);
-			AkSoundEngine.PostEvent ("PLAY_HEROTHEME", gameObject);
+			AkSoundEngine.PostEvent ("PLAY_MUSIC_HEROTHEME", gameObject);
+		}
+
+		GUI.Box(new Rect(150,220,140,180), "Adaptive Menu");		
+		//starts music playback and makes sure music doesn't play on top of each other
+		if(GUI.Button(new Rect(160,250,120,20), "Start Music")) {
+			AkSoundEngine.PostEvent ("Stop_AdaptiveDemoSwitch", gameObject);
+			AkSoundEngine.PostEvent ("Play_AdaptiveDemoSwitch", gameObject);
+		}//stops all music
+		if(GUI.Button(new Rect(160,280,120,20), "Base Music")) {
+			AkSoundEngine.SetSwitch ("AdaptiveDemo", "BaseLoops", gameObject);
+		}
+		if(GUI.Button(new Rect(160,310,120,20), "Battle Loops")) {
+			AkSoundEngine.SetSwitch ("AdaptiveDemo", "BattleLoops", gameObject);
+		}
+		if(GUI.Button(new Rect(160,340,120,20), "Explore Loops")) {
+			AkSoundEngine.SetSwitch ("AdaptiveDemo", "ExploreLoops", gameObject);
+		}
+		if(GUI.Button(new Rect(160,370,120,20), "Stop Music")) {
+			AkSoundEngine.PostEvent ("Stop_AdaptiveDemoSwitch", gameObject);
 		}
 
 

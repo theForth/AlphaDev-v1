@@ -24,15 +24,21 @@
 			<ShortName>demoMusic</ShortName>
 			<Path>demoMusic.bnk</Path>
 			<IncludedEvents>
-				<Event Id="3464373413" Name="Play_HeroTheme" />
+				<Event Id="3407709558" Name="Play_Adaptive_BattleLoops" />
+				<Event Id="1723535977" Name="Play_Adaptive_ExploreLoops" />
+				<Event Id="142412086" Name="Play_Adaptive_PalletTownLoops" />
+				<Event Id="730661021" Name="Play_AdaptiveDemoSwitch" />
+				<Event Id="4008751620" Name="Play_Music_ExploreLoops" />
+				<Event Id="3749534469" Name="Play_Music_HeroTheme" />
 				<Event Id="3470311514" Name="Play_Music_IndigoPlateau" />
+				<Event Id="165489874" Name="Play_Music_PewterCity" />
+				<Event Id="2265689790" Name="Play_Music_Route1" />
 				<Event Id="1954642026" Name="Play_MusicDemo" />
 				<Event Id="3930672562" Name="Play_OpenPokeball" />
-				<Event Id="2684889074" Name="Play_PewterCity" />
 				<Event Id="2572900434" Name="Play_PokeBall" />
 				<Event Id="1029675917" Name="Play_ReleasePokeball" />
-				<Event Id="694852190" Name="Play_Route1" />
 				<Event Id="1851254290" Name="Play_ThrowPokeball" />
+				<Event Id="1553919215" Name="Stop_AdaptiveDemoSwitch" />
 				<Event Id="728354400" Name="Stop_MusicDemo" />
 				<Event Id="984852372" Name="Stop_PokeBall" />
 			</IncludedEvents>
@@ -41,31 +47,79 @@
 			<IncludedFullFiles>
 				<File Id="391793705" Language="SFX">
 					<ShortName>Music\Pokemon NXT - Arriving At The Indigo Plateau.wav</ShortName>
-					<Path>sfx\music\pokemon nxt - arriving at the indigo plateau_950ff8f3.wem</Path>
+					<Path>sfx\music\pokemon nxt - arriving at the indigo plateau_a5062247.wem</Path>
 				</File>
 				<File Id="522335922" Language="SFX">
 					<ShortName>Music\Pokemon NXT - Hero Theme(2).wav</ShortName>
-					<Path>sfx\music\pokemon nxt - hero theme(2)_950ff8f3.wem</Path>
+					<Path>sfx\music\pokemon nxt - hero theme(2)_a5062247.wem</Path>
 				</File>
 				<File Id="230457006" Language="SFX">
 					<ShortName>Music\Pokemon NXT - Pewter City.wav</ShortName>
-					<Path>sfx\music\pokemon nxt - pewter city_950ff8f3.wem</Path>
+					<Path>sfx\music\pokemon nxt - pewter city_a5062247.wem</Path>
 				</File>
 				<File Id="971927148" Language="SFX">
 					<ShortName>Music\Pokemon NXT - Route 1.wav</ShortName>
-					<Path>sfx\music\pokemon nxt - route 1_950ff8f3.wem</Path>
+					<Path>sfx\music\pokemon nxt - route 1_a5062247.wem</Path>
 				</File>
 				<File Id="1047822742" Language="SFX">
 					<ShortName>OpenPokeball.wav</ShortName>
-					<Path>sfx\openpokeball_950ff8f3.wem</Path>
+					<Path>sfx\openpokeball_a5062247.wem</Path>
+				</File>
+				<File Id="167483638" Language="SFX">
+					<ShortName>Pallet Town A1 Loop.wav</ShortName>
+					<Path>sfx\pallet town a1 loop_665231a0.wem</Path>
+				</File>
+				<File Id="810773312" Language="SFX">
+					<ShortName>Pallet Town A2 Loop.wav</ShortName>
+					<Path>sfx\pallet town a2 loop_665231a0.wem</Path>
+				</File>
+				<File Id="94472568" Language="SFX">
+					<ShortName>Pallet Town B1 Loop.wav</ShortName>
+					<Path>sfx\pallet town b1 loop_665231a0.wem</Path>
+				</File>
+				<File Id="376222054" Language="SFX">
+					<ShortName>Pallet Town B2 Loop.wav</ShortName>
+					<Path>sfx\pallet town b2 loop_665231a0.wem</Path>
 				</File>
 				<File Id="225769852" Language="SFX">
 					<ShortName>ReleasePokeball.wav</ShortName>
-					<Path>sfx\releasepokeball_950ff8f3.wem</Path>
+					<Path>sfx\releasepokeball_a5062247.wem</Path>
+				</File>
+				<File Id="776465249" Language="SFX">
+					<ShortName>Route1 Battle Loop A1.wav</ShortName>
+					<Path>sfx\route1 battle loop a1_665231a0.wem</Path>
+				</File>
+				<File Id="553706946" Language="SFX">
+					<ShortName>Route1 Battle Loop A2.wav</ShortName>
+					<Path>sfx\route1 battle loop a2_665231a0.wem</Path>
+				</File>
+				<File Id="370969799" Language="SFX">
+					<ShortName>Route1 Battle Loop B1.wav</ShortName>
+					<Path>sfx\route1 battle loop b1_a85e714a.wem</Path>
+				</File>
+				<File Id="832494200" Language="SFX">
+					<ShortName>Route1 Battle Loop B2.wav</ShortName>
+					<Path>sfx\route1 battle loop b2_a85e714a.wem</Path>
+				</File>
+				<File Id="397309308" Language="SFX">
+					<ShortName>Route1 Explore Loop A1.wav</ShortName>
+					<Path>sfx\route1 explore loop a1_665231a0.wem</Path>
+				</File>
+				<File Id="901181483" Language="SFX">
+					<ShortName>Route1 Explore Loop A2.wav</ShortName>
+					<Path>sfx\route1 explore loop a2_665231a0.wem</Path>
+				</File>
+				<File Id="125028367" Language="SFX">
+					<ShortName>Route1 Explore Loop B1.wav</ShortName>
+					<Path>sfx\route1 explore loop b1_665231a0.wem</Path>
+				</File>
+				<File Id="715785544" Language="SFX">
+					<ShortName>Route1 Explore Loop B2.wav</ShortName>
+					<Path>sfx\route1 explore loop b2_665231a0.wem</Path>
 				</File>
 				<File Id="81916733" Language="SFX">
 					<ShortName>ThrowPokeball.wav</ShortName>
-					<Path>sfx\throwpokeball_950ff8f3.wem</Path>
+					<Path>sfx\throwpokeball_a5062247.wem</Path>
 				</File>
 			</IncludedFullFiles>
 			<IncludedPrefetchFiles />
