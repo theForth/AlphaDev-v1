@@ -25,7 +25,7 @@ public class WwiseAudioDemo : MonoBehaviour {
 		AkSoundEngine.SetSwitch ("AdaptiveDemo", "BaseLoops", gameObject);
 	}
 
-	void Update(){
+	/*void Update(){
 
 		if(leftBracket){
 			musicVolLevel -= 1;
@@ -37,8 +37,7 @@ public class WwiseAudioDemo : MonoBehaviour {
 		}
 		AkSoundEngine.SetRTPCValue (musicVolSlider, musicVolLevel);
 		AkSoundEngine.SetRTPCValue (sfxVolSlider, sfxVolLevel);
-		/*
-		 * //footsteps control
+		//footsteps control
 		if(Input.GetKeyDown("w") || Input.GetKeyDown("a") || Input.GetKeyDown("s") || Input.GetKeyDown("d")){
 			AkSoundEngine.PostEvent ("Stop_Footsteps", gameObject);	
 			AkSoundEngine.PostEvent ("Play_Footsteps", gameObject);
@@ -46,7 +45,7 @@ public class WwiseAudioDemo : MonoBehaviour {
 		if(Input.GetKey("w")!=true && Input.GetKey("a")!=true && Input.GetKey("s")!=true && Input.GetKey("d")!=true){
 			AkSoundEngine.PostEvent ("Stop_Footsteps", gameObject);	
 		}
-		*/	
+
 	}
 	void OnGUI () {
 			
@@ -150,5 +149,5 @@ public class WwiseAudioDemo : MonoBehaviour {
 			sfxVolLevel -= 10;
 			AkSoundEngine.SetRTPCValue (sfxVolSlider, sfxVolLevel);
 		}
-	}
+	}*/
 }

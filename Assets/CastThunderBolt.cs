@@ -11,8 +11,6 @@ public class CastThunderBolt : MonoBehaviour
 		// Use this for initialization
 		void Start ()
 		{
-		
-		
 		}
 	
 		// Update is called once per frame
@@ -29,6 +27,8 @@ public class CastThunderBolt : MonoBehaviour
 			
 			
 						if (Input.GetMouseButton (0) && cooldown <= 0) {
+
+								AkSoundEngine.PostEvent ("Play_PokemonSFX_Thunder", gameObject);
 								GameObject thunderBolt = (GameObject)Instantiate (thunderBoltprefab, hit.point, Quaternion.identity);
 								thunderBolt.transform.position += new Vector3 (0, 1.5f, 0);
 								thunderBolt.AddComponent<TimedDestroy> ();
