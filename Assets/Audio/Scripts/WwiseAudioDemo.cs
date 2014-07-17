@@ -10,11 +10,16 @@ public class WwiseAudioDemo : MonoBehaviour {
 	float sfxVolLevel = 100;
 	uint sfxVolSlider = 988953028U;
 	//rtpc control
-	bool leftBracket = Input.GetKey(KeyCode.LeftBracket);
-	bool rightBracket = Input.GetKey(KeyCode.RightBracket);
+	bool leftBracket;
+	bool rightBracket;
 
 	// Use this for initialization
 	void Start () {
+
+		//rtpc control
+		leftBracket = Input.GetKey(KeyCode.LeftBracket);
+		rightBracket = Input.GetKey(KeyCode.RightBracket);
+
 		uint bankID; // Not used
 		//sets initial volume level
 		AkSoundEngine.SetRTPCValue (musicVolSlider, musicVolLevel);
