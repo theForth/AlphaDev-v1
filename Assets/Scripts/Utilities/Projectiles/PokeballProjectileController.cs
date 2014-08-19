@@ -57,8 +57,9 @@ public class PokeballProjectileController : BaseProjectileController
 						pokeball.constantForce.force += (projectileGlobalAcceleration) * accelerationScale;
 						pokeball.constantForce.force *= 50f;
 						audioSource = gameObject.AddComponent<AudioSource> ();
-						audioSource.clip = shootSound;
-						audioSource.Play ();
+						//audioSource.clip = shootSound;
+						//audioSource.Play ();
+                        SoundManager.PlaySFX(shootSound);
 				
 						//pokeball.AddComponent<APEprojectile> ().life = projectileLife;
 				

@@ -7,8 +7,8 @@ using System;
 
 public class MoveMethodManager : MonoBehaviour
     {
-    public static Dictionary<int, Action<Transform, PokemonObj>> MoveMethods = new Dictionary<int, Action<Transform, PokemonObj>>();
-
+    public static Dictionary<int, Action<Transform, PokeBattler>> MoveMethods = new Dictionary<int, Action<Transform, PokeBattler>>();
+    public LayerMask collisionLayers = new LayerMask();
 
     void OnAwake()
     {
@@ -16,17 +16,10 @@ public class MoveMethodManager : MonoBehaviour
     }
    void Start()
     {
-        MoveMethods[85] = CastThunder;
-        MoveMethods[45] = Growl;
+       // MoveMethods[85] = CastThunder;
+       // MoveMethods[45] = Growl;
     }
   
-    public void CastThunder(Transform transform, PokemonObj pokemonObj)
-    {
-        Debug.Log("Casting " + pokemonObj.moves[1].Name + ' ' + transform.name);
-    }
-    public void Growl(Transform transform, PokemonObj pokemonObj)
-    {
-        Debug.Log("Casting " + pokemonObj.moves[1].Name + ' ' + transform.name);
-    }
+
     }
 

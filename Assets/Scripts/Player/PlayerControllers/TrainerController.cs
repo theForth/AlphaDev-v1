@@ -9,355 +9,371 @@ public class TrainerController : MonoBehaviour
 
 
     //**********Movement variables*********************
-		public bool clickToMove = false;
-		public List<string> clickableTags = new List<string> ();
-		public bool keyboardControl = true;
-		public float walkSpeed = 3;
-		public float runSpeed = 6;
-		public float backpedalSpeed = 3;
-		public float turnSpeed = 6;
-		public float jumpPower = 8;
-		public float gravity = 20;
-		public float slopeLimit = 55;
-		public float fallThreshold = 10;
-		public float antiBunny = 0.0f;
-	    
-		private bool _controllable = true;
-	
-		[SerializeField]
-		private bool
-				_running = true;
-		private bool _grounded = false;
-		private float _speed = 0;
-		private bool _autorun = false;
-		private Vector3 _velocity = Vector3.zero;
-		private float _fall_start = 0;
-		
-		[SerializeField]
-		private float
-				_input_x = 0;
-		[SerializeField]
-		private float
-				_input_y = 0;
-		[SerializeField]
-		private float
-				_input_s = 0;
-		private float _rotation = 0;
-		private Vector3 _last_position = Vector3.zero;
-		private float _animation_speed = 1;
-		public float _move_speed = 0;
-		private Vector3 _wanted_position = Vector3.zero;
-		private Vector3 _last_wanted_position = Vector3.zero;
-		private float _last_distance = 0;
-		public Animator ani;
-		private Transform _t;
-		private CharacterController _controller;
-        private ThirdPersonCameraControl thirdPersonController;
+    public bool clickToMove = false;
+    public List<string> clickableTags = new List<string>();
+    public bool keyboardControl = true;
+    public float walkSpeed = 3;
+    public float runSpeed = 6;
+    public float backpedalSpeed = 3;
+    public float turnSpeed = 6;
+    public float jumpPower = 8;
+    public float gravity = 20;
+    public float slopeLimit = 55;
+    public float fallThreshold = 10;
+    public float antiBunny = 0.0f;
+
+    private bool _controllable = true;
+
+    [SerializeField]
+    private bool
+            _running = true;
+    private bool _grounded = false;
+    private float _speed = 0;
+    private bool _autorun = false;
+    private Vector3 _velocity = Vector3.zero;
+    private float _fall_start = 0;
+
+    [SerializeField]
+    private float
+            _input_x = 0;
+    [SerializeField]
+    private float
+            _input_y = 0;
+    [SerializeField]
+    private float
+            _input_s = 0;
+    private float _rotation = 0;
+    private Vector3 _last_position = Vector3.zero;
+    private float _animation_speed = 1;
+    public float _move_speed = 0;
+    private Vector3 _wanted_position = Vector3.zero;
+    private Vector3 _last_wanted_position = Vector3.zero;
+    private float _last_distance = 0;
+    public Animator ani;
+    private Transform _t;
+    private CharacterController _controller;
+    private ThirdPersonCameraControl thirdPersonController;
     //***********KeyBinding*******************************
-        public string triggerAxis = "Fire1";
+    public string triggerAxis = "Fire1";
     //*********Trainer Variables ***************************
-       public Trainer trainer;
+    public Trainer trainer;
 
 
-       //pokeballState = PokeballState.Selecting;
-		//private PlayerAnimatorController _animator;
-	
-		public bool Grounded {
-				get { return _grounded; }
-				set { _grounded = value; }
-		}
-	
-		public Vector3 Velocity {
-				get { return _velocity; }
-				set { _velocity = value; }
-		}
-	
-		public float InputX {
-				get { return _input_x; }
-		}
-	
-		public float InputY {
-				get { return _input_y; }
-		}
-	
-		public float InputS {
-				get { return _input_s; }
-		}
-	
-		public float Rotation {
-				get { return _rotation; }
-		}
-	
-		public float FallPosition {
-				get { return _fall_start; }
-				set { _fall_start = value; }
-		}
-	
-		public bool Controllable {
-				get { return _controllable; }
-				set { _controllable = value; }
-		}
-	
-		void Start ()
-		{
-				_t = transform;
-				_controller = GetComponent<CharacterController> ();
-                trainer = GetComponent<Trainer>();
-                thirdPersonController = Camera.main.GetComponent<ThirdPersonCameraControl>();
-				//_animator = GetComponent<PlayerAnimatorController> ();
-				ani = GetComponent<Animator> ();
-				_controller.slopeLimit = slopeLimit;
-				_wanted_position = _t.position;
-		}
+    //pokeballState = PokeballState.Selecting;
+    //private PlayerAnimatorController _animator;
 
-        void Update()
+    public bool Grounded
+    {
+        get { return _grounded; }
+        set { _grounded = value; }
+    }
+
+    public Vector3 Velocity
+    {
+        get { return _velocity; }
+        set { _velocity = value; }
+    }
+
+    public float InputX
+    {
+        get { return _input_x; }
+    }
+
+    public float InputY
+    {
+        get { return _input_y; }
+    }
+
+    public float InputS
+    {
+        get { return _input_s; }
+    }
+
+    public float Rotation
+    {
+        get { return _rotation; }
+    }
+
+    public float FallPosition
+    {
+        get { return _fall_start; }
+        set { _fall_start = value; }
+    }
+
+    public bool Controllable
+    {
+        get { return _controllable; }
+        set { _controllable = value; }
+    }
+
+    void Start()
+    {
+        _t = transform;
+        _controller = GetComponent<CharacterController>();
+        trainer = GetComponent<Trainer>();
+        thirdPersonController = Camera.main.GetComponent<ThirdPersonCameraControl>();
+        //_animator = GetComponent<PlayerAnimatorController> ();
+        ani = GetComponent<Animator>();
+        _controller.slopeLimit = slopeLimit;
+        _wanted_position = _t.position;
+    }
+
+    void Update()
+    {
+
+        #region playerMovement
+        //***********************PlayerMovement**************************
+
+        // If user middle-clicks, toggle autorun on/off
+        if (Input.GetMouseButtonDown(2))
         {
+            _autorun = !_autorun;
+        }
 
-            #region playerMovement
-            //***********************PlayerMovement**************************
-
-            // If user middle-clicks, toggle autorun on/off
-            if (Input.GetMouseButtonDown(2))
-            {
-                _autorun = !_autorun;
-            }
-
-            // If on the ground, allow jumping
-            if (_grounded)
-            {
-                if (_controllable)
-                {
-                    if (Input.GetButtonDown("Jump"))
-                    {
-                        _velocity.y = jumpPower;
-                        _grounded = false;
-                    }
-                }
-            }
-
-            // Toggle running / walking
-            if (Input.GetKeyDown(KeyCode.R))
-            {
-                _running = !_running;
-            }
-
+        // If on the ground, allow jumping
+        if (_grounded)
+        {
             if (_controllable)
-            {
-                if (clickToMove)
+            {/*
+                if (Input.GetButtonDown("Jump"))
                 {
-                    if (Input.GetMouseButton(0))
+                    _velocity.y = jumpPower;
+                    _grounded = false;
+                }
+              * */
+            }
+        }
+
+        // Toggle running / walking
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            _running = !_running;
+        }
+
+        if (_controllable)
+        {
+            if (clickToMove)
+            {
+                if (Input.GetMouseButton(0))
+                {
+                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    RaycastHit[] hits = Physics.RaycastAll(ray);
+
+                    foreach (RaycastHit hit in hits)
                     {
-                        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                        RaycastHit[] hits = Physics.RaycastAll(ray);
+                        bool done = false;
 
-                        foreach (RaycastHit hit in hits)
+                        foreach (string tag in clickableTags)
                         {
-                            bool done = false;
-
-                            foreach (string tag in clickableTags)
+                            if (hit.transform.CompareTag(tag))
                             {
-                                if (hit.transform.CompareTag(tag))
-                                {
-                                    _wanted_position = hit.point;
-                                    _last_distance = Vector3.Distance(_t.position, _wanted_position);
-                                    done = true;
-                                    break;
-                                }
-                            }
-
-                            if (done)
-                            {
+                                _wanted_position = hit.point;
+                                _last_distance = Vector3.Distance(_t.position, _wanted_position);
+                                done = true;
                                 break;
                             }
+                        }
+
+                        if (done)
+                        {
+                            break;
                         }
                     }
                 }
             }
+        }
 
-            //_animator.SetSpeed (_animation_speed);
+        //_animator.SetSpeed (_animation_speed);
 
 
-            // Physics should be handled within FixedUpdate()
+        // Physics should be handled within FixedUpdate()
 
-            _animation_speed = 1;
-            float input_modifier = (_input_x != 0.0f && _input_y != 0.0f) ? 0.7071f : 1.0f;
+        _animation_speed = 1;
+       // float input_modifier = (_input_x != 0.0f && _input_y != 0.0f) ? 0.7071f : 1.0f;
 
-            if (_controllable)
+        if (_controllable)
+        {
+            if (keyboardControl)
             {
-                if (keyboardControl)
-                {
-                    _input_x = Input.GetAxis("Horizontal");
-                    _input_y = Input.GetAxis("Vertical");
+                _input_x = cInput.GetAxis("Horizontal");
+                _input_y = Input.GetAxis("Vertical");
 
 
-                    //* Strafing axis takes priority!
+                //* Strafing axis takes priority!
 
-                    _input_s = Input.GetAxis("Strafe");
+                _input_s = Input.GetAxis("Horizontal");
 
-                }
             }
+        }
 
-            // If autorun is enabled, set Y input to always be 1 until user uses the Y axis
-            if (_autorun)
+        // If autorun is enabled, set Y input to always be 1 until user uses the Y axis
+        if (_autorun)
+        {
+            if (_input_y == 0)
             {
-                if (_input_y == 0)
-                {
-                    _input_y = 1;
-                }
-                else
-                {
-                    _autorun = false;
-                }
-            }
-
-            // If user is using strafe keys, override X axis
-            if (_input_s != 0)
-            {
-                _input_x = _input_s;
-            }
-
-            // If the user is not holding right-mouse button, rotate the player with the X axis instead of strafing
-            if (!Input.GetMouseButton(1) &&
-                    _input_x != 0 &&
-                    _input_s == 0)
-            {
-                _t.Rotate(new Vector3(0, _input_x * (turnSpeed / 2.0f), 0));
-                _rotation = _input_x;
-                _input_x = 0;
+                _input_y = 1;
             }
             else
             {
-                _rotation = 0;
+                _autorun = false;
             }
+        }
 
-            // Movement direction and speed
-            if (_input_y < 0)
+        // If user is using strafe keys, override X axis
+        if (_input_s != 0)
+        {
+            _input_x = _input_s;
+        }
+
+        // If the user is not holding right-mouse button, rotate the player with the X axis instead of strafing
+        if (!Input.GetMouseButton(1) &&
+                _input_x != 0 &&
+                _input_s == 0)
+        {
+            _t.Rotate(new Vector3(0, _input_x * (turnSpeed / 2.0f), 0));
+            _rotation = _input_x;
+            _input_x = 0;
+        }
+        else
+        {
+            _rotation = 0;
+        }
+
+        // Movement direction and speed
+        if (_input_y < 0)
+        {
+            _speed = backpedalSpeed;
+        }
+        else
+        {
+            if (_running)
             {
-                _speed = backpedalSpeed;
+                _speed = runSpeed;
             }
             else
             {
-                if (_running)
+                _speed = walkSpeed;
+            }
+        }
+
+
+
+        // If on the ground, test to see if still on the ground and apply movement direction
+        if (_grounded)
+        {
+            //_velocity = new Vector3 (_input_x * input_modifier, -antiBunny, _input_y * input_modifier);
+            //_velocity = _t.TransformDirection (_velocity) * _speed;
+
+            // Animation
+            //_move_speed = (_t.position - _last_position).magnitude;
+
+
+            //_last_position = _t.position;
+            if (_input_y > 0)
+            {                            //foward
+
+                ani.SetFloat("Speed", _speed / 6, 0.10f, Time.deltaTime);
+            }
+            else
+            {
+                if (_input_y < 0)
                 {
-                    _speed = runSpeed;
+                    ani.SetFloat("Speed", 0f, 0.035f, Time.deltaTime);
+                    ani.SetFloat("InputY", -1f);
                 }
                 else
                 {
-                    _speed = walkSpeed;
+                    ani.SetFloat("Speed", 0f, 0.035f, Time.deltaTime);  //idle
+                    ani.SetFloat("InputY", 0); //idle
                 }
             }
 
 
+            if (_input_x > 0)
 
-            // If on the ground, test to see if still on the ground and apply movement direction
+                ani.SetFloat("InputX", 1);
+            else
+            {
+                if (_input_x < 0)
+                {
+                    ani.SetFloat("InputX", -1);
+                }
+                else
+                {
+                    ani.SetFloat("InputX", 0);
+                }
+            }
+            if (!Physics.Raycast(_t.position, -Vector3.up, 0.2f))
+            {
+                _grounded = false;
+            }
+        }
+        else
+        {
+            if (_velocity.y > 0)
+            {
+                //_animator.Action = "jump";
+            }
+            else
+            {
+                //_animator.Action = "fall";
+            }
+
+            // Sets the falling start position to the highest point the player reaches
+            if (_fall_start < _t.position.y)
+            {
+                _fall_start = _t.position.y;
+            }
+        }
+
+        //_velocity.y -= gravity * Time.deltaTime;
+        //_controller.Move (_velocity * Time.deltaTime);
+        //***********************************************************************************************************
+        #endregion
+
+
+
+
+
+    }
+    #region helper methods
+    void OnControllerColliderHit(ControllerColliderHit col)
+    {
+        // This keeps the player from sticking to walls
+        float angle = col.normal.y * 90;
+
+        if (angle < slopeLimit)
+        {
             if (_grounded)
             {
-                //_velocity = new Vector3 (_input_x * input_modifier, -antiBunny, _input_y * input_modifier);
-                //_velocity = _t.TransformDirection (_velocity) * _speed;
+                _velocity = Vector3.zero;
+            }
 
-                // Animation
-                //_move_speed = (_t.position - _last_position).magnitude;
-
-
-                //_last_position = _t.position;
-                if (_input_y > 0)
-                {                            //foward
-
-                    ani.SetFloat("Speed", _speed / 6, 0.10f, Time.deltaTime);
-                }
-                else
-                {
-                    if (_input_y < 0)
-                    {
-                        ani.SetFloat("Speed", 0f, 0.035f, Time.deltaTime);
-                        ani.SetFloat("InputY", -1f);
-                    }
-                    else
-                    {
-                        ani.SetFloat("Speed", 0f, 0.035f, Time.deltaTime);  //idle
-                        ani.SetFloat("InputY", 0); //idle
-                    }
-                }
-
-
-                if (_input_x > 0)
-
-                    ani.SetFloat("InputX", 1);
-                else
-                {
-                    if (_input_x < 0)
-                    {
-                        ani.SetFloat("InputX", -1);
-                    }
-                    else
-                    {
-                        ani.SetFloat("InputX", 0);
-                    }
-                }
-                if (!Physics.Raycast(_t.position, -Vector3.up, 0.2f))
-                {
-                    _grounded = false;
-                }
+            if (_velocity.y > 0)
+            {
+                _velocity.y = 0;
             }
             else
             {
-                if (_velocity.y > 0)
-                {
-                    //_animator.Action = "jump";
-                }
-                else
-                {
-                    //_animator.Action = "fall";
-                }
-
-                // Sets the falling start position to the highest point the player reaches
-                if (_fall_start < _t.position.y)
-                {
-                    _fall_start = _t.position.y;
-                }
+                _velocity += new Vector3(col.normal.x, 0, col.normal.z).normalized;
             }
 
-            //_velocity.y -= gravity * Time.deltaTime;
-            //_controller.Move (_velocity * Time.deltaTime);
-            //***********************************************************************************************************
-            #endregion
-
-          
-    
-         
-            
+            _grounded = false;
         }
-#region helper methods
-        void OnControllerColliderHit (ControllerColliderHit col)
-		{
-				// This keeps the player from sticking to walls
-				float angle = col.normal.y * 90;
-		
-				if (angle < slopeLimit) {
-						if (_grounded) {
-								_velocity = Vector3.zero;
-						}
-			
-						if (_velocity.y > 0) {
-								_velocity.y = 0;
-						} else {
-								_velocity += new Vector3 (col.normal.x, 0, col.normal.z).normalized;
-						}
-			
-						_grounded = false;
-				} else {
-						// Player is grounded here
-						// If player falls too far, trigger falling damage
-						
-			
-						_fall_start = _t.position.y;
-			
-						_grounded = true;
-						_velocity.y = 0;
-                }
+        else
+        {
+            // Player is grounded here
+            // If player falls too far, trigger falling damage
 
 
+            _fall_start = _t.position.y;
 
+            _grounded = true;
+            _velocity.y = 0;
         }
-        #endregion
+
+
+
+    }
+    #endregion
 }

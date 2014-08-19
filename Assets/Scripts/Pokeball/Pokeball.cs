@@ -47,7 +47,8 @@ public class Pokeball : MonoBehaviour
 
 	        if (lifetime < 0 && !fired) 
             {
-                    audio.PlayOneShot(openPokeball);
+                   // audio.PlayOneShot(openPokeball);
+                SoundManager.PlaySFX(openPokeball); 
 					Transform particles = transform.FindChild ("Particles");
 								
                 if (particles)
@@ -66,9 +67,9 @@ public class Pokeball : MonoBehaviour
                 renderer.enabled = false;	//Pokeball Dissappears when the pokemon is released			
                 Destroy (gameObject,0.9f);	//sound effect is still being played after pokeball is destroyed and hence is destroyed 0.90s later			
                 fired = true;
-                GameObject pokeObj = (GameObject)Instantiate(trainer.TemporaryPokemonSlot[pokePartyIndex], transform.position, Quaternion.identity);              
-                Trainer.ActivePokemon = pokeObj.AddComponent<PokemonObj>();//Caching in the Active Pokemons Object so data can easily be retreived.
-                Trainer.ActivePokemon.pokemon = trainer.party.GetSlot(pokePartyIndex).pokemon;                          
+                GameObject pokeObj = (GameObject)Instantiate(trainer.TemporaryPokemonSlot[pokePartyIndex], transform.position, Camera.main.transform.rotation);              
+                Trainer.ActivePokemon = pokeObj.AddComponent<PokeBattler>();//Caching in the Active Pokemons Object so data can easily be retreived.
+                Trainer.ActivePokemon.pokemon = trainer.pokeParty.GetPokeSlot(pokePartyIndex).pokemon;                          
                 PlayerControlManager.pokeballState = PokeballState.Released;
 								/*
                                  (GameObject)Instantiate (projectile, transform.position, transform.rotation);
@@ -76,9 +77,9 @@ public class Pokeball : MonoBehaviour
 										GameObject pokeObj = (GameObject)Instantiate (Resources.Load ("Pokemon/" + Pokemon.GetName (pokemon.number)));
 										pokeObj.transform.position = transform.position;
 										pokeObj.transform.rotation = Quaternion.Euler (0, Random.value * 360, 0);
-										pokeObj.GetComponent<PokemonObj> ().pokemon = pokemon;
+										pokeObj.GetComponent<PokeBattler> ().pokemon = pokemon;
 										pokeObj.name = pokemon.name;
-										pokemon.obj = pokeObj.GetComponent<PokemonObj> ();
+										pokemon.obj = pokeObj.GetComponent<PokeBattler> ();
 										PokemonDomesticated pokeDom = pokeObj.AddComponent<PokemonDomesticated> ();
 										PokemonGUI pokeGui = pokeObj.AddComponent<PokemonGUI> ();
 										pokeDom.trainer = trainer;
@@ -118,7 +119,7 @@ public class Pokeball : MonoBehaviour
 		public void CapturePokemon ()
 		{
 				string printme = "";
-				PokemonObj targetPokemon = Player.pokemon.obj.enemy;
+				PokeBattler targetPokemon = Player.pokemon.obj.enemy;
 				if (targetPokemon != null) {
 						if (targetPokemon.GetComponent<PokemonWild> () != null) {
 								float statusAilment = 0;	//statusAilment = 12 if poisoned/burned/paralyzed, 25 if frozen or asleep, 0 otherwise.

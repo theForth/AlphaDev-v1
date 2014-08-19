@@ -8,7 +8,7 @@
 using System;
 using UnityEngine;
 
-public class WildPokemonObj:PokemonObj
+public class WildPokeBattler:PokeBattler
 {
 		public Transform spawnPosition;
 }

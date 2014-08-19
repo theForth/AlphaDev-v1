@@ -13,7 +13,7 @@ public class Cursor : MonoBehaviour
 		{
 				Screen.lockCursor = false;
 				Screen.showCursor = false;
-				cursor = Resources.Load ("Pokeball", typeof(Texture2D)) as Texture2D;
+				cursor = Resources.Load ("Cursor/AimCurser_Possible", typeof(Texture2D)) as Texture2D;
 				cursor.SetPixel (0, 0, new Color (1, 1, 1, 0.1f));
 				cursor.Apply ();
 				
