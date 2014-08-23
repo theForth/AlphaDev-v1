@@ -48,7 +48,7 @@ public class Pokeball : MonoBehaviour
 	        if (lifetime < 0 && !fired) 
             {
                    // audio.PlayOneShot(openPokeball);
-                SoundManager.PlaySFX(openPokeball); 
+                MasterAudio.PlaySound("OpenPokeball", 100);
 					Transform particles = transform.FindChild ("Particles");
 								
                 if (particles)
