@@ -59,20 +59,11 @@ public class PokeballProjectileController : BaseProjectileController
 						audioSource = gameObject.AddComponent<AudioSource> ();
 						//audioSource.clip = shootSound;
 						//audioSource.Play ();
-                        MasterAudio.PlaySound("ThrowPokeball", 100);
+                        MasterAudio.PlaySound("ThrowPokeball", 100);    
 
-                        ChangePlaylist("Battle Music", true);         
-
-                        // MasterAudio.ChangePlaylistByName("Battle Music", false);
-                        // MasterAudio.TriggerPlaylistClip("Pokemon NXT - Hero Theme(2)");
-				
 						//pokeball.AddComponent<APEprojectile> ().life = projectileLife;
 				
 		}
-    public void ChangePlaylist(string playlistName, bool startPlaylist) {
-        MasterAudio.ChangePlaylistByName(playlistName, startPlaylist);
-        Debug.Log("Changing playlist to battle music");
-    }
 }
 
 

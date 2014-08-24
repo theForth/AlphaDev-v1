@@ -181,10 +181,5 @@ public class PokeBattler : PokeCore
     void OnDestroy()
     {
         PlayerControlManager.CastMove -= CastMove;
-        Debug.Log("Pokemon Returned");
-        ChangePlaylist("Background Music", true);   
-    }
-    public void ChangePlaylist(string playlistName, bool startPlaylist) {
-        MasterAudio.ChangePlaylistByName(playlistName, startPlaylist);
     }
 }
