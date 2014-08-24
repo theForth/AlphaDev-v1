@@ -41,14 +41,17 @@ public class PlayerControlManager : MonoBehaviour
     public string triggerPokeReturn = "PokeReturn";
     private KGFMapSystem itsKGFMapSystem;
     //****************** Event Delegation*****************
+
     public delegate void EventPokemonRelease(int PokePartyIndex, PokeCore pokeCore);
     public delegate void EventCastMove(int selection);
     public delegate void EventPokemonReturn();
     public delegate void EventSelectMove(int selectedMoveIndex);
+    public delegate void EventFired(PlayerControlState playerControlState); //
     public static event EventSelectMove SelectMove = new EventSelectMove((int selectedMoveIndex) => { });
     public static event EventCastMove CastMove = new EventCastMove((int selection) => { });
     public static event EventPokemonRelease eventPokemonRelease = new EventPokemonRelease((int PokePartyIndex, PokeCore pokeCore) => { });
     public static event EventPokemonReturn eventPokemonReturn = new EventPokemonReturn(() => { });
+
     void Start()
     {
         itsKGFMapSystem = KGFAccessor.GetObject<KGFMapSystem>();
@@ -125,6 +128,7 @@ public class PlayerControlManager : MonoBehaviour
                 pokeballState = PokeballState.None;
                 itsKGFMapSystem.SetTarget(trainerObject);
                 eventPokemonReturn();
+                //eventFired(PokemonReleased);
                 Destroy(Trainer.ActivePokemon.gameObject);
 
                 // After the PokemonGameObject is disabled/Destroyed and the particle effect

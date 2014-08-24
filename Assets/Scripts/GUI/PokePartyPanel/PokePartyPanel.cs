@@ -11,7 +11,7 @@ public class PokePartyPanel : MonoBehaviour
 
     void Start()
     {
-        pokeParty = GameObject.Find("Player").GetComponent<Trainer>().pokeParty;
+        pokeParty = GameObject.Find("PlayerTrainer").GetComponent<Trainer>().pokeParty;
 
         Init();
 
