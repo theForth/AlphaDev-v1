@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MusicPlaylistManager : MonoBehaviour {
+public class MusicPlaylist : MonoBehaviour
+{
 
 
     void Start() {
