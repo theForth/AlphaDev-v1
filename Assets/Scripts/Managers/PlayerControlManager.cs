@@ -79,7 +79,7 @@ public class PlayerControlManager : MonoBehaviour
             itsKGFMapSystem.SetTarget(Trainer.ActivePokemon.gameObject);  //Set The Minimap Target
             trainerController.ani.SetFloat("Speed", 0f);
             trainerController.enabled = false;                    //Disable the control script                                                        //Set Camera's new target to the newly Active Pokemon   
-            eventPokemonRelease(trainer.pokeParty.SelectedIndex,Trainer.ActivePokemon);
+            eventPokemonRelease(trainer.pokeParty.SelectedIndex, Trainer.ActivePokemon);
             pokeballState = PokeballState.None;                    // The pokemon
         }
         //****************************Move Casting****************************\\
@@ -121,7 +121,7 @@ public class PlayerControlManager : MonoBehaviour
         {
             if (CanReturnPokemon())
             {
-
+                trainer.pokeParty.SetPokeSlotsInActive();
                 playerControlState = PlayerControlState.Trainer;             //Set Global Control State
                 thirdPersonCameraControl.StartTransition(trainerController.transform);     //Camera Transition to Pokemon +  Transition State to not disturb Camera  + Set Camera's new target back to the Trainer    
                 EnableTrainerMovementScript();
@@ -154,9 +154,9 @@ public class PlayerControlManager : MonoBehaviour
                         PokePartyIndex = i;
                         pokeballState = PokeballState.Selecting;
                     }
-                  
+
                 }
-          
+
 
                 if (pokeballState == PokeballState.Selecting) //Animation State for Throw
                 {
@@ -202,9 +202,17 @@ public class PlayerControlManager : MonoBehaviour
         CastMove(selectedMoveIndex);
 
     }
+    /// <summary>
+    /// For now we can work with true or false, later we can keep status codes
+    /// </summary>
+    /// <returns>bool</returns>
     private bool CanReturnPokemon()
     {
-        return Trainer.ActivePokemon.canReturn;
+        if (trainer.pokeParty.GetActiveSlotIndex() < 0)
+        {
+            return false;
+        }
+        return true;
     }
 
 

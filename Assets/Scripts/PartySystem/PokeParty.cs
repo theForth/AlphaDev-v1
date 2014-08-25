@@ -10,6 +10,11 @@ public class PokeParty
     List<PokeSlot> slots;
     private int selectedIndex;
 
+    public void SetPokeSlotsInActive()
+    {
+        selectedIndex = -1;
+
+    }
     public int SelectedIndex
     {
         get { return selectedIndex; }
@@ -91,6 +96,10 @@ public class PokeParty
             GetPokeSlot(SlotCount() - 1);
     }
     public int GetSelectedIndex()
+    {
+        return selectedIndex;
+    }
+    public int GetActiveSlotIndex()
     {
         return selectedIndex;
     }

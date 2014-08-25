@@ -173,11 +173,18 @@ public class IconSlot : UIDragDropItem
     public void SetIcon(Texture iconTex)
     {
         if (iconTex != null && !this.iconSprite.enabled)
+        {
             this.iconSprite.enabled = true;
+            
+        }
+        
+        if (iconTex == null && this.iconSprite.enabled)
+        {
+            this.iconSprite.enabled = false;
+        }
+
         this.iconSprite.mainTexture = iconTex;
 
-        
-        if (iconTex == null && this.iconSprite.enabled) this.iconSprite.enabled = false;
     }
 
     public void OnHover(bool isOver)
